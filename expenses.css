@@ -12,7 +12,7 @@ body {
 
 /* Header */
 header {
-    background-color: #4CAF50; /* NoteNest green */
+    background-color: #2c3e50; /* Changed: Dark blue/grey header */
     color: white;
     padding: 15px 30px;
     display: flex;
@@ -71,6 +71,33 @@ header {
     transform: translateY(-2px);
 }
 
+/* --- Keyframe Animations --- */
+@keyframes icon-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes arrow-move-left {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-8px); /* Move left 8 pixels */
+    }
+}
+
+/* --- Application of Animations --- */
+
+/* Apply bounce to header buttons with icons on hover */
+.header-btn:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
 /* Main Content Layout */
 .expense-main-content {
     display: grid;
@@ -93,13 +120,45 @@ header {
 }
 
 .form-card h2, .list-card h2 {
-    color: #4CAF50; /* NoteNest Green */
+    color: #D32F2F; /* Red for expense sections */
     font-size: 1.8em;
     margin-top: 0;
     margin-bottom: 25px;
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Style for icons within Expense section headings */
+.form-card h2 i, .list-card h2 i {
+    color: #D32F2F; /* Red color for icons in expense headings */
+    transition: transform 0.3s ease-out; /* Smooth transition for non-animated state */
+}
+
+/* Animation for icons within Expense section headings on hover */
+.form-card h2:hover i, .list-card h2:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite; /* Bounce on hover */
+    will-change: transform;
+}
+
+/* Specific styling for the dashboard icon (assuming it's in a heading of a section) */
+/* If you have a specific dashboard section, you might need to target it more precisely,
+   e.g., #dashboard-section h2 .fa-chart-pie */
+/* For example, if your dashboard link/icon is in header: */
+header .header-btn.dashboard-link:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite; /* Example bounce for a dashboard icon in header */
+    will-change: transform;
+}
+
+/* Animation for an arrow icon in the dashboard context (e.g., within a heading or navigation) */
+/* Assuming a class like 'dashboard-arrow' or a direct FontAwesome class within a relevant element */
+.dashboard-icon-arrow-left { /* Add this class to your arrow icon if it's not already there */
+    transition: transform 0.3s ease-out;
+}
+
+.dashboard-icon-arrow-left:hover {
+    animation: arrow-move-left 0.8s ease-in-out infinite;
+    will-change: transform;
 }
 
 /* Form Styling */
@@ -139,8 +198,8 @@ header {
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-    border-color: #4CAF50;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    border-color: #D32F2F; /* Red */
+    box-shadow: 0 0 0 3px rgba(211, 47, 47, 0.2); /* Red shadow */
     outline: none;
 }
 
@@ -165,9 +224,8 @@ header {
     width: 100%; /* Make inputs/selects fill their container */
 }
 
-
 .add-button {
-    background-color: #4CAF50;
+    background-color: #D32F2F; /* Red */
     color: white;
     padding: 15px 25px;
     border: none;
@@ -184,7 +242,7 @@ header {
 }
 
 .add-button:hover {
-    background-color: #45a049;
+    background-color: #c62828; /* Darker red */
     transform: translateY(-2px);
 }
 
@@ -198,8 +256,8 @@ header {
 }
 
 #noExpensesMessage {
-    background-color: #e0f2f1; /* Light teal */
-    color: #26a69a; /* Darker teal */
+    background-color: #fce4ec; /* Light pinkish red */
+    color: #c2185b; /* Darker pinkish red */
     padding: 15px;
     border-radius: 8px;
     text-align: center;
@@ -207,7 +265,7 @@ header {
     font-style: italic;
     font-size: 1.1em;
     display: none; /* Hidden by default, JavaScript will show/hide */
-    border: 1px solid #b2dfdb;
+    border: 1px solid #f8bbd0;
 }
 
 .expense-items-list {
@@ -297,9 +355,15 @@ header {
     color: #e65100;
 }
 
+.action-btn.delete-btn { /* Specific style for delete button */
+    background-color: #ef9a9a; /* Lighter red for delete button default */
+    color: #b71c1c; /* Darker red text */
+    border-color: #ef9a9a;
+}
+
 .action-btn.delete-btn:hover {
-    background-color: #ffcdd2; /* Light red for delete */
-    color: #c62828;
+    background-color: #e57373; /* Darker red on hover */
+    color: white;
 }
 
 /* Footer */
