@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NoteNest: Your Personal Expense & Income Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="logo-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+      <div>
+        <h1>NoteNest</h1>
+        <p class="subtitle">Your Smart Note Keeper</p>
+      </div>
+    </a>
+    <div class="header-icons">
+      <button class="calculator-button" id="calculator-toggle" title="Open Calculator">
+        <i class="fas fa-calculator"></i>
+      </button>
+    </div>
+  </header>
+
+  <nav>
+    <ul class="navigation">
+      <li class="category"><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li class="category"><a href="expenses.html"><i class="fas fa-money-bill-wave"></i> Expenses</a></li>
+      <li class="category"><a href="income.html"><i class="fas fa-hand-holding-usd"></i> Income</a></li>
+      <li class="category"><a href="casual.html"><i class="fas fa-sticky-note"></i> Casual Notes</a></li>
+      <li class="category"><a href="bills-subscriptions.html"><i class="fas fa-receipt"></i> Bills & Subscriptions</a></li>
+      <li class="category"><a href="debts.html"><i class="fas fa-wallet"></i> Debts & Loans</a></li>
+      <li class="category"><a href="taxrelated.html"><i class="fas fa-file-invoice-dollar"></i> Tax Related</a></li>
+      <li class="category"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+      <li class="category"><a href="travelplans.html"><i class="fas fa-plane"></i> Travel Plans</a></li>
+      <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+    </ul>
+  </nav>
+
+  <main class="dashboard-main-content">
+    <section id="upcoming-trips-section" class="card-style">
+      <h3><i class="fas fa-plane-departure"></i> Upcoming Trips
+        <a href="travelplans.html" class="add-trip-link" title="Go to Travel Plans"><i class="fas fa-plus-circle"></i> Add New Trip</a>
+      </h3>
+      <div class="slideshow-container">
+        <div id="tripSlides" class="trip-slides"></div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <div style="text-align:center; margin-top: 15px;" id="slideshow-dots"></div>
+      </div>
+      <p id="noUpcomingTripsMessage" class="info-message hidden" style="text-align: center; margin-top: 15px; color: #555;">No upcoming trips planned. Add one now!</p>
+    </section>
+
+    <iframe id="calculator-iframe" src="calculator.html" class="calculator-embed-container" frameborder="0"></iframe>
+
+    <!-- ✅ COMPACT CREATE NOTE FORM -->
+    <section class="create-note-section card-style">
+      <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
+      <div class="note-form-layout compact-layout">
+        <form id="noteForm" class="note-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="noteDate">Note Date:</label>
+              <input type="date" id="noteDate" required />
+            </div>
+            <div class="form-group">
+              <label for="noteTitle">Note Title:</label>
+              <input type="text" id="noteTitle" required placeholder="Enter title" />
+            </div>
+            <div class="form-group">
+              <label for="category">Category:</label>
+              <select id="category" required onchange="populateSubcategories()">
+                <option value="" disabled selected>-- Select Category --</option>
+                <option value="Expenses">Expenses</option>
+                <option value="Income">Income</option>
+                <option value="Casual Note">Casual Note</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="subcategory">Subcategory:</label>
+              <select id="subcategory" required>
+                <option value="" disabled selected>-- Select Subcategory --</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="currencyCountry">Currency & Country:</label>
+              <select id="currencyCountry">
+                <option value="₹ - India">₹ - India</option>
+                <option value="$ - United States">$ - United States</option>
+                <option value="€ - Germany">€ - Germany</option>
+                <option value="£ - United Kingdom">£ - United Kingdom</option>
+                <option value="¥ - Japan">¥ - Japan</option>
+                <option value="Others">Others</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="amount">Amount:</label>
+              <input type="number" id="amount" min="0" placeholder="Enter the amount" />
+            </div>
+            <div class="form-group wide">
+              <label for="description">Description:</label>
+              <textarea id="description" rows="2" placeholder="Optional note..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="add-note-button"><i class="fas fa-plus-circle"></i> Add Note</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- ✅ COMPLETE DASHBOARD OVERVIEW SECTION -->
+    <section class="dashboard-overview-section card-style">
+      <h2><i class="fas fa-chart-line"></i> Dashboard Overview</h2>
+      <div class="overview-cards-grid">
+        <div class="overview-card income-card">
+          <h3>Income</h3>
+          <p id="dashboardTotalIncome" class="total-amount">Total: ₹0</p>
+        </div>
+        <div class="overview-card expenses-card">
+          <h3>Expenses</h3>
+          <p id="dashboardTotalExpenses" class="total-amount">Total: ₹0</p>
+        </div>
+        <div class="overview-card casual-card">
+          <h3>Casual Notes</h3>
+          <p class="total-amount">Count: <span id="dashboardCasualCount">0</span></p>
+          <p class="total-amount">Amount Total: ₹<span id="dashboardCasualAmount">0</span></p>
+        </div>
+      </div>
+
+      <div class="stats-charts card-style chart-container">
+        <h3><i class="fas fa-chart-pie"></i> Category Distribution</h3>
+        <canvas id="categoryChart"></canvas>
+      </div>
+
+      <div class="notes-filter-and-view">
+        <div class="notes-filter-group">
+          <label for="filterCategory"><i class="fas fa-filter"></i> Filter by Category:</label>
+          <select id="filterCategory">
+            <option value="All">All</option>
+            <option value="Expenses">Expenses</option>
+            <option value="Income">Income</option>
+            <option value="Casual Note">Casual Note</option>
+          </select>
+        </div>
+        <div class="view-toggle-buttons">
+          <button class="view-toggle-button active-view" id="cardViewBtn" data-view="card"><i class="fas fa-th-large"></i> Card View</button>
+          <button class="view-toggle-button" id="tableViewBtn" data-view="table"><i class="fas fa-table"></i> Table View</button>
+        </div>
+      </div>
+
+      <div id="noNotesMessage" class="info-message hidden">
+        <p>No notes recorded yet. Add your first note using the "Quick Create Note" form!</p>
+      </div>
+
+      <div id="cardViewContainer" class="note-card-grid-container"></div>
+
+      <div id="tableViewContainer" class="notes-table-container hidden-view">
+        <table class="notes-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Subcategory</th>
+              <th>Amount</th>
+              <th>Currency</th>
+              <th>Country</th>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="notesTableBody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&#169; 2025 NoteNest. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <!-- Optional inline styling to support compact form -->
+  <style>
+    .note-form-layout.compact-layout {
+      padding: 10px 0;
+    }
+    .note-form .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: space-between;
+    }
+    .note-form .form-group {
+      flex: 1 1 200px;
+      min-width: 180px;
+    }
+    .note-form .form-group.wide {
+      flex: 2 1 100%;
+    }
+  </style>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const slidesContainer = document.getElementById("tripSlides");
+      const dotsContainer = document.getElementById("slideshow-dots");
+      const travelPlans = JSON.parse(localStorage.getItem("travelPlans")) || [];
+      const upcoming = travelPlans.filter(plan => {
+        const today = new Date();
+        const planDate = new Date(plan.startDate);
+        return (plan.status === "Planning" || plan.status === "Booked") && planDate >= today;
+      });
+      if (upcoming.length === 0) {
+        document.getElementById("noUpcomingTripsMessage").classList.remove("hidden");
+        return;
+      }
+      slidesContainer.innerHTML = '';
+      dotsContainer.innerHTML = '';
+      upcoming.forEach((plan, index) => {
+        const slide = document.createElement("div");
+        slide.className = "trip-slide fade";
+        slide.innerHTML = `
+          <h4>${plan.planTitle}</h4>
+          <p><i class="fas fa-map-marker-alt"></i> ${plan.destination}</p>
+          <p><i class="fas fa-calendar-alt"></i> ${plan.startDate} to ${plan.endDate}</p>
+          <p><i class="fas fa-tags"></i> <span class="status-${plan.status.toLowerCase()}">${plan.status}</span></p>`;
+        slidesContainer.appendChild(slide);
+        const dot = document.createElement("span");
+        dot.className = "dot";
+        dot.addEventListener("click", () => showSlides(index + 1));
+        dotsContainer.appendChild(dot);
+      });
+      let slideIndex = 1;
+      showSlides(slideIndex);
+      window.plusSlides = function(n) {
+        showSlides(slideIndex += n);
+      };
+      function showSlides(n) {
+        let slides = document.getElementsByClassName("trip-slide");
+        let dots = document.getElementsByClassName("dot");
+        if (n > slides.length) slideIndex = 1;
+        if (n < 1) slideIndex = slides.length;
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].style.display = "none";
+        }
+        for (let i = 0; i < dots.length; i++) {
+          dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+      }
+      setInterval(() => {
+        plusSlides(1);
+      }, 7000);
+    });
+  </script>
+
+</body>
+</html>

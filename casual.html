@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Casual - NoteNest</title>
+  <link rel="stylesheet" href="casual.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+      <h1>NoteNest - Casual Notes</h1>
+    </div>
+    <div class="header-links">
+      <a href="reports.html" class="report-link">📊 Reports</a>
+      <a href="index.html" class="back-link">← Back to Dashboard</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="form-container">
+      <h2>Add Casual Note</h2>
+
+      <div class="note-form-layout">
+        <div class="note-image">
+          <img src="https://i.ibb.co/d4h2CgqC/Gemini-Generated-Image-fy5j3lfy5j3lfy5j.jpg" alt="Casual Notes Illustration" />
+        </div>
+
+        <form id="casualForm">
+          <label for="title">Note Title:</label>
+          <input type="text" id="title" required />
+
+          <label for="type">Note Type:</label>
+          <select id="type" required>
+            <option value="Reminder">Reminder</option>
+            <option value="Idea">Idea</option>
+            <option value="Misc">Misc</option>
+            <option value="Thought">Thought</option>
+            <option value="Todo">Todo</option>
+            <option value="Others">Others</option>
+          </select>
+
+          <label for="content">Note Content:</label>
+          <textarea id="content" rows="5" required></textarea>
+
+          <button type="submit" class="small-button">Add Note</button>
+        </form>
+      </div>
+    </section>
+
+
+    <section class="list-container">
+      <h3>Casual Notes</h3>
+      <div id="casualList">No casual notes yet.</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 NoteNest. All rights reserved.</p>
+  </footer>
+
+  <script src="casual.js"></script>
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest - Goals</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="goals.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </a>
+        <div class="header-buttons">
+            <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        </div>
+    </header>
+
+    <main class="goals-main-content">
+        <section class="goals-banner-section">
+            <div class="goals-banner-left">
+                <img src="https://i.ibb.co/dsrVHQqr/Gemini-Generated-Image-yzxipiyzxipiyzxi.jpg" alt="Goals Illustration" />
+                <script>
+                    // This script is now minimal, only ensuring alt text if needed.
+                    // The image src is directly set in the HTML.
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const imgElement = document.querySelector('.goals-banner-left img');
+                        imgElement.alt = "Achieve Your Goals"; // More descriptive alt text
+                    });
+                </script>
+            </div>
+            <div class="goals-banner-text">
+                <h3>Achieve Your Aspirations <i class="fas fa-bullseye"></i></h3>
+                <ul>
+                    <li><i class="fas fa-lightbulb"></i> Define your financial and personal goals</li>
+                    <li><i class="fas fa-chart-line"></i> Track progress towards your targets</li>
+                    <li><i class="fas fa-calendar-check"></i> Set realistic deadlines and milestones</li>
+                    <li><i class="fas fa-trophy"></i> Celebrate your achievements and stay motivated</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <h2><i class="fas fa-plus-circle"></i> Add New Goal</h2>
+            <form id="goalForm">
+                <div class="form-group">
+                    <label for="goalTitle">Goal Title:</label>
+                    <input type="text" id="goalTitle" required placeholder="e.g., Save for Down Payment, Learn New Skill" />
+                </div>
+
+                <div class="form-group">
+                    <label for="goalType">Type:</label>
+                    <select id="goalType" required>
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="Financial">Financial</option>
+                        <option value="Personal">Personal</option>
+                        <option value="Career">Career</option>
+                        <option value="Health">Health</option>
+                        <option value="Education">Education</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="targetAmount">Target Amount (if financial):</label>
+                        <input type="number" id="targetAmount" min="0" step="0.01" placeholder="e.g., 100000.00" />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="currentAmount">Current Amount (if financial):</label>
+                        <input type="number" id="currentAmount" min="0" step="0.01" value="0.00" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetDate">Target Date:</label>
+                    <input type="date" id="targetDate" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" required>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="On Hold">On Hold</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (Optional):</label>
+                    <textarea id="description" rows="3" placeholder="Details about this goal and steps to achieve it"></textarea>
+                </div>
+
+                <button type="submit" class="add-button"><i class="fas fa-plus-circle"></i> Add Goal</button>
+            </form>
+        </section>
+
+        <section class="list-card">
+            <h2><i class="fas fa-list-alt"></i> Your Goals</h2>
+
+            <div class="view-toggle-buttons">
+                <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+                <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+            </div>
+
+            <div id="noGoalsMessage" class="info-message">
+                <p>No goals recorded yet. Add your first goal!</p>
+            </div>
+
+            <div id="cardViewContainer" class="card-grid-container">
+                </div>
+
+            <div id="tableViewContainer" class="table-responsive hidden-view">
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Target Amount</th>
+                            <th>Current Amount</th>
+                            <th>Progress (%)</th>
+                            <th>Target Date</th>
+                            <th>Status</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="goalsTableBody">
+                        </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="table-total-label">Total Amount Recorded:</td>
+                            <td id="totalTaxAmountCell" class="table-total-amount">0.00</td>
+                            <td colspan="2"></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="export-buttons">
+                <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+                <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="goals.js"></script>
+</body>
+</html>

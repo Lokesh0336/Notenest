@@ -1,0 +1,512 @@
+/* Basic Reset & Body Styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f8f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #2e8b57; /* Darker green */
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none; /* Remove underline from logo link */
+    display: flex; /* Keep logo and text aligned */
+    align-items: center;
+}
+
+.logo-title img {
+    width: 40px;
+    margin-right: 12px;
+}
+
+.logo-title h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #e0e0e0;
+    margin: 2px 0;
+}
+
+/* Main Content Area */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.report-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2e8b57; /* Matches header green */
+}
+
+.report-header h2 {
+    color: #2e8b57;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.export-bar {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
+    justify-content: flex-end; /* Align buttons to the right */
+}
+
+.export-bar button,
+.export-bar .back-home {
+    padding: 8px 12px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none; /* For the anchor tag button */
+    display: inline-block; /* Ensure it behaves like a button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.export-bar button:hover,
+.export-bar .back-home:hover {
+    background-color: #256f48; /* Darker green on hover */
+    transform: translateY(-1px);
+}
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden; /* Ensures rounded corners on table */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+thead {
+    background-color: #2e8b57; /* Table header background */
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee; /* Light border between rows */
+}
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8; /* Zebra striping */
+}
+
+tbody tr:hover {
+    background-color: #f0f0f0; /* Hover effect on rows */
+}
+
+/* Footer */
+tfoot td {
+    font-weight: bold;
+    background-color: #e8f5e9; /* Light green background for footer */
+    border-top: 2px solid #2e8b57; /* Stronger border for totals */
+}
+
+/* Specific colors for total cells */
+#totalExpensesCell {
+    color: #e74c3c; /* Red for expenses */
+}
+
+#totalIncomeCell {
+    color: #2ecc71; /* Green for income */
+}
+
+footer {
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    background-color: #f1f1f1;
+    color: #444;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .logo-title {
+        margin-bottom: 10px;
+    }
+
+    .export-bar {
+        flex-direction: column;
+        align-items: stretch; /* Stretch buttons to full width */
+    }
+
+    .export-bar button,
+    .export-bar .back-home {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block; /* Make table stack on small screens */
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px; /* Hide table header visually */
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #555;
+    }
+
+    /* Labeling table cells for mobile view */
+    td:nth-of-type(1):before { content: "S.No."; }
+    td:nth-of-type(2):before { content: "Date"; }
+    td:nth-of-type(3):before { content: "Title"; }
+    td:nth-of-type(4):before { content: "Subcategory"; }
+    td:nth-of-type(5):before { content: "Description"; }
+    td:nth-of-type(6):before { content: "Currency"; }
+    td:nth-of-type(7):before { content: "Expenses"; }
+    td:nth-of-type(8):before { content: "Income"; }
+    td:nth-of-type(9):before { content: "Casual"; }
+
+    tfoot td {
+        text-align: right !important; /* Force right alignment for totals */
+    }
+    tfoot td[colspan="6"] {
+        text-align: left !important; /* Force left alignment for "Totals:" label */
+        padding-left: 15px;
+    }
+}
+/* Basic Reset & Body Styles */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f8f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
+    background-color: #2e8b57; /* Darker green */
+    color: white;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+}
+
+.logo-link {
+    text-decoration: none; /* Remove underline from logo link */
+    display: flex; /* Keep logo and text aligned */
+    align-items: center;
+}
+
+.logo-title img {
+    width: 40px;
+    margin-right: 12px;
+}
+
+.logo-title h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.subtitle {
+    font-size: 12px;
+    color: #e0e0e0;
+    margin: 2px 0;
+}
+
+/* Main Content Area */
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.report-header {
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #2e8b57; /* Matches header green */
+}
+
+.report-header h2 {
+    color: #2e8b57;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+/* New container for top buttons */
+.top-buttons-container {
+    display: flex;
+    justify-content: space-between; /* Puts items at opposite ends */
+    align-items: center;
+    margin-top: 10px;
+    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    gap: 10px; /* Space between elements */
+}
+
+.export-bar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end; /* Ensures export buttons stay together on the right */
+}
+
+.export-bar button,
+.back-home { /* Apply to .back-home as well */
+    padding: 8px 12px;
+    background-color: #2e8b57;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    text-decoration: none; /* For the anchor tag button */
+    display: inline-block; /* Ensure it behaves like a button */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.export-bar button:hover,
+.back-home:hover {
+    background-color: #256f48; /* Darker green on hover */
+    transform: translateY(-1px);
+}
+
+/* Calculate Totals Button Container */
+.calculate-totals-container {
+    text-align: right; /* Align button to the right */
+    margin-top: 20px; /* Space above the button */
+    margin-bottom: 30px; /* Space below the button */
+}
+
+.calculate-totals-container button {
+    padding: 10px 18px; /* Slightly larger button */
+    background-color: #007bff; /* A nice blue color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.calculate-totals-container button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-1px);
+}
+
+
+/* Table Styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden; /* Ensures rounded corners on table */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+thead {
+    background-color: #2e8b57; /* Table header background */
+    color: white;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border-bottom: 1px solid #eee; /* Light border between rows */
+}
+
+th {
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f8f8; /* Zebra striping */
+}
+
+tbody tr:hover {
+    background-color: #f0f0f0; /* Hover effect on rows */
+}
+
+/* Footer */
+tfoot td {
+    font-weight: bold;
+    background-color: #e8f5e9; /* Light green background for footer */
+    border-top: 2px solid #2e8b57; /* Stronger border for totals */
+}
+
+/* Specific colors for total cells */
+#totalExpensesCell {
+    color: #e74c3c; /* Red for expenses */
+}
+
+#totalIncomeCell {
+    color: #2ecc71; /* Green for income */
+}
+
+footer {
+    text-align: center;
+    padding: 12px;
+    font-size: 14px;
+    background-color: #f1f1f1;
+    color: #444;
+    margin-top: 30px;
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 10px;
+    }
+
+    .logo-title {
+        margin-bottom: 10px;
+    }
+
+    .top-buttons-container {
+        flex-direction: column;
+        align-items: stretch; /* Stretch buttons to full width */
+    }
+
+    .export-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .export-bar button,
+    .back-home {
+        width: 100%; /* Full width buttons on small screens */
+    }
+
+    table, thead, tbody, th, td, tr {
+        display: block; /* Make table stack on small screens */
+    }
+
+    thead tr {
+        position: absolute;
+        top: -9999px; /* Hide table header visually */
+        left: -9999px;
+    }
+
+    tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    td {
+        border: none;
+        border-bottom: 1px solid #eee;
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+
+    td:before {
+        position: absolute;
+        top: 0;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        text-align: left;
+        font-weight: bold;
+        color: #555;
+    }
+
+    /* Labeling table cells for mobile view */
+    td:nth-of-type(1):before { content: "S.No."; }
+    td:nth-of-type(2):before { content: "Date"; }
+    td:nth-of-type(3):before { content: "Title"; }
+    td:nth-of-type(4):before { content: "Subcategory"; }
+    td:nth-of-type(5):before { content: "Description"; }
+    td:nth-of-type(6):before { content: "Currency"; }
+    td:nth-of-type(7):before { content: "Expenses"; }
+    td:nth-of-type(8):before { content: "Income"; }
+    td:nth-of-type(9):before { content: "Casual"; }
+
+    tfoot td {
+        text-align: right !important; /* Force right alignment for totals */
+    }
+    tfoot td[colspan="6"] {
+        text-align: left !important; /* Force left alignment for "Totals:" label */
+        padding-left: 15px;
+    }
+}

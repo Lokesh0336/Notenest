@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NoteNest - Income</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="income.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+</head>
+<body>
+  <header>
+    <a href="index.html" class="logo-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+      <div>
+        <h1>NoteNest</h1>
+        <p class="subtitle">Your Smart Note Keeper</p>
+      </div>
+    </a>
+    <div class="header-buttons">
+      <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+      <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+    </div>
+  </header>
+
+  <main class="income-main-content">
+    <section class="income-banner-section">
+      <div class="income-banner-left">
+        <img src="https://i.ibb.co/5xRz9WB8/Gemini-Generated-Image-7q3jdp7q3jdp7q3j.jpg" alt="Income Illustration" />
+      </div>
+      <div class="income-banner-text">
+        <h3>Track Every Rupee Earned <i class="fas fa-briefcase"></i></h3>
+        <ul>
+          <li><i class="fas fa-money-bill-wave"></i> Record all income sources with ease</li>
+          <li><i class="fas fa-folder-open"></i> Organize by subcategories: Salary, Freelance, Gift & more</li>
+          <li><i class="fas fa-chart-line"></i> Monitor your earnings in the Reports section</li>
+          <li><i class="fas fa-globe"></i> Multi-currency and country support</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="form-card">
+      <h2><i class="fas fa-plus-circle"></i> Add New Income</h2>
+      <form id="incomeForm">
+        <div class="form-group">
+          <label for="incomeDate">Date:</label>
+          <input type="date" id="incomeDate" required />
+        </div>
+
+        <div class="form-group">
+          <label for="title">Income Title:</label>
+          <input type="text" id="title" required placeholder="e.g., Monthly Salary" />
+        </div>
+
+        <div class="form-group">
+          <label for="subcategory">Category:</label>
+          <select id="subcategory" required>
+            <option value="" disabled selected>-- Select Category --</option>
+            <option value="Salary">Salary</option>
+            <option value="Freelance">Freelance</option>
+            <option value="Business">Business</option>
+            <option value="Investments">Investments</option>
+            <option value="Interest">Interest</option>
+            <option value="Gift">Gift</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group inline-group">
+          <div class="input-with-label">
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" required min="0.01" step="0.01" placeholder="e.g., 25000.00" />
+          </div>
+          <div class="input-with-label">
+            <label for="currency">Currency:</label>
+            <select id="currency">
+              <option value="₹">₹ - INR</option>
+              <option value="$">$ - USD</option>
+              <option value="€">€ - EUR</option>
+              <option value="£">£ - GBP</option>
+              <option value="¥">¥ - JPY</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description (Optional):</label>
+          <textarea id="description" rows="3" placeholder="Brief details about this income"></textarea>
+        </div>
+
+        <button type="submit" class="add-button"><i class="fas fa-sack-dollar"></i> Add Income</button>
+      </form>
+    </section>
+
+    <section class="list-card">
+      <h2><i class="fas fa-money-check-alt"></i> Income History</h2>
+
+      <div class="view-toggle-buttons">
+        <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+        <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+      </div>
+
+      <div id="noIncomeMessage" class="info-message">
+        <p>No income recorded yet. Add your first income!</p>
+      </div>
+
+      <div id="cardViewContainer" class="card-grid-container"></div>
+
+      <div id="tableViewContainer" class="table-responsive hidden-view">
+        <table class="notes-table">
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>Date</th>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Description</th>
+              <th>Currency</th>
+              <th>Amount</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="incomeTableBody"></tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6" class="table-total-label">Total Income:</td>
+              <td id="totalIncomeCell" class="table-total-amount">0.00</td>
+              <td></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="export-buttons">
+        <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+        <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script>
+    // Set today's date as default
+    document.addEventListener("DOMContentLoaded", function () {
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      document.getElementById("incomeDate").value = `${yyyy}-${mm}-${dd}`;
+    });
+  </script>
+  <script src="income.js"></script>
+</body>
+</html>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest - Bills & Subscriptions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="bills-subscriptions.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </a>
+        <div class="header-buttons">
+            <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        </div>
+    </header>
+
+    <main class="bills-main-content">
+
+        <section class="bill-banner-section">
+            <div class="bill-banner-left">
+                <img src="https://i.ibb.co/bgX8xrXJ/Gemini-Generated-Image-oa278ooa278ooa27.jpg" alt="Bills Banner" />
+            </div>
+            <div class="bill-banner-text">
+                <h3>Why Track Your Bills? <i class="fas fa-receipt"></i></h3>
+                <ul>
+                    <li><i class="fas fa-lightbulb"></i> Avoid missing due dates</li>
+                    <li><i class="fas fa-chart-bar"></i> Understand your monthly spend</li>
+                    <li><i class="fas fa-calendar-alt"></i> Plan ahead for subscriptions</li>
+                    <li><i class="fas fa-check-circle"></i> Stay in control of EMIs & recurring payments</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <h2><i class="fas fa-plus-circle"></i> Add Bill/Subscription</h2>
+
+            <form id="billForm">
+                <div class="form-group">
+                    <label for="date">Due Date:</label>
+                    <input type="date" id="date" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="mainCategory">Main Category:</label>
+                    <select id="mainCategory" required onchange="populateSubcategories()">
+                        <option value="" disabled selected>Select Main Category</option>
+                        <option value="OTT">OTT</option>
+                        <option value="Home Bills">Home Bills</option>
+                        <option value="Education">Education</option>
+                        <option value="EMI/Loans">EMI/Loans</option>
+                        <option value="Fitness & Wellness">Fitness & Wellness</option>
+                        <option value="Internet & Mobile">Internet & Mobile</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="subCategory">Subcategory:</label>
+                    <select id="subCategory" required onchange="toggleCustomSubcategory()">
+                        <option value="" disabled selected>Select Subcategory</option>
+                        </select>
+                    <input type="text" id="customSubCategory" class="custom-input" placeholder="Enter custom subcategory" style="display:none;" />
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" placeholder="e.g., Netflix Premium, Electricity Bill" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (Optional):</label>
+                    <textarea id="description" rows="3" placeholder="Brief details about this bill"></textarea>
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" required min="0.01" step="0.01" placeholder="e.g., 500.00" />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="currencyCountry">Currency & Country:</label>
+                        <select id="currencyCountry" required>
+                            <option value="₹ - India">₹ - India</option>
+                            <option value="$ - United States">$ - United States</option>
+                            <option value="€ - Germany">€ - Germany</option>
+                            <option value="£ - United Kingdom">£ - United Kingdom</option>
+                            <option value="¥ - Japan">¥ - Japan</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="paymentType">Payment Type:</label>
+                    <select id="paymentType" required onchange="toggleCustomPaymentType()">
+                        <option value="" disabled selected>Select Payment Method</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Credit Card">Credit Card</option>
+                        <option value="Debit Card">Debit Card</option>
+                        <option value="Net Banking">Net Banking</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Others">Others</option>
+                    </select>
+                    <input type="text" id="customPaymentType" class="custom-input" placeholder="Enter custom payment method" style="display:none;" />
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Transaction Type:</label>
+                    <select id="type" required>
+                        <option value="Expense">Expense</option>
+                        <option value="Income">Income</option>
+                    </select>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="autopay" />
+                    <label for="autopay">AutoPay Enabled</label>
+                </div>
+
+                <button type="submit" class="add-button"><i class="fas fa-plus-circle"></i> Add Entry</button>
+            </form>
+        </section>
+
+        <section class="list-card">
+            <h2><i class="fas fa-list-alt"></i> All Bills & Subscriptions</h2>
+
+            <div class="filter-controls">
+                <div class="filter-group">
+                    <label for="filterMonth"><i class="fas fa-calendar-alt"></i> Month:</label>
+                    <select id="filterMonth">
+                        <option value="all">All</option>
+                        <option value="0">January</option>
+                        <option value="1">February</option>
+                        <option value="2">March</option>
+                        <option value="3">April</option>
+                        <option value="4">May</option>
+                        <option value="5">June</option>
+                        <option value="6">July</option>
+                        <option value="7">August</option>
+                        <option value="8">September</option>
+                        <option value="9">October</option>
+                        <option value="10">November</option>
+                        <option value="11">December</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterYear"><i class="fas fa-calendar-alt"></i> Year:</label>
+                    <select id="filterYear"></select>
+                </div>
+            </div>
+
+            <div class="view-toggle-buttons">
+                <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+                <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+            </div>
+
+            <div id="noBillsMessage" class="info-message">
+                <p>No bills or subscriptions recorded yet. Add your first entry!</p>
+            </div>
+
+            <div id="cardViewContainer" class="card-grid-container">
+                </div>
+
+            <div id="tableViewContainer" class="table-responsive hidden-view">
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Due Date</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Type</th>
+                            <th>Currency</th>
+                            <th>Payment Type</th>
+                            <th>AutoPay</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="billsTableBody">
+                        </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="table-total-label">Total Bills (Expenses):</td>
+                            <td id="totalBillsCell" class="table-total-amount">0.00</td>
+                            <td colspan="5"></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="export-buttons">
+                <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+                <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="bills-subscriptions.js"></script>
+</body>
+</html>

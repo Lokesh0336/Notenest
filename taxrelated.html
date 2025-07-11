@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest - Tax Related</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="taxrelated.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </a>
+        <div class="header-buttons">
+            <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        </div>
+    </header>
+
+    <main class="tax-main-content">
+        <section class="tax-banner-section">
+            <div class="tax-banner-left">
+                <img src="https://i.ibb.co/4wdw21vp/Gemini-Generated-Image-q08b5pq08b5pq08b.jpg" alt="Tax Related Illustration" />
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const imgElement = document.querySelector('.tax-banner-left img');
+                        imgElement.alt = "Tax Related Illustration"; // Ensure alt text is set
+                    });
+                </script>
+            </div>
+            <div class="tax-banner-text">
+                <h3>Simplify Your Tax Season <i class="fas fa-file-invoice-dollar"></i></h3>
+                <ul>
+                    <li><i class="fas fa-clipboard-list"></i> Organize all tax-related documents and notes</li>
+                    <li><i class="fas fa-calendar-alt"></i> Track important tax deadlines and filing dates</li>
+                    <li><i class="fas fa-calculator"></i> Record deductible expenses and taxable income</li>
+                    <li><i class="fas fa-shield-alt"></i> Stay compliant and prepared for tax season</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <h2><i class="fas fa-plus-circle"></i> Add New Tax Note</h2>
+            <form id="taxForm">
+                <div class="form-group">
+                    <label for="taxDate">Date:</label>
+                    <input type="date" id="taxDate" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" required placeholder="e.g., Q1 GST Filing, Income Tax Documents" />
+                </div>
+
+                <div class="form-group">
+                    <label for="type">Type:</label>
+                    <select id="type" required>
+                        <option value="" disabled selected>-- Select Type --</option>
+                        <option value="Income Tax">Income Tax</option>
+                        <option value="GST">GST</option>
+                        <option value="Property Tax">Property Tax</option>
+                        <option value="TDS">TDS</option>
+                        <option value="Document">Document</option>
+                        <option value="Deadline">Deadline</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="amount">Amount (if applicable):</label>
+                        <input type="number" id="amount" min="0" step="0.01" placeholder="e.g., 5000.00 (tax paid/due)" />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="currency">Currency:</label>
+                        <select id="currency">
+                            <option value="₹">₹ - INR</option>
+                            <option value="$">$ - USD</option>
+                            <option value="€">€ - EUR</option>
+                            <option value="£">£ - GBP</option>
+                            <option value="¥">¥ - JPY</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (Optional):</label>
+                    <textarea id="description" rows="3" placeholder="Brief details about this tax entry"></textarea>
+                </div>
+
+                <button type="submit" class="add-button"><i class="fas fa-plus-circle"></i> Add Tax Note</button>
+            </form>
+        </section>
+
+        <section class="list-card">
+            <h2><i class="fas fa-list-alt"></i> Tax Related History</h2>
+
+            <div class="view-toggle-buttons">
+                <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+                <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+            </div>
+
+            <div id="noTaxNotesMessage" class="info-message">
+                <p>No tax related notes recorded yet. Add your first entry!</p>
+            </div>
+
+            <div id="cardViewContainer" class="card-grid-container">
+                </div>
+
+            <div id="tableViewContainer" class="table-responsive hidden-view">
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Date</th>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="taxTableBody">
+                        </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4" class="table-total-label">Total Amount Recorded:</td>
+                            <td id="totalTaxAmountCell" class="table-total-amount">0.00</td>
+                            <td colspan="2"></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="export-buttons">
+                <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+                <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="taxrelated.js"></script>
+</body>
+</html>

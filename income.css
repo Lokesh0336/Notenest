@@ -1,0 +1,535 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background-color: #f4f7f6; /* Light gray background */
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Ensures footer sticks to bottom */
+}
+
+/* Header (consistent with expenses.css) */
+header {
+    background-color: #4CAF50; /* NoteNest green */
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+}
+
+.logo-title img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo-title h1 {
+    margin: 0;
+    font-size: 1.8em;
+    font-family: 'Caveat', cursive;
+    font-weight: 600;
+}
+
+.logo-title .subtitle {
+    margin: 0;
+    font-size: 0.8em;
+    opacity: 0.8;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 15px;
+}
+
+.header-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+}
+
+/* Income Banner Specifics */
+.income-banner-section {
+    background-color: #e8f5e9; /* Very light green */
+    border: 1px solid #c8e6c9;
+    border-radius: 12px;
+    padding: 20px 30px;
+    margin: 30px auto 0 auto; /* Top margin, no bottom margin here */
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.income-banner-left img {
+    max-height: 150px;
+    border-radius: 8px;
+}
+
+.income-banner-text h3 {
+    color: #388e3c; /* Darker green */
+    font-size: 1.6em;
+    margin-top: 0;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.income-banner-text ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.income-banner-text ul li {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Main Content Layout */
+.income-main-content {
+    display: grid;
+    grid-template-columns: 1fr 2fr; /* Form on left (1 part), List on right (2 parts) */
+    gap: 30px;
+    padding: 30px;
+    max-width: 1200px;
+    margin: 30px auto; /* Center the main content, with space from banner */
+    flex-grow: 1; /* Allows main content to fill available space */
+}
+
+/* Card Styling for Sections (consistent with expenses.css) */
+.form-card, .list-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card h2, .list-card h2 {
+    color: #4CAF50; /* NoteNest Green */
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Form Styling (consistent with expenses.css) */
+#incomeForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 5px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #444;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+    outline: none;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 60px;
+}
+
+.inline-group {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.inline-group .input-with-label {
+    flex: 1;
+}
+
+.inline-group .input-with-label input,
+.inline-group .input-with-label select {
+    width: 100%;
+}
+
+.add-button {
+    background-color: #4CAF50; /* NoteNest green */
+    color: white;
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.add-button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+}
+
+.add-button:active {
+    transform: translateY(0);
+}
+
+/* List Styling */
+.list-card {
+    position: relative;
+}
+
+.view-toggle-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    gap: 10px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 5px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.08);
+}
+
+.toggle-btn {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 500;
+    color: #555;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.toggle-btn.active-view {
+    background-color: #4CAF50;
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.toggle-btn:hover:not(.active-view) {
+    background-color: #e0e0e0;
+}
+
+.info-message {
+    background-color: #e0f2f1; /* Light teal */
+    color: #26a69a; /* Darker teal */
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    margin-top: 15px;
+    font-style: italic;
+    font-size: 1.1em;
+    display: none; /* Hidden by default, JavaScript will show/hide */
+    border: 1px solid #b2dfdb;
+}
+
+/* Card View Specifics */
+.card-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.income-card {
+    background-color: #f9f9f9;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 15px 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Push action buttons to bottom */
+}
+
+.income-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.income-card h4 {
+    margin: 0 0 5px 0;
+    color: #222;
+    font-size: 1.2em;
+    font-weight: 600;
+}
+
+.income-card p {
+    margin: 0 0 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.income-card .card-amount {
+    font-weight: 700;
+    color: #4CAF50; /* Green for income */
+    font-size: 1.3em;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.income-card .card-actions {
+    display: flex;
+    justify-content: flex-end; /* Push action buttons to the right */
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* Table View Specifics */
+.table-responsive {
+    overflow-x: auto; /* Enable horizontal scrolling on small screens */
+    margin-top: 20px;
+}
+
+.notes-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.notes-table thead th {
+    background-color: #4CAF50; /* NoteNest Green */
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.9em;
+    border-bottom: 2px solid #388e3c;
+}
+
+.notes-table tbody td {
+    padding: 10px 15px;
+    border-bottom: 1px solid #eee;
+    color: #444;
+    font-size: 0.9em;
+}
+
+.notes-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.notes-table tbody tr:hover {
+    background-color: #eef7ee; /* Light green on hover */
+}
+
+.table-action-btn {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    color: #666;
+    padding: 6px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.table-action-btn:hover {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.table-action-btn.delete-btn:hover {
+    background-color: #ffcdd2; /* Light red for delete */
+    color: #c62828;
+}
+
+.table-total-label {
+    text-align: right;
+    font-weight: 600;
+    padding: 10px 15px;
+    border-top: 2px solid #4CAF50;
+    background-color: #e8f5e9;
+    color: #333;
+}
+
+.table-total-amount {
+    font-weight: 700;
+    color: #4CAF50; /* Green for income total */
+    padding: 10px 15px;
+    border-top: 2px solid #4CAF50;
+    background-color: #e8f5e9;
+    text-align: right;
+}
+
+/* Hidden View Utility Class */
+.hidden-view {
+    display: none !important; /* !important to override other display properties */
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    justify-content: flex-end; /* Push to the right */
+    gap: 10px;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.export-btn {
+    background-color: #607d8b; /* Greyish blue for exports */
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn:hover {
+    background-color: #546e7a;
+    transform: translateY(-2px);
+}
+
+
+/* Footer (consistent with expenses.css) */
+footer {
+    margin-top: 40px;
+    padding: 20px;
+    background-color: #e9ecef;
+    color: #555;
+    text-align: center;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.05);
+}
+
+/* Responsive Design (consistent with expenses.css) */
+@media (max-width: 900px) {
+    .income-main-content {
+        grid-template-columns: 1fr;
+        padding: 20px;
+    }
+    .income-banner-section {
+        flex-direction: column;
+        text-align: center;
+    }
+    .income-banner-left img {
+        margin-bottom: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    .header-btn {
+        width: calc(100% - 30px);
+        justify-content: center;
+    }
+    .logo-title {
+        justify-content: center;
+    }
+    .income-main-content {
+        padding: 15px;
+    }
+    .form-card, .list-card, .income-banner-section {
+        padding: 20px;
+    }
+    .form-card h2, .list-card h2 {
+        font-size: 1.5em;
+    }
+    .inline-group {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .income-card {
+        padding: 12px 15px;
+    }
+    .notes-table thead th, .notes-table tbody td, .table-total-label, .table-total-amount {
+        padding: 8px 10px;
+        font-size: 0.85em;
+    }
+    .table-action-btn {
+        padding: 4px 8px;
+        font-size: 0.7em;
+    }
+    .export-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

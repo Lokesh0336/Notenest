@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest - Travel Plans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="travelplans.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+    <style>
+        /* New styles for the professional reminder display */
+        .professional-reminder {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #f8d7da; /* Light red/pink background */
+            color: #721c24; /* Dark red text */
+            padding: 25px 35px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            display: none; /* Hidden by default */
+            text-align: center;
+            font-family: 'Poppins', sans-serif;
+            border: 1px solid #f5c6cb;
+            max-width: 400px;
+            animation: fadeInOut 8s forwards; /* Animation for visibility */
+            gap: 15px; /* Spacing between elements */
+            flex-direction: column; /* Stack elements vertically */
+            align-items: center; /* Center horizontally */
+        }
+
+        .professional-reminder h3 {
+            margin-top: 0;
+            color: #721c24;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .professional-reminder p {
+            margin-bottom: 0;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .professional-reminder .icon {
+            font-size: 2.5em;
+            color: #721c24;
+        }
+
+        .professional-reminder .close-btn {
+            background-color: #dc3545; /* Bootstrap danger red */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+
+        .professional-reminder .close-btn:hover {
+            background-color: #c82333;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </a>
+        <div class="header-buttons">
+            <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        </div>
+    </header>
+
+    <main class="travel-main-content">
+        <section class="travel-banner-section">
+            <div class="travel-banner-left">
+                <img src="https://i.ibb.co/zV52mvMh/Gemini-Generated-Image-su8gl6su8gl6su8g.jpg" alt="Travel Plans Illustration" />
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        const imgElement = document.querySelector('.travel-banner-left img');
+                        imgElement.alt = "Explore the World with Your Plans"; // More descriptive alt text
+                    });
+                </script>
+            </div>
+            <div class="travel-banner-text">
+                <h3>Plan Your Next Adventure <i class="fas fa-plane"></i></h3>
+                <ul>
+                    <li><i class="fas fa-map-marked-alt"></i> Organize itineraries, destinations, and dates</li>
+                    <li><i class="fas fa-money-bill-wave"></i> Track travel budgets and expenses</li>
+                    <li><i class="fas fa-list-alt"></i> Keep checklists for packing and activities</li>
+                    <li><i class="fas fa-passport"></i> Store important travel document details</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="form-card">
+            <h2><i class="fas fa-plus-circle"></i> Add New Travel Plan</h2>
+            <form id="travelPlanForm">
+                <div class="form-group">
+                    <label for="planTitle">Plan Title:</label>
+                    <input type="text" id="planTitle" required placeholder="e.g., European Backpacking, Family Beach Trip" />
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" required />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" required />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reminderTime">Reminder Time (Optional):</label>
+                    <input type="time" id="reminderTime" />
+                </div>
+
+                <div class="form-group">
+                    <label for="destination">Destination(s):</label>
+                    <input type="text" id="destination" placeholder="e.g., Paris, Rome; Tokyo" />
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="budgetAmount">Budget Amount (Optional):</label>
+                        <input type="number" id="budgetAmount" min="0" step="0.01" placeholder="e.g., 2500.00" />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="currency">Currency:</label>
+                        <select id="currency">
+                            <option value="₹">₹ - INR</option>
+                            <option value="$">$ - USD</option>
+                            <option value="€">€ - EUR</option>
+                            <option value="£">£ - GBP</option>
+                            <option value="¥">¥ - JPY</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select id="status" required>
+                        <option value="Planning">Planning</option>
+                        <option value="Booked">Booked</option>
+                        <option value="In Progress">In Progress</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes/Itinerary (Optional):</label>
+                    <textarea id="notes" rows="4" placeholder="Detailed itinerary, booking info, packing list, etc."></textarea>
+                </div>
+
+                <button type="submit" class="add-button"><i class="fas fa-plus-circle"></i> Add Plan</button>
+            </form>
+        </section>
+
+        <section class="list-card">
+            <h2><i class="fas fa-list-alt"></i> Your Travel Plans</h2>
+
+            <div class="view-toggle-buttons">
+                <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+                <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+            </div>
+
+            <div id="noTravelPlansMessage" class="info-message">
+                <p>No travel plans recorded yet. Add your first plan!</p>
+            </div>
+
+            <div id="cardViewContainer" class="card-grid-container">
+                </div>
+
+            <div id="tableViewContainer" class="table-responsive hidden-view">
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>S.No.</th>
+                            <th>Title</th>
+                            <th>Destination(s)</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Budget</th>
+                            <th>Currency</th>
+                            <th>Status</th>
+                            <th>Notes</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="travelTableBody">
+                        </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5" class="table-total-label">Total Budgeted:</td>
+                            <td id="totalBudgetCell" class="table-total-amount">0.00</td>
+                            <td colspan="3"></td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+            <div class="export-buttons">
+                <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+                <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <audio id="alarmSound" src="sounds/iphone_alarm.mp3" preload="auto"></audio>
+
+    <div id="professionalReminderDisplay" class="professional-reminder">
+        <i class="fas fa-bell icon"></i>
+        <h3 id="reminderTitle">Travel Reminder!</h3>
+        <p id="reminderMessage"></p>
+        <button class="close-btn" onclick="document.getElementById('professionalReminderDisplay').style.display = 'none';">Dismiss</button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="travelplans.js"></script>
+
+</body>
+</html>

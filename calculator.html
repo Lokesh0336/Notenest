@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apple Style Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+        <style>
+            .calculator-embed-container {
+                width: 360px; /* Adjust this width to match your calculator's size */
+                height: 600px; /* Adjust this height to match your calculator's size */
+                border: none;
+                display: none; /* Hidden by default */
+                margin: 20px auto; /* Center it below header and give space */
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Match calculator's shadow */
+                border-radius: 20px; /* Match calculator's border-radius */
+                overflow: hidden; /* Ensures content stays within rounded corners */
+                max-width: 90%; /* Responsive adjustment for smaller screens */
+            }
+            .calculator-embed-container.active {
+                display: block; /* Show when active */
+            }
+
+            /* Optional: Add some padding to the main content when calculator is active to prevent overlap */
+            /* This might need adjustment based on your layout */
+            /* If your calculator appears at the very top, you might not need this */
+            main.calculator-active {
+                padding-top: 20px; /* Example padding */
+            }
+        </style>
+
+    </head>
+</head>
+<body>
+    <div class="calculator-body">
+        <div class="calculator-screen">
+            <div id="previous-operand" class="previous-operand"></div>
+            <div id="current-operand" class="current-operand">0</div>
+        </div>
+        <div class="calculator-buttons">
+            <button class="btn function-btn" data-action="clear">AC</button>
+            <button class="btn function-btn" data-action="plus-minus">+/-</button>
+            <button class="btn function-btn" data-action="percent">%</button>
+            <button class="btn operator-btn" data-action="divide">÷</button>
+
+            <button class="btn number-btn">7</button>
+            <button class="btn number-btn">8</button>
+            <button class="btn number-btn">9</button>
+            <button class="btn operator-btn" data-action="multiply">×</button>
+
+            <button class="btn number-btn">4</button>
+            <button class="btn number-btn">5</button>
+            <button class="btn number-btn">6</button>
+            <button class="btn operator-btn" data-action="subtract">-</button>
+
+            <button class="btn number-btn">1</button>
+            <button class="btn number-btn">2</button>
+            <button class="btn number-btn">3</button>
+            <button class="btn operator-btn" data-action="add">+</button>
+
+            <button class="btn number-btn zero-btn">0</button>
+            <button class="btn number-btn" data-action="decimal">.</button>
+            <button class="btn operator-btn" data-action="equals">=</button>
+        </div>
+    </div>
+
+    <script src="calculator.js"></script>
+</body>
+</html>

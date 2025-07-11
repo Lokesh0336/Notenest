@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest - Expenses</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="expenses.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticim.com/512/3242/3242257.png" type="image/png" />
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </a>
+        <div class="header-buttons">
+            <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+            <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
+        </div>
+    </header>
+
+    <main class="expense-main-content">
+        <section class="list-card">
+            <h2><i class="fas fa-history"></i> Expense History</h2>
+            <div id="noExpensesMessage" class="info-message">
+                <p>No expenses recorded yet. Add your first expense!</p>
+            </div>
+            <ul id="expenseList" class="expense-items-list">
+                </ul>
+        </section>
+
+        <section class="form-card">
+            <h2><i class="fas fa-plus-circle"></i> Add New Expense</h2>
+            <form id="expenseForm">
+                <div class="form-group">
+                    <label for="expenseDate">Date:</label>
+                    <input type="date" id="expenseDate" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Expense Title:</label>
+                    <input type="text" id="title" required placeholder="e.g., Weekly Groceries" />
+                </div>
+
+                <div class="form-group">
+                    <label for="subcategory">Category:</label>
+                    <select id="subcategory" required>
+                        <option value="" disabled selected>-- Select Category --</option>
+                        <option value="Food">Food</option>
+                        <option value="Travel">Travel</option>
+                        <option value="Shopping">Shopping</option>
+                        <option value="Bills">Bills</option>
+                        <option value="Healthcare">Healthcare</option>
+                        <option value="Loan">Loan Repayment</option>
+                        <option value="Tax">Tax Payment</option>
+                        <option value="Savings">Savings</option>
+                        <option value="Insurance">Insurance</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+
+                <div class="form-group inline-group">
+                    <div class="input-with-label">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" required min="0.01" step="0.01" placeholder="e.g., 500.00" />
+                    </div>
+                    <div class="input-with-label">
+                        <label for="currency">Currency:</label>
+                        <select id="currency">
+                            <option value="₹">₹ - INR</option>
+                            <option value="$">$ - USD</option>
+                            <option value="€">€ - EUR</option>
+                            <option value="£">£ - GBP</option>
+                            <option value="¥">¥ - JPY</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description (Optional):</label>
+                    <textarea id="description" rows="3" placeholder="Brief details about this expense"></textarea>
+                </div>
+
+                <button type="submit" class="add-button"><i class="fas fa-wallet"></i> Add Expense</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p style="text-align: center; color: #555; font-size: 14px;">© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="expenses.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const expenseDateInput = document.getElementById('expenseDate');
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(today.getDate()).padStart(2, '0');
+
+            expenseDateInput.value = `${year}-${month}-${day}`;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Reports - NoteNest</title>
+    <link rel="stylesheet" href="reports.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <div class="logo-title">
+            <a href="index.html" class="logo-link">
+                <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            </a>
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="report-header combined-exports-top">
+            <h2>All Notes Summary</h2>
+            <div class="top-buttons-container"> <a href="index.html" class="back-home small-button">← Back to Home</a>
+                <div class="export-bar">
+                    <button onclick="exportAllToCSV()">Download as Excel</button>
+                    <button onclick="exportAllToPDF()">Download as PDF</button>
+                </div>
+            </div>
+        </section>
+
+        <table id="allNotesTable">
+            <thead>
+                <tr>
+                    <th>S.No.</th>
+                    <th>Date</th>
+                    <th>Title</th>
+                    <th>Subcategory</th>
+                    <th>Description</th>
+                    <th>Currency</th>
+                    <th>Expenses (₹)</th>
+                    <th>Income (₹)</th>
+                    <th>Casual Note</th>
+                </tr>
+            </thead>
+            <tbody id="allNotesReportBody"></tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">Totals:</td>
+                    <td id="totalExpensesCell" style="font-weight: bold; color: #e74c3c;">0.00</td>
+                    <td id="totalIncomeCell" style="font-weight: bold; color: #2ecc71;">0.00</td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <div class="calculate-totals-container">
+             <button onclick="renderAllNotes()">Calculate Totals</button>
+        </div>
+
+    </main>
+
+    <footer>
+        <p>© 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <script src="reports.js"></script>
+</body>
+</html>
