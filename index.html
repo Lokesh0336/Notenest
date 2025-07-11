@@ -1,266 +1,469 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>NoteNest: Your Personal Expense & Income Tracker</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest: Your Personal Expense & Income Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-  <header>
-    <a href="index.html" class="logo-title">
-      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
-      <div>
-        <h1>NoteNest</h1>
-        <p class="subtitle">Your Smart Note Keeper</p>
-      </div>
-    </a>
-    <div class="header-icons">
-      <button class="calculator-button" id="calculator-toggle" title="Open Calculator">
-        <i class="fas fa-calculator"></i>
-      </button>
-    </div>
-  </header>
-
-  <nav>
-    <ul class="navigation">
-      <li class="category"><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-      <li class="category"><a href="expenses.html"><i class="fas fa-money-bill-wave"></i> Expenses</a></li>
-      <li class="category"><a href="income.html"><i class="fas fa-hand-holding-usd"></i> Income</a></li>
-      <li class="category"><a href="casual.html"><i class="fas fa-sticky-note"></i> Casual Notes</a></li>
-      <li class="category"><a href="bills-subscriptions.html"><i class="fas fa-receipt"></i> Bills & Subscriptions</a></li>
-      <li class="category"><a href="debts.html"><i class="fas fa-wallet"></i> Debts & Loans</a></li>
-      <li class="category"><a href="taxrelated.html"><i class="fas fa-file-invoice-dollar"></i> Tax Related</a></li>
-      <li class="category"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
-      <li class="category"><a href="travelplans.html"><i class="fas fa-plane"></i> Travel Plans</a></li>
-      <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
-    </ul>
-  </nav>
-
-  <main class="dashboard-main-content">
-    <section id="upcoming-trips-section" class="card-style">
-      <h3><i class="fas fa-plane-departure"></i> Upcoming Trips
-        <a href="travelplans.html" class="add-trip-link" title="Go to Travel Plans"><i class="fas fa-plus-circle"></i> Add New Trip</a>
-      </h3>
-      <div class="slideshow-container">
-        <div id="tripSlides" class="trip-slides"></div>
-        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-        <a class="next" onclick="plusSlides(1)">&#10095;</a>
-        <div style="text-align:center; margin-top: 15px;" id="slideshow-dots"></div>
-      </div>
-      <p id="noUpcomingTripsMessage" class="info-message hidden" style="text-align: center; margin-top: 15px; color: #555;">No upcoming trips planned. Add one now!</p>
-    </section>
-
-    <iframe id="calculator-iframe" src="calculator.html" class="calculator-embed-container" frameborder="0"></iframe>
-
-    <!-- ✅ COMPACT CREATE NOTE FORM -->
-    <section class="create-note-section card-style">
-      <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
-      <div class="note-form-layout compact-layout">
-        <form id="noteForm" class="note-form">
-          <div class="form-row">
-            <div class="form-group">
-              <label for="noteDate">Note Date:</label>
-              <input type="date" id="noteDate" required />
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
             </div>
-            <div class="form-group">
-              <label for="noteTitle">Note Title:</label>
-              <input type="text" id="noteTitle" required placeholder="Enter title" />
-            </div>
-            <div class="form-group">
-              <label for="category">Category:</label>
-              <select id="category" required onchange="populateSubcategories()">
-                <option value="" disabled selected>-- Select Category --</option>
-                <option value="Expenses">Expenses</option>
-                <option value="Income">Income</option>
-                <option value="Casual Note">Casual Note</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="subcategory">Subcategory:</label>
-              <select id="subcategory" required>
-                <option value="" disabled selected>-- Select Subcategory --</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="currencyCountry">Currency & Country:</label>
-              <select id="currencyCountry">
-                <option value="₹ - India">₹ - India</option>
-                <option value="$ - United States">$ - United States</option>
-                <option value="€ - Germany">€ - Germany</option>
-                <option value="£ - United Kingdom">£ - United Kingdom</option>
-                <option value="¥ - Japan">¥ - Japan</option>
-                <option value="Others">Others</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="amount">Amount:</label>
-              <input type="number" id="amount" min="0" placeholder="Enter the amount" />
-            </div>
-            <div class="form-group wide">
-              <label for="description">Description:</label>
-              <textarea id="description" rows="2" placeholder="Optional note..."></textarea>
-            </div>
-          </div>
-          <button type="submit" class="add-note-button"><i class="fas fa-plus-circle"></i> Add Note</button>
-        </form>
-      </div>
-    </section>
-
-    <!-- ✅ COMPLETE DASHBOARD OVERVIEW SECTION -->
-    <section class="dashboard-overview-section card-style">
-      <h2><i class="fas fa-chart-line"></i> Dashboard Overview</h2>
-      <div class="overview-cards-grid">
-        <div class="overview-card income-card">
-          <h3>Income</h3>
-          <p id="dashboardTotalIncome" class="total-amount">Total: ₹0</p>
+        </a>
+        <div class="header-icons">
+            <button class="calculator-button" id="calculator-toggle" title="Open Calculator">
+                <i class="fas fa-calculator"></i>
+            </button>
         </div>
-        <div class="overview-card expenses-card">
-          <h3>Expenses</h3>
-          <p id="dashboardTotalExpenses" class="total-amount">Total: ₹0</p>
-        </div>
-        <div class="overview-card casual-card">
-          <h3>Casual Notes</h3>
-          <p class="total-amount">Count: <span id="dashboardCasualCount">0</span></p>
-          <p class="total-amount">Amount Total: ₹<span id="dashboardCasualAmount">0</span></p>
-        </div>
-      </div>
+    </header>
 
-      <div class="stats-charts card-style chart-container">
-        <h3><i class="fas fa-chart-pie"></i> Category Distribution</h3>
-        <canvas id="categoryChart"></canvas>
-      </div>
+    <nav>
+        <ul class="navigation">
+            <li class="category"><a href="index.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+            <li class="category"><a href="expenses.html"><i class="fas fa-money-bill-wave"></i> Expenses</a></li>
+            <li class="category"><a href="income.html"><i class="fas fa-hand-holding-usd"></i> Income</a></li>
+            <li class="category"><a href="casual.html"><i class="fas fa-sticky-note"></i> Casual Notes</a></li>
+            <li class="category"><a href="bills-subscriptions.html"><i class="fas fa-receipt"></i> Bills & Subscriptions</a></li>
+            <li class="category"><a href="debts.html"><i class="fas fa-wallet"></i> Debts & Loans</a></li>
+            <li class="category"><a href="taxrelated.html"><i class="fas fa-file-invoice-dollar"></i> Tax Related</a></li>
+            <li class="category"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
+            <li class="category"><a href="travelplans.html"><i class="fas fa-plane"></i> Travel Plans</a></li>
+            <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+        </ul>
+    </nav>
 
-      <div class="notes-filter-and-view">
-        <div class="notes-filter-group">
-          <label for="filterCategory"><i class="fas fa-filter"></i> Filter by Category:</label>
-          <select id="filterCategory">
-            <option value="All">All</option>
-            <option value="Expenses">Expenses</option>
-            <option value="Income">Income</option>
-            <option value="Casual Note">Casual Note</option>
-          </select>
-        </div>
-        <div class="view-toggle-buttons">
-          <button class="view-toggle-button active-view" id="cardViewBtn" data-view="card"><i class="fas fa-th-large"></i> Card View</button>
-          <button class="view-toggle-button" id="tableViewBtn" data-view="table"><i class="fas fa-table"></i> Table View</button>
-        </div>
-      </div>
+    <main class="dashboard-main-content">
+        <section class="welcome-note">
+            <h2>Welcome to <span class="highlight">NoteNest</span> <i class="fas fa-sparkles"></i></h2>
+            <p class="tagline">Your smart assistant for managing expenses, income, and ideas efficiently.</p>
+            <p class="creator">Created with ❤️ by <span class="lokesh-name">Lokesh</span></p>
+        </section>
 
-      <div id="noNotesMessage" class="info-message hidden">
-        <p>No notes recorded yet. Add your first note using the "Quick Create Note" form!</p>
-      </div>
+        <section id="upcoming-trips-section" class="card-style">
+            <h3><i class="fas fa-plane-departure"></i> Upcoming Trips
+                <a href="travelplans.html" class="add-trip-link" title="Go to Travel Plans"><i class="fas fa-plus-circle"></i> Add New Trip</a>
+            </h3>
+            <div class="slideshow-container">
+                <div id="tripSlides" class="trip-slides">
+                    </div>
 
-      <div id="cardViewContainer" class="note-card-grid-container"></div>
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-      <div id="tableViewContainer" class="notes-table-container hidden-view">
-        <table class="notes-table">
-          <thead>
-            <tr>
-              <th>Title</th>
-              <th>Category</th>
-              <th>Subcategory</th>
-              <th>Amount</th>
-              <th>Currency</th>
-              <th>Country</th>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="notesTableBody"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+                <div style="text-align:center; margin-top: 15px;" id="slideshow-dots">
+                    </div>
+            </div>
+            <p id="noUpcomingTripsMessage" class="info-message hidden" style="text-align: center; margin-top: 15px; color: #555;">No upcoming trips planned. Add one now!</p>
+            
+        </section>
 
-  <footer>
-    <p>&#169; 2025 NoteNest. All rights reserved.</p>
-  </footer>
+        <iframe id="calculator-iframe" src="calculator.html" class="calculator-embed-container" frameborder="0"></iframe>
 
-  <script src="script.js"></script>
+        <section class="create-note-section card-style">
+            <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
 
-  <!-- Optional inline styling to support compact form -->
-  <style>
-    .note-form-layout.compact-layout {
-      padding: 10px 0;
-    }
-    .note-form .form-row {
+            <div class="note-form-layout">
+                <div class="note-intro-description">
+                    <img src="https://i.ibb.co/h1hFXymX/Gemini-Generated-Image-dsmc3mdsmc3mdsmc-1.jpg" alt="Quick Note Illustration" />
+                    <p>Unlock smarter financial management and effortless note-taking! NoteNest helps you:</p>
+                    <ul>
+                        <li><i class="fas fa-check-circle"></i> Record **expenses** and **income** quickly.</li>
+                        <li><i class="fas fa-check-circle"></i> Keep track of **casual notes**, **bills**, and **debts**.</li>
+                        <li><i class="fas fa-check-circle"></i> Set and monitor **financial goals**.</li>
+                        <li><i class="fas fa-check-circle"></i> Plan **travel budgets**.</li>
+                        <li><i class="fas fa-check-circle"></i> Generate insightful **reports** for better decisions.</li>
+                    </ul>
+                    <p>Start organizing your finances and thoughts in one intuitive place!</p>
+                </div>
+
+                <form id="noteForm" class="note-form">
+                    <div class="form-group">
+                        <label for="noteDate">Note Date:</label>
+                        <input type="date" id="noteDate" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="noteTitle">Note Title:</label>
+                        <input type="text" id="noteTitle" required placeholder="Enter title" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category:</label>
+                        <select id="category" required onchange="populateSubcategories()">
+                            <option value="" disabled selected>-- Select Category --</option>
+                            <option value="Expenses">Expenses</option>
+                            <option value="Income">Income</option>
+                            <option value="Casual Note">Casual Note</option>
+                        </select>
+                    </div>
+                    <section class="trip-list-section">
+                      <h2><i class="fas fa-plane-departure"></i> Planning & Booked Trips</h2>
+                      <div id="planningTripsContainer" class="trip-card-container"></div>
+                    </section>
+
+
+                    <div class="form-group">
+                        <label for="subcategory">Subcategory:</label>
+                        <select id="subcategory" required>
+                            <option value="" disabled selected>-- Select Subcategory --</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="currencyCountry">Currency & Country:</label>
+                        <select id="currencyCountry">
+                            <option value="₹ - India">₹ - India</option>
+                            <option value="$ - United States">$ - United States</option>
+                            <option value="€ - Germany">€ - Germany</option>
+                            <option value="£ - United Kingdom">£ - United Kingdom</option>
+                            <option value="¥ - Japan">¥ - Japan</option>
+                            <option value="Others">Others</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">Amount:</label>
+                        <input type="number" id="amount" min="0" placeholder="Enter the amount" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea id="description" rows="3" placeholder="Optional note..."></textarea>
+                    </div>
+
+                    <button type="submit" class="add-note-button"><i class="fas fa-plus-circle"></i> Add Note</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="dashboard-overview-section card-style">
+            <h2><i class="fas fa-chart-line"></i> Dashboard Overview</h2>
+            <div class="overview-cards-grid">
+                <div class="overview-card income-card">
+                    <h3>Income</h3>
+                    <p id="dashboardTotalIncome" class="total-amount">Total: ₹0</p>
+                </div>
+                <div class="overview-card expenses-card">
+                    <h3>Expenses</h3>
+                    <p id="dashboardTotalExpenses" class="total-amount">Total: ₹0</p>
+                </div>
+                <div class="overview-card casual-card">
+                    <h3>Casual Notes</h3>
+                    <p class="total-amount">Count: <span id="dashboardCasualCount">0</span></p>
+                    <p class="total-amount">Amount Total: ₹<span id="dashboardCasualAmount">0</span></p>
+                </div>
+            </div>
+
+            <div class="stats-charts card-style chart-container">
+                <h3><i class="fas fa-chart-pie"></i> Category Distribution</h3>
+                <canvas id="categoryChart"></canvas>
+            </div>
+
+            <div class="notes-filter-and-view">
+                <div class="notes-filter-group">
+                    <label for="filterCategory"><i class="fas fa-filter"></i> Filter by Category:</label>
+                    <select id="filterCategory">
+                        <option value="All">All</option>
+                        <option value="Expenses">Expenses</option>
+                        <option value="Income">Income</option>
+                        <option value="Casual Note">Casual Note</option>
+                    </select>
+                </div>
+
+                <div class="view-toggle-buttons">
+                    <button class="view-toggle-button active-view" id="cardViewBtn" data-view="card"><i class="fas fa-th-large"></i> Card View</button>
+                    <button class="view-toggle-button" id="tableViewBtn" data-view="table"><i class="fas fa-table"></i> Table View</button>
+                </div>
+            </div>
+
+            <div id="noNotesMessage" class="info-message hidden">
+                <p>No notes recorded yet. Add your first note using the "Quick Create Note" form!</p>
+            </div>
+
+            <div id="cardViewContainer" class="note-card-grid-container">
+                </div>
+
+            <div id="tableViewContainer" class="notes-table-container hidden-view">
+                <table class="notes-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Category</th>
+                            <th>Subcategory</th>
+                            <th>Amount</th>
+                            <th>Currency</th>
+                            <th>Country</th>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="notesTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&#169; 2025 NoteNest. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <style>
+        /* Basic styling for the slideshow */
+        .slideshow-container {
+            max-width: 100%;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            background-color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .trip-slides {
+            display: flex; /* Changed to flex for proper horizontal slide arrangement */
+            transition: transform 0.5s ease-in-out;
+            width: 100%; /* Ensures inner container takes full width */
+        }
+
+        .trip-slide {
+            min-width: 100%; /* Each slide takes full width of its container */
+            flex-shrink: 0; /* Prevent slides from shrinking */
+            box-sizing: border-box;
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            color: #333;
+            transition: opacity 0.6s ease-in-out;
+            display: none; /* Initially hidden, controlled by JS */
+        }
+
+        .trip-slide h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.4em;
+        }
+
+        .trip-slide p {
+            margin-bottom: 8px;
+            font-size: 1em;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .trip-slide p i {
+            margin-right: 8px;
+            color: #007bff;
+            font-size: 1.1em;
+        }
+
+        /* Status badges */
+        .status-planning {
+            background-color: #ffc107; /* Yellow */
+            color: #333;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .status-booked {
+            background-color: #28a745; /* Green */
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .status-completed {
+            background-color: #6c757d; /* Grey */
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+        .status-cancelled {
+            background-color: #dc3545; /* Red */
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+
+        /* Next & previous buttons */
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: #555;
+            font-weight: bold;
+            font-size: 24px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        /* Position the "next button" to the right */
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        /* On hover, add a black background color with a little more opacity */
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.3);
+            color: white;
+        }
+
+        /* The dots/bullets/indicators */
+        .dot {
+            cursor: pointer;
+            height: 12px;
+            width: 12px;
+            margin: 0 4px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active {
+            background-color: #717171;
+        }
+
+        /* Fading animation */
+        .fade {
+            animation-name: fade;
+            animation-duration: 1.5s;
+        }
+
+        @keyframes fade {
+            from {opacity: .4}
+            to {opacity: 1}
+        }
+
+        /* Adjustments for no trips found */
+        .upcoming-trips-section #noUpcomingTripsMessage {
+            display: block; /* Always show if no trips, hidden by JS if trips exist */
+            margin-top: 20px;
+            font-style: italic;
+            color: #777;
+        }
+        .upcoming-trips-section .slideshow-container {
+            display: block; /* Ensure container is block */
+        }
+        /* Override previous hidden class if it existed on the section itself */
+        #upcoming-trips-section.hidden {
+            display: block !important; /* Ensure the section is visible for the message to show */
+        }
+        .info-message.hidden {
+            display: none !important;
+        }
+
+        /* Add New Trip link styling */
+        .add-trip-link {
+            font-size: 0.9em;
+            margin-left: 15px;
+            text-decoration: none;
+            color: #007bff;
+            display: inline-flex;
+            align-items: center;
+            transition: color 0.3s ease;
+        }
+
+        .add-trip-link:hover {
+            color: #0056b3;
+        }
+
+        .add-trip-link i {
+            margin-right: 5px;
+            font-size: 1.1em;
+        }
+    </style>
+    <style>
+    .trip-card-container {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
-      justify-content: space-between;
     }
-    .note-form .form-group {
-      flex: 1 1 200px;
-      min-width: 180px;
-    }
-    .note-form .form-group.wide {
-      flex: 2 1 100%;
-    }
-  </style>
 
-  <script>
+    .trip-card {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      padding: 15px;
+      width: 280px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .trip-card h3 {
+      margin-top: 0;
+      font-size: 1.2em;
+      color: #444;
+    }
+
+    .trip-card p {
+      margin: 6px 0;
+      font-size: 0.95em;
+      color: #555;
+    }
+    </style>
+    <script>
     document.addEventListener("DOMContentLoaded", () => {
-      const slidesContainer = document.getElementById("tripSlides");
-      const dotsContainer = document.getElementById("slideshow-dots");
+      const container = document.getElementById("planningTripsContainer");
+      if (!container) return;
+
       const travelPlans = JSON.parse(localStorage.getItem("travelPlans")) || [];
-      const upcoming = travelPlans.filter(plan => {
-        const today = new Date();
-        const planDate = new Date(plan.startDate);
-        return (plan.status === "Planning" || plan.status === "Booked") && planDate >= today;
-      });
-      if (upcoming.length === 0) {
-        document.getElementById("noUpcomingTripsMessage").classList.remove("hidden");
+
+      const filteredPlans = travelPlans.filter(plan =>
+        plan.status === "Planning" || plan.status === "Booked"
+      );
+
+      if (filteredPlans.length === 0) {
+        container.innerHTML = "<p>No Planning or Booked trips yet.</p>";
         return;
       }
-      slidesContainer.innerHTML = '';
-      dotsContainer.innerHTML = '';
-      upcoming.forEach((plan, index) => {
-        const slide = document.createElement("div");
-        slide.className = "trip-slide fade";
-        slide.innerHTML = `
-          <h4>${plan.planTitle}</h4>
-          <p><i class="fas fa-map-marker-alt"></i> ${plan.destination}</p>
-          <p><i class="fas fa-calendar-alt"></i> ${plan.startDate} to ${plan.endDate}</p>
-          <p><i class="fas fa-tags"></i> <span class="status-${plan.status.toLowerCase()}">${plan.status}</span></p>`;
-        slidesContainer.appendChild(slide);
-        const dot = document.createElement("span");
-        dot.className = "dot";
-        dot.addEventListener("click", () => showSlides(index + 1));
-        dotsContainer.appendChild(dot);
+
+      filteredPlans.forEach(plan => {
+        const card = document.createElement("div");
+        card.className = "trip-card";
+        card.innerHTML = `
+          <h3>${plan.planTitle}</h3>
+          <p><strong>Destination:</strong> ${plan.destination}</p>
+          <p><strong>Dates:</strong> ${plan.startDate} to ${plan.endDate}</p>
+          <p><strong>Status:</strong> ${plan.status}</p>
+        `;
+        container.appendChild(card);
       });
-      let slideIndex = 1;
-      showSlides(slideIndex);
-      window.plusSlides = function(n) {
-        showSlides(slideIndex += n);
-      };
-      function showSlides(n) {
-        let slides = document.getElementsByClassName("trip-slide");
-        let dots = document.getElementsByClassName("dot");
-        if (n > slides.length) slideIndex = 1;
-        if (n < 1) slideIndex = slides.length;
-        for (let i = 0; i < slides.length; i++) {
-          slides[i].style.display = "none";
-        }
-        for (let i = 0; i < dots.length; i++) {
-          dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-      }
-      setInterval(() => {
-        plusSlides(1);
-      }, 7000);
     });
-  </script>
+    </script>
+
 
 </body>
 </html>
