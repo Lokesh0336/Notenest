@@ -119,6 +119,109 @@ nav {
     color: #fff;
 }
 
+/* --- Keyframe Animations --- */
+
+@keyframes icon-bounce {
+    0%, 100% {
+        transform: translateY(0); /* Start and end at original position */
+    }
+    50% {
+        transform: translateY(-5px); /* Move up 5 pixels */
+    }
+}
+
+@keyframes airplane-fly-hover {
+    0%, 100% {
+        transform: translateX(0); /* Start and end at original position */
+    }
+    50% {
+        transform: translateX(8px); /* Move right 8 pixels */
+    }
+}
+
+/* New: Continuous airplane fly-through animation for Upcoming Trips */
+@keyframes airplane-fly-through {
+    0% {
+        transform: translateX(-100%) translateY(0); /* Start off-screen left of its parent, centered vertically */
+        opacity: 0;
+    }
+    5% {
+        opacity: 1; /* Appear quickly */
+    }
+    95% {
+        transform: translateX(calc(100% + 100vw)) translateY(0); /* Move across and off screen right. calc ensures it fully exits even if parent is narrow */
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(calc(100% + 100vw)) translateY(0);
+        opacity: 0; /* Disappear off-screen */
+    }
+}
+
+
+/* --- Application of Animations --- */
+
+/* For Header Calculator Button Icon */
+.calculator-button:hover i { /* Targeting the <i> tag INSIDE the button */
+    animation: icon-bounce 0.8s ease-in-out infinite; /* Slower, continuous bounce */
+    transform: translateZ(0); /* Performance optimization */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+/* For Navigation Category Icons */
+.navigation .category a:hover i { /* Targeting the <i> tag INSIDE the link */
+    animation: icon-bounce 0.6s ease-in-out infinite; /* Default bounce for general category icons */
+    transform: translateZ(0); /* Performance optimization */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+/* Specific rule for the airplane icon in navigation (if exists) */
+.navigation .category a:hover .fa-plane,
+.navigation .category a:hover .fa-plane-departure,
+.navigation .category a:hover .fa-plane-arrival {
+    animation: airplane-fly-hover 1s ease-in-out infinite; /* Airplane flying motion on hover */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+
+/* For Add Note Button Icon */
+.add-note-button:hover i { /* Targeting the <i> tag INSIDE the button */
+    animation: icon-bounce 0.7s ease-in-out infinite; /* Medium bounce */
+    transform: translateZ(0); /* Performance optimization */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+/* For Note Intro Description List Item Icons (green checkmarks) */
+.note-intro-description ul li:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards; /* Bounce once on hover and stay slightly up */
+    transform: translateZ(0); /* Performance optimization */
+    backface-visibility: hidden;
+    perspective: 1000px;
+    will-change: transform;
+}
+
+/* Shaking effect removed from these elements */
+.navigation .category a:hover {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    transform: translateY(-2px); /* Gentle lift instead of shake */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.overview-card:hover {
+    transform: translateY(-5px); /* Gentle lift instead of shake */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+
 /* --- Main Content Sections --- */
 .dashboard-main-content {
     display: grid;
@@ -131,12 +234,12 @@ nav {
         grid-template-columns: 1fr 2fr; /* Two columns for larger screens */
         grid-template-areas:
             "welcome welcome"
-            "upcoming-trips upcoming-trips" /* <--- ADDED THIS LINE */
+            "upcoming-trips upcoming-trips"
             "calculator calculator"
             "create-note dashboard-overview";
     }
     .welcome-note { grid-area: welcome; }
-    #upcoming-trips-section { grid-area: upcoming-trips; } /* <--- ADDED THIS LINE */
+    #upcoming-trips-section { grid-area: upcoming-trips; }
     .calculator-embed-container { grid-area: calculator; }
     .create-note-section { grid-area: create-note; }
     .dashboard-overview-section { grid-area: dashboard-overview; }
@@ -179,6 +282,8 @@ nav {
     justify-content: center;
     align-items: center;
     gap: 10px;
+    position: relative; /* Ensure the aeroplane can be absolutely positioned relative to this H2 */
+    overflow: hidden; /* Hide parts of aeroplane outside H2 bounds */
 }
 
 .welcome-note h2 .highlight {
@@ -222,6 +327,34 @@ nav {
     align-items: center;
     gap: 10px;
 }
+
+/* --- Crucial for the continuous aeroplane animation --- */
+#upcoming-trips-section {
+    position: relative; /* Set this section as the positioning context for the absolute airplane icon */
+    overflow: hidden; /* Ensure the airplane icon is hidden when outside this section */
+    /* Other styles for #upcoming-trips-section remain as before */
+}
+
+#upcoming-trips-section h2 {
+    position: relative; /* Keeps the H2 content in flow */
+    z-index: 1; /* Ensure text is above the flying airplane if they overlap */
+}
+
+#upcoming-trips-section h2 .fa-plane,
+#upcoming-trips-section h2 .fa-plane-departure,
+#upcoming-trips-section h2 .fa-plane-arrival {
+    position: absolute; /* Take the icon out of normal document flow */
+    top: 50%; /* Center vertically within the H2 */
+    left: -10%; /* Start slightly off-screen to the left (adjust as needed) */
+    transform: translateY(-50%); /* Adjust for vertical centering based on its own height */
+    font-size: 2em; /* Make it visible */
+    color: #3498db; /* Or any other color you prefer for the flying plane */
+    animation: airplane-fly-through 15s linear infinite; /* Increased duration for slower flight, adjust as needed */
+    z-index: 0; /* Ensure it flies *behind* the H2 text if they overlap, or adjust as desired */
+    white-space: nowrap; /* Prevent icon from wrapping */
+    will-change: transform, opacity; /* Performance hint */
+}
+
 
 /* Quick Create Note Section */
 .note-form-layout {
@@ -366,11 +499,7 @@ nav {
     border-radius: 10px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
     text-align: center;
-    transition: transform 0.2s ease;
-}
-
-.overview-card:hover {
-    transform: translateY(-5px);
+    transition: transform 0.2s ease; /* Keep existing transform transition */
 }
 
 .overview-card h3 {
@@ -685,7 +814,7 @@ footer {
         grid-template-columns: 1fr; /* Stack all sections */
         grid-template-areas:
             "welcome"
-            "upcoming-trips" /* <--- ADDED THIS LINE FOR SMALL SCREENS */
+            "upcoming-trips"
             "calculator"
             "create-note"
             "dashboard-overview";
@@ -774,59 +903,59 @@ footer {
 }
 /* Compact layout for the Quick Create Note form */
 .note-form-layout.compact-layout {
-  padding: 15px 10px;
+    padding: 15px 10px;
 }
 
 .note-form .form-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: space-between;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
 }
 
 .note-form .form-group {
-  flex: 1 1 200px;
-  min-width: 180px;
+    flex: 1 1 200px;
+    min-width: 180px;
 }
 
 .note-form .form-group.wide {
-  flex: 2 1 100%;
+    flex: 2 1 100%;
 }
 
 .note-form .form-group label {
-  font-weight: 500;
-  margin-bottom: 5px;
-  display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+    display: block;
 }
 
 .note-form input,
 .note-form select,
 .note-form textarea {
-  width: 100%;
-  padding: 7px 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  font-family: 'Poppins', sans-serif;
-  font-size: 14px;
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
 }
 
 .note-form textarea {
-  resize: vertical;
+    resize: vertical;
 }
 
 .add-note-button {
-  margin-top: 15px;
-  padding: 10px 18px;
-  background-color: #4CAF50;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background 0.3s;
+    margin-top: 15px;
+    padding: 10px 18px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
 .add-note-button:hover {
-  background-color: #43a047;
+    background-color: #43a047;
 }
