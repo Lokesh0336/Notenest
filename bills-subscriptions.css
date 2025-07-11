@@ -27,6 +27,25 @@ main {
     }
 }
 
+/* --- Keyframe Animations --- */
+@keyframes icon-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes arrow-move-left {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-8px); /* Move left 8 pixels */
+    }
+}
+
 /* Header Styles */
 header {
     background-color: #2c3e50; /* Dark blue/grey */
@@ -77,7 +96,7 @@ header {
     border-radius: 5px;
     text-decoration: none;
     font-weight: 500;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -85,7 +104,21 @@ header {
 
 .header-btn:hover {
     background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Moving effect */
 }
+
+/* Apply bounce to header button icons on hover */
+.header-btn:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Specific animation for a dashboard back arrow icon */
+.header-btn.dashboard-icon-arrow-left:hover i {
+    animation: arrow-move-left 0.8s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 /* Bills Banner Section */
 .bill-banner-section {
@@ -98,6 +131,11 @@ header {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     align-items: center;
     flex-wrap: wrap; /* Allow wrapping */
+    transition: transform 0.3s ease; /* Added for subtle banner hover effect */
+}
+
+.bill-banner-section:hover {
+    transform: translateY(-5px); /* Banner subtle lift effect */
 }
 
 .bill-banner-left {
@@ -128,6 +166,13 @@ header {
     gap: 10px;
 }
 
+/* Animation for icons within bills banner heading */
+.bill-banner-text h3:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
+
 .bill-banner-text ul {
     list-style: none;
     padding: 0;
@@ -146,6 +191,13 @@ header {
     color: #3498db; /* Blue icons */
     font-size: 18px;
 }
+
+/* Animation for icons within bills banner list items */
+.bill-banner-text li:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards;
+    will-change: transform;
+}
+
 
 /* Card Styles (for form and list sections) */
 .form-card,
@@ -166,6 +218,14 @@ header {
     align-items: center;
     gap: 10px;
 }
+
+/* Animation for icons within form/list card headings */
+.form-card h2:hover i,
+.list-card h2:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 /* Form Styles */
 form .form-group {
@@ -246,7 +306,7 @@ form textarea {
     border-radius: 6px;
     font-size: 18px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
     width: 100%;
     display: flex;
     justify-content: center;
@@ -257,7 +317,15 @@ form textarea {
 
 .add-button:hover {
     background-color: #218838; /* Darker green on hover */
+    transform: translateY(-2px); /* Moving effect */
 }
+
+/* Animation for add button icon */
+.add-button:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 .custom-input {
     margin-top: 10px;
@@ -309,7 +377,7 @@ form textarea {
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; /* Added transform */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -317,17 +385,27 @@ form textarea {
 
 .toggle-btn:hover {
     background-color: #dbe4e6;
+    transform: translateY(-2px); /* Moving effect */
 }
 
 .toggle-btn.active-view {
     background-color: #3498db; /* Blue for active view */
     color: #fff;
     border-color: #3498db;
+    transform: translateY(0); /* Reset transform for active state */
 }
 
 .toggle-btn.active-view:hover {
     background-color: #2980b9;
+    transform: translateY(-2px); /* Moving effect even on active */
 }
+
+/* Animation for toggle button icons */
+.toggle-btn:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 .info-message {
     text-align: center;
@@ -353,14 +431,14 @@ form textarea {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Added transform */
     display: flex;
     flex-direction: column;
     justify-content: space-between; /* Push actions to bottom */
 }
 
 .bill-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-3px); /* Moving effect */
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
@@ -399,7 +477,7 @@ form textarea {
     padding: 8px 12px;
     font-size: 14px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
     display: flex;
     align-items: center;
     gap: 5px;
@@ -407,7 +485,15 @@ form textarea {
 
 .card-actions button:hover {
     background-color: #c82333;
+    transform: translateY(-2px); /* Moving effect */
 }
+
+/* Animation for action button icons within cards */
+.card-actions button:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards; /* Bounce forward once */
+    will-change: transform;
+}
+
 
 /* Table Styles */
 .table-responsive {
@@ -441,9 +527,12 @@ form textarea {
     background-color: #f9f9f9;
 }
 
-.notes-table tr:hover {
+.notes-table tbody tr:hover {
     background-color: #f1f7fc;
+    transform: translateY(-2px); /* Subtle lift for table rows */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow for table rows */
 }
+
 
 .table-action-btn {
     background: none;
@@ -453,7 +542,7 @@ form textarea {
     margin: 0 5px;
     padding: 5px;
     border-radius: 4px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
 }
 
 .table-action-btn.delete-btn {
@@ -462,6 +551,13 @@ form textarea {
 
 .table-action-btn.delete-btn:hover {
     background-color: #ffe0e0;
+    transform: translateY(-2px); /* Moving effect */
+}
+
+/* Animation for table action button icons */
+.table-action-btn:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards;
+    will-change: transform;
 }
 
 /* Specific text colors */
@@ -528,7 +624,7 @@ form textarea {
     border-radius: 6px;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Added transform */
     display: flex;
     align-items: center;
     gap: 8px;
@@ -536,7 +632,15 @@ form textarea {
 
 .export-btn:hover {
     background-color: #5a6268;
+    transform: translateY(-2px); /* Moving effect */
 }
+
+/* Animation for export button icons */
+.export-btn:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 /* Footer Styles */
 footer {
@@ -563,7 +667,7 @@ footer {
         flex-grow: 1; /* Allow buttons to expand */
         justify-content: center;
     }
-    .bills-main-content {
+    .bills-main-content { /* Assuming you have a wrapper for main content */
         padding: 15px;
     }
 
