@@ -12,7 +12,7 @@ body {
 
 /* Header (consistent with expenses.css) */
 header {
-    background-color: #4CAF50; /* NoteNest green */
+    background-color: #2c3e50; /* Updated: Dark blue/grey header */
     color: white;
     padding: 15px 30px;
     display: flex;
@@ -71,13 +71,50 @@ header {
     transform: translateY(-2px);
 }
 
+/* --- Keyframe Animations --- */
+@keyframes icon-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes arrow-move-left {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-8px); /* Move left 8 pixels */
+    }
+}
+
+/* --- Application of Animations --- */
+
+/* Apply bounce to header buttons with icons on hover */
+.header-btn:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Animation for an arrow icon in the dashboard context */
+.dashboard-icon-arrow-left { /* Add this class to your HTML arrow icon */
+    transition: transform 0.3s ease-out;
+}
+
+.dashboard-icon-arrow-left:hover {
+    animation: arrow-move-left 0.8s ease-in-out infinite;
+    will-change: transform;
+}
+
 /* Income Banner Specifics */
 .income-banner-section {
     background-color: #e8f5e9; /* Very light green */
     border: 1px solid #c8e6c9;
     border-radius: 12px;
     padding: 20px 30px;
-    margin: 30px auto 0 auto; /* Top margin, no bottom margin here */
+    margin: 30px auto 0 auto;
     max-width: 1200px;
     display: flex;
     align-items: center;
@@ -100,6 +137,12 @@ header {
     gap: 10px;
 }
 
+/* Animation for icons within income banner heading */
+.income-banner-text h3:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
 .income-banner-text ul {
     list-style: none;
     padding: 0;
@@ -113,6 +156,12 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
+}
+
+/* Animation for icons within income banner list items */
+.income-banner-text ul li:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards;
+    will-change: transform;
 }
 
 /* Main Content Layout */
@@ -144,6 +193,12 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+/* Animation for icons within form/list card headings */
+.form-card h2:hover i, .list-card h2:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
 }
 
 /* Form Styling (consistent with expenses.css) */
@@ -234,6 +289,13 @@ header {
     transform: translateY(0);
 }
 
+/* Animation for add button icon */
+.add-button:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
+
 /* List Styling */
 .list-card {
     position: relative;
@@ -276,6 +338,13 @@ header {
 .toggle-btn:hover:not(.active-view) {
     background-color: #e0e0e0;
 }
+
+/* Animation for toggle button icons */
+.toggle-btn:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
 
 .info-message {
     background-color: #e0f2f1; /* Light teal */
@@ -343,6 +412,12 @@ header {
     margin-top: 10px;
 }
 
+/* Animation for action buttons within income cards */
+.income-card .card-actions .action-btn:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards; /* Bounce forward once */
+    will-change: transform;
+}
+
 /* Table View Specifics */
 .table-responsive {
     overflow-x: auto; /* Enable horizontal scrolling on small screens */
@@ -404,6 +479,13 @@ header {
     color: #c62828;
 }
 
+/* Animation for table action buttons */
+.table-action-btn:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards;
+    will-change: transform;
+}
+
+
 .table-total-label {
     text-align: right;
     font-weight: 600;
@@ -455,6 +537,12 @@ header {
 .export-btn:hover {
     background-color: #546e7a;
     transform: translateY(-2px);
+}
+
+/* Animation for export button icons */
+.export-btn:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
 }
 
 
