@@ -21,9 +21,6 @@
             </div>
         </a>
         <div class="header-icons">
-            <button class="calculator-button" id="calculator-toggle" title="Open Calculator">
-                <i class="fas fa-calculator"></i>
-            </button>
         </div>
     </header>
 
@@ -38,7 +35,7 @@
             <li class="category"><a href="taxrelated.html"><i class="fas fa-file-invoice-dollar"></i> Tax Related</a></li>
             <li class="category"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
             <li class="category"><a href="travelplans.html"><i class="fas fa-plane"></i> Travel Plans</a></li>
-            <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+            <li class="category"><a href="todo.html"><i class="fas fa-tasks"></i> To-Do</a></li> <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
         </ul>
     </nav>
 
@@ -63,10 +60,8 @@
                 <div style="text-align:center; margin-top: 15px;" id="slideshow-dots">
                     </div>
             </div>
-       
+        
         </section>
-
-        <iframe id="calculator-iframe" src="calculator.html" class="calculator-embed-container" frameborder="0"></iframe>
 
         <section class="create-note-section card-style">
             <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
@@ -76,11 +71,11 @@
                     <img src="https://i.ibb.co/h1hFXymX/Gemini-Generated-Image-dsmc3mdsmc3mdsmc-1.jpg" alt="Quick Note Illustration" />
                     <p>Unlock smarter financial management and effortless note-taking! NoteNest helps you:</p>
                     <ul>
-                        <li><i class="fas fa-check-circle"></i> Record "Expenses" and "Income" quickly.</li>
-                        <li><i class="fas fa-check-circle"></i> Keep track of "Casual Notes", "Bills", and "Debts".</li>
-                        <li><i class="fas fa-check-circle"></i> Set and monitor "Financial Goals".</li>
-                        <li><i class="fas fa-check-circle"></i> Plan "Travel Budgets".</li>
-                        <li><i class="fas fa-check-circle"></i> Generate insightful "Reports" for better decisions.</li>
+                        <li><i class="fas fa-check-circle"></i> Record <span class="highlight-expenses">expenses</span> and <span class="highlight-income">income</span> quickly.</li>
+                        <li><i class="fas fa-check-circle"></i> Keep track of <span class="highlight-casual">casual notes</span>, <span class="highlight-bills">bills</span>, and <span class="highlight-debts">debts</span>.</li>
+                        <li><i class="fas fa-check-circle"></i> Set and monitor <span class="highlight-goals">financial goals</span>.</li>
+                        <li><i class="fas fa-check-circle"></i> Plan <span class="highlight-travel">travel budgets</span>.</li>
+                        <li><i class="fas fa-check-circle"></i> Generate insightful <span class="highlight-reports">reports</span> for better decisions.</li>
                     </ul>
                     <p>Start organizing your finances and thoughts in one intuitive place!</p>
                 </div>
@@ -88,7 +83,7 @@
                 <form id="noteForm" class="note-form">
                     <div class="form-group">
                         <label for="noteDate">Note Date:</label>
-                        <input type="date" id="noteDate" required />
+                        <input type="date" id="noteDate" required value="2025-07-12"/>
                     </div>
 
                     <div class="form-group">
@@ -427,6 +422,48 @@
       font-size: 0.95em;
       color: #555;
     }
+
+    /* Styling for highlighted words in Quick Create Note description */
+    .highlight-expenses {
+        color: #dc3545; /* Red, similar to expenses card */
+        font-weight: 600;
+    }
+
+    .highlight-income {
+        color: #28a745; /* Green, similar to income card */
+        font-weight: 600;
+    }
+
+    .highlight-casual {
+        color: #007bff; /* Blue, similar to casual notes card */
+        font-weight: 600;
+    }
+
+    .highlight-bills {
+        color: #6f42c1; /* Purple */
+        font-weight: 600;
+    }
+
+    .highlight-debts {
+        color: #fd7e14; /* Orange */
+        font-weight: 600;
+    }
+
+    .highlight-goals {
+        color: #20c997; /* Teal/Aqua */
+        font-weight: 600;
+    }
+
+    .highlight-travel {
+        color: #17a2b8; /* Cyan */
+        font-weight: 600;
+    }
+
+    .highlight-reports {
+        color: #6c757d; /* Grey */
+        font-weight: 600;
+    }
+
     </style>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
