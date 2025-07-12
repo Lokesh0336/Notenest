@@ -1,0 +1,932 @@
+/* General Body and Container Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5; /* Softer, light grey background for a fresh start */
+    color: #343a40; /* Darker text for readability */
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll on smaller screens */
+}
+
+/* Header Styles */
+.app-header { /* Renamed from 'header' for better specificity and avoidance of tag conflicts */
+    background-color: #2c3e50; /* Dark blue/grey, a classic professional tone */
+    color: #fff;
+    padding: 18px 30px; /* Generous padding for a spacious feel */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* Prominent, soft shadow for depth */
+    position: sticky; /* Keeps the header visible when scrolling */
+    top: 0;
+    z-index: 100; /* Ensures the header stays on top of other content */
+}
+
+.logo-title {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* No underline for the logo link */
+    color: #fff;
+    gap: 10px; /* Space between logo image and text */
+}
+
+.logo-title img {
+    height: 50px; /* Slightly larger logo for better visibility */
+    margin-right: 8px; /* Space between logo and title text */
+}
+
+.logo-title h1 {
+    margin: 0;
+    font-size: 2.2em; /* Large, commanding title */
+    font-weight: 700; /* Bold title for emphasis */
+    letter-spacing: -0.5px; /* Tighter letter spacing for a sleek look */
+    display: flex; /* To align "NoteNest" and "Todo" */
+    align-items: baseline; /* Align at the baseline */
+    gap: 8px; /* Space between main title and subtitle */
+}
+
+.logo-title .subtitle {
+    margin: 0;
+    font-size: 0.95em; /* Subtitle complementing the main title */
+    opacity: 0.88; /* Slightly transparent for a softer look */
+    font-weight: 500;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 18px; /* Increased spacing between header buttons */
+}
+
+.header-btn {
+    background-color: #3498db; /* A vibrant blue for interactive elements */
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 25px; /* Pill-shaped buttons for a modern touch */
+    text-decoration: none;
+    font-weight: 600; /* Bolder text for button labels */
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions for interactivity */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15); /* Soft shadow for a subtle lift */
+    position: relative; /* For potential future enhancements like ripple effects */
+    overflow: hidden; /* Ensures any internal overflow is hidden */
+}
+
+.header-btn i {
+    margin-right: 10px; /* Space between icon and text in buttons */
+    font-size: 1.1em;
+}
+
+.header-btn:hover {
+    background-color: #2188d6; /* Darker blue on hover */
+    transform: translateY(-3px); /* Lifts the button slightly on hover */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.25); /* More prominent shadow on hover */
+}
+
+/* Main Content Layout for the To-Do Page */
+.todos-main-content {
+    padding: 30px 25px; /* Consistent padding around the main content */
+    max-width: 1280px; /* Wider content area for more space */
+    margin: 35px auto; /* Centers the content block horizontally */
+    display: grid;
+    gap: 35px; /* Spacing between grid sections */
+    grid-template-columns: 1fr; /* Default to a single column layout */
+}
+
+@media (min-width: 768px) {
+    .todos-main-content {
+        grid-template-columns: 1fr 1fr; /* Two columns for larger screens (e.g., form and list side-by-side) */
+    }
+}
+
+/* Banner Section Styling */
+.todos-banner-section {
+    grid-column: 1 / -1; /* Spans across all columns in the grid */
+    display: flex;
+    flex-direction: column; /* Stacks items vertically by default */
+    align-items: center; /* Centers items horizontally within the column */
+    background: linear-gradient(135deg, #e0f7fa, #d1f3e0); /* A gentle, inviting gradient */
+    border-radius: 15px; /* Softly rounded corners */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1); /* Subtle, larger shadow */
+    padding: 35px;
+    text-align: center;
+    margin-bottom: 25px; /* Space below the banner */
+    overflow: hidden; /* Ensures content stays within the rounded corners */
+}
+
+.todos-banner-left {
+    flex-shrink: 0; /* Prevents image from shrinking in row layout */
+    /* Adjusted max-width to make the image smaller on larger screens */
+    max-width: 35%; /* Significantly reduced for a more controlled size */
+    margin-bottom: 25px; /* Add space below image in column layout */
+}
+
+.todos-banner-left img {
+    max-width: 100%; /* Ensures image fits within its parent (.todos-banner-left) */
+    height: auto; /* Maintains aspect ratio */
+    display: block; /* Removes extra space below image */
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.todos-banner-left img:hover {
+    transform: scale(1.03); /* Slightly enlarges the image on hover */
+}
+
+.todos-banner-text {
+    flex-grow: 1; /* Allows text to take available space */
+}
+
+.todos-banner-text h3 {
+    color: #2c3e50;
+    font-size: 2.5em; /* Prominent heading for the banner */
+    margin-top: 0;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; /* Space between icon and text in the heading */
+    font-weight: 700;
+}
+
+.todos-banner-text ul {
+    list-style: none; /* Removes default list bullets */
+    padding: 0;
+    margin: 0;
+    text-align: left;
+}
+
+.todos-banner-text ul li {
+    font-size: 1.15em;
+    color: #555;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: flex-start; /* Aligns icon and text at the top */
+    line-height: 1.4; /* Improves readability for list items */
+}
+
+.todos-banner-text ul li i {
+    margin-right: 12px;
+    color: #3498db; /* Blue checkmarks for emphasis */
+    font-size: 1.3em;
+    flex-shrink: 0; /* Prevents the icon from shrinking */
+    padding-top: 2px; /* Fine-tunes vertical alignment of the icon */
+}
+
+@media (min-width: 768px) {
+    .todos-banner-section {
+        flex-direction: row; /* Arranges items horizontally on larger screens */
+        text-align: left;
+        padding: 50px;
+    }
+    .todos-banner-left {
+        /* On larger screens, the image takes less width but stays proportional */
+        max-width: 25%; /* Further reduced for a smaller image */
+        margin-right: 40px;
+        margin-bottom: 0; /* Remove bottom margin when in row layout */
+    }
+    .todos-banner-text {
+        flex: 1.2; /* Gives more space to the text content */
+    }
+}
+
+/* Card Styles for Form and List Sections */
+.form-card, .list-card {
+    background-color: #fff;
+    border-radius: 15px; /* Nicely rounded corners for cards */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.12); /* Soft, pronounced shadow */
+    padding: 40px; /* Generous internal padding */
+    border: 1px solid #e9ecef; /* Subtle, light border */
+}
+
+.form-card h2, .list-card h2 {
+    color: #2c3e50;
+    font-size: 2.2em; /* Large heading for card titles */
+    margin-top: 0;
+    margin-bottom: 35px; /* Ample space below the heading */
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #f0f2f5; /* Subtle separation line */
+    padding-bottom: 18px; /* Padding for the border line */
+    font-weight: 700;
+}
+
+.form-card h2 i, .list-card h2 i {
+    margin-right: 18px; /* Space between icon and text in card titles */
+    color: #3498db; /* Blue icons for visual consistency */
+    font-size: 1.2em;
+}
+
+/* Form Group Styling */
+.form-group {
+    margin-bottom: 28px; /* Space between form input groups */
+}
+
+.form-group label {
+    display: block; /* Ensures label takes its own line */
+    margin-bottom: 12px; /* Space between label and input field */
+    font-weight: 600; /* Bolder labels for clarity */
+    color: #495057; /* Darker label color */
+    font-size: 1.08em;
+}
+
+/* Unified styling for all text-based input types and select/textarea */
+form input[type="text"],
+form input[type="date"],
+form select,
+form textarea {
+    width: calc(100% - 28px); /* Full width minus padding and border */
+    padding: 15px 14px; /* Consistent padding for all inputs */
+    border: 1px solid #ced4da; /* Light border */
+    border-radius: 10px; /* Rounded input fields */
+    font-size: 1.05em;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease; /* Smooth transitions for focus */
+    background-color: #fefefe; /* Slightly off-white background for inputs */
+    color: #343a40; /* Dark text within inputs */
+}
+
+form input[type="text"]:focus,
+form input[type="date"]:focus,
+form select:focus,
+form textarea:focus {
+    border-color: #007bff; /* Vibrant blue border on focus */
+    box-shadow: 0 0 0 5px rgba(0, 123, 255, 0.2); /* Soft, larger focus shadow */
+    outline: none; /* Removes default outline */
+    background-color: #fff; /* White background on focus */
+}
+
+textarea {
+    resize: vertical; /* Allows vertical resizing */
+    min-height: 90px; /* Minimum height for text areas */
+}
+
+/* Checkbox group for days */
+.days-checkbox-group {
+    display: flex;
+    flex-wrap: wrap; /* Allows checkboxes to wrap to the next line */
+    gap: 15px; /* Spacing between individual day checkboxes */
+}
+
+.days-checkbox-group label {
+    background-color: #e9ecef; /* Light grey background for unselected days */
+    padding: 12px 18px; /* Padding inside each day "pill" */
+    border-radius: 30px; /* Highly rounded, pill-like shape */
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    color: #495057;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Subtle shadow for each pill */
+}
+
+.days-checkbox-group input[type="checkbox"] {
+    margin-right: 12px;
+    appearance: none; /* Hides default checkbox appearance */
+    -webkit-appearance: none;
+    width: 22px; /* Custom size for the checkbox */
+    height: 22px;
+    border: 2px solid #adb5bd; /* Grey border for unchecked state */
+    border-radius: 6px; /* Slightly rounded checkbox square */
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    flex-shrink: 0; /* Prevents checkbox from shrinking */
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.days-checkbox-group input[type="checkbox"]:checked {
+    background-color: #007bff; /* Blue background when checked */
+    border-color: #007bff; /* Blue border when checked */
+}
+
+.days-checkbox-group input[type="checkbox"]:checked::before {
+    content: '\2713'; /* Unicode checkmark symbol */
+    display: block;
+    color: white;
+    font-size: 18px; /* Size of the checkmark */
+    text-align: center;
+    line-height: 20px; /* Centers the checkmark vertically */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centers the checkmark precisely */
+}
+
+.days-checkbox-group label:has(input[type="checkbox"]:checked) {
+    background-color: #007bff; /* Blue background for the label when its checkbox is checked */
+    color: #fff;
+    transform: translateY(-3px); /* Lifts the selected pill slightly */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.3); /* Blue tinted shadow for selected pills */
+}
+
+/* Button Styling (for Add/Save actions) */
+.add-button {
+    background-color: #28a745; /* Green for primary actions (Add/Save) */
+    color: #fff;
+    padding: 18px 40px; /* Large padding for a prominent button */
+    border: none;
+    border-radius: 15px; /* Rounded corners for the button */
+    font-size: 1.3em; /* Large font size for visibility */
+    font-weight: 700; /* Bold text */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: auto; /* Button width adjusts to content */
+    box-shadow: 0 8px 20px rgba(40, 167, 69, 0.35); /* Prominent, green-tinted shadow */
+    min-width: 180px; /* Ensures a minimum width for the button */
+}
+
+.add-button i {
+    margin-right: 15px; /* Space between icon and text */
+    font-size: 1.15em;
+}
+
+.add-button:hover {
+    background-color: #218838; /* Darker green on hover */
+    transform: translateY(-5px); /* Lifts the button more on hover */
+    box-shadow: 0 10px 25px rgba(40, 167, 69, 0.45); /* Larger, more intense shadow on hover */
+}
+
+/* To-Do List Display Area */
+#todos-display-area { /* This refers to the container holding the card/table view */
+    margin-top: 35px;
+}
+
+/* View Toggle Buttons (Card/Table) */
+.view-toggle-buttons {
+    display: flex;
+    justify-content: flex-end; /* Aligns toggle buttons to the right */
+    margin-bottom: 30px;
+    background-color: #e9ecef;
+    border-radius: 10px; /* Rounded container for the buttons */
+    padding: 6px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); /* Inner shadow for a pressed look */
+}
+
+.view-toggle-buttons .toggle-btn {
+    background-color: transparent;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px; /* Rounded individual buttons */
+    font-size: 1.05em;
+    font-weight: 500;
+    color: #495057;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+}
+
+.view-toggle-buttons .toggle-btn.active-view {
+    background-color: #007bff; /* Blue for the currently active view button */
+    color: #fff;
+    box-shadow: 0 3px 8px rgba(0, 123, 255, 0.3); /* Blue-tinted shadow for active state */
+    transform: translateY(-1px); /* Slight lift for active button */
+}
+
+.view-toggle-buttons .toggle-btn:hover:not(.active-view) {
+    background-color: #dee2e6; /* Light grey on hover for inactive buttons */
+    color: #343a40;
+}
+
+/* Card View Container for To-Dos */
+.card-grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid for cards */
+    gap: 25px; /* Spacing between cards */
+    margin-top: 25px;
+}
+
+.todo-card { /* Class for individual todo cards, assumed to be dynamically added */
+    background-color: #fff;
+    border: 1px solid #e0e0e0; /* Light border */
+    border-left: 8px solid #3498db; /* Thick blue left border to categorize as a To-Do */
+    border-radius: 12px; /* Rounded corners for each card */
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Soft shadow for cards */
+    transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effects */
+    display: flex;
+    flex-direction: column; /* Content stacked vertically */
+    justify-content: space-between; /* Distributes space evenly */
+}
+
+.todo-card:hover {
+    transform: translateY(-7px); /* Lifts the card more on hover */
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15); /* More prominent shadow on hover */
+}
+
+.todo-card.completed {
+    background-color: #e9f5e9; /* Light green background for completed tasks */
+    border-left-color: #28a745; /* Green border for completed tasks */
+    opacity: 0.95; /* Slightly less opaque for completed tasks */
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.1); /* Green-tinted shadow for completed tasks */
+}
+
+.todo-card.completed .card-title,
+.todo-card.completed .card-description,
+.todo-card.completed .card-meta {
+    text-decoration: line-through; /* Strikethrough for completed tasks */
+    color: #888; /* Faded color for completed text */
+}
+
+.card-title {
+    font-size: 1.5em; /* Large title for the todo item */
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.card-description {
+    font-size: 1.05em;
+    color: #666;
+    margin-bottom: 15px;
+    flex-grow: 1; /* Allows description to take available vertical space */
+    line-height: 1.5; /* Improves readability of description */
+}
+
+.card-meta {
+    font-size: 0.95em;
+    color: #777;
+    margin-top: 12px;
+}
+
+.card-meta span {
+    display: flex; /* Arranges icon and text horizontally */
+    align-items: center;
+    margin-bottom: 6px; /* Space between meta items */
+}
+
+.card-meta i {
+    margin-right: 10px;
+    color: #3498db; /* Blue icons for meta info */
+    font-size: 1.1em;
+}
+
+.card-actions {
+    display: flex;
+    justify-content: flex-end; /* Aligns action buttons to the right */
+    gap: 12px; /* Space between action buttons */
+    margin-top: 20px;
+}
+
+.card-actions button {
+    background-color: #f0f2f5; /* Light background for action buttons */
+    border: none;
+    border-radius: 50%; /* Circular buttons */
+    width: 42px; /* Fixed width for circular shape */
+    height: 42px; /* Fixed height for circular shape */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em; /* Size of the icon */
+    cursor: pointer;
+    color: #6c757d; /* Grey color for icons */
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow for buttons */
+}
+
+.card-actions button:hover {
+    transform: translateY(-3px); /* Lifts button slightly on hover */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.18); /* More pronounced shadow on hover */
+}
+
+.card-actions button.complete-btn:hover { background-color: #28a745; color: #fff; } /* Green on hover for complete */
+.card-actions button.edit-btn:hover { background-color: #ffc107; color: #fff; } /* Yellow on hover for edit */
+.card-actions button.delete-btn:hover { background-color: #dc3545; color: #fff; } /* Red on hover for delete */
+
+
+/* Table View Container */
+.table-responsive {
+    overflow-x: auto; /* Enables horizontal scrolling for tables on small screens */
+    margin-top: 25px;
+}
+
+.notes-table { /* Renamed from .todo-table for consistency with previous CSS */
+    width: 100%;
+    border-collapse: collapse; /* Collapses table borders */
+    margin-top: 25px;
+    font-size: 0.98em;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Shadow for the entire table */
+    border-radius: 12px; /* Rounded corners for the table */
+    overflow: hidden; /* Ensures rounded corners apply to content */
+    background-color: #fff; /* White background for table rows */
+}
+
+.notes-table th, .notes-table td {
+    padding: 14px 18px; /* Padding for table cells */
+    text-align: left;
+    border-bottom: 1px solid #e9ecef; /* Light border between rows */
+}
+
+.notes-table th {
+    background-color: #f8f9fa; /* Light header background for the table */
+    color: #495057;
+    font-weight: 600;
+    text-transform: uppercase; /* Uppercase table headers */
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+.notes-table tbody tr:nth-child(even) {
+    background-color: #fdfdfd; /* Slightly different background for even rows */
+}
+
+.notes-table tbody tr:hover {
+    background-color: #eef7ff; /* Light blue background on row hover */
+}
+
+.notes-table .table-actions button {
+    background: none; /* No background for table action buttons */
+    border: none;
+    font-size: 1.2em; /* Size of action icons in table */
+    cursor: pointer;
+    color: #6c757d; /* Grey color for icons */
+    transition: color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+    padding: 6px;
+}
+
+.notes-table .table-actions button:hover {
+    transform: translateY(-1px); /* Slight lift on hover */
+}
+
+.notes-table .table-actions button.complete-btn:hover { color: #28a745; }
+.notes-table .table-actions button.edit-btn:hover { color: #ffc107; }
+.notes-table .table-actions button.delete-btn:hover { color: #dc3545; }
+
+/* Status Badges (Useful for general status, adapted from previous version) */
+.notes-table .status-planning { background-color: #ffc107; color: #333; padding: 5px 10px; border-radius: 5px; font-weight: 600; font-size: 0.88em; }
+.notes-table .status-booked { background-color: #28a745; color: white; padding: 5px 10px; border-radius: 5px; font-weight: 600; font-size: 0.88em; }
+.notes-table .status-in-progress { background-color: #007bff; color: white; padding: 5px 10px; border-radius: 5px; font-weight: 600; font-size: 0.88em; }
+.notes-table .status-completed { background-color: #6c757d; color: white; padding: 5px 10px; border-radius: 5px; font-weight: 600; font-size: 0.88em; }
+.notes-table .status-cancelled { background-color: #dc3545; color: white; padding: 5px 10px; border-radius: 5px; font-weight: 600; font-size: 0.88em; }
+
+/* Utility class to hide views */
+.hidden-view {
+    display: none;
+}
+
+/* Info Message Styling */
+.info-message { /* Renamed from .no-todo-msg */
+    text-align: center;
+    color: #777;
+    font-style: italic;
+    margin-top: 35px;
+    padding: 20px;
+    background-color: #e9f0f5; /* Light background for informational messages */
+    border-radius: 10px;
+    border: 1px solid #dcdfe4; /* Subtle border */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); /* Soft shadow */
+    font-size: 1.1em;
+}
+
+/* Export Buttons */
+.export-buttons {
+    display: flex;
+    justify-content: center; /* Centers the export buttons */
+    gap: 25px; /* Spacing between export buttons */
+    margin-top: 35px;
+    margin-bottom: 35px; /* Consistent margin for the section */
+}
+
+.export-btn {
+    background-color: #17a2b8; /* Info blue for export actions */
+    color: #fff;
+    padding: 14px 28px;
+    border: none;
+    border-radius: 10px; /* Rounded buttons */
+    font-size: 1.05em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease; /* Smooth transitions */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(23, 162, 184, 0.25); /* Blue-tinted shadow */
+}
+
+.export-btn i {
+    margin-right: 10px;
+    font-size: 1.05em;
+}
+
+.export-btn:hover {
+    background-color: #138496; /* Darker blue on hover */
+    transform: translateY(-3px); /* Lifts button on hover */
+    box-shadow: 0 6px 15px rgba(23, 162, 184, 0.35); /* More prominent shadow on hover */
+}
+
+/* Footer Styles */
+.footer { /* Renamed from 'footer' for consistency */
+    text-align: center;
+    padding: 30px; /* Generous padding for the footer */
+    background-color: #2c3e50;
+    color: #ecf0f1; /* Light text for dark background */
+    font-size: 0.98em;
+    margin-top: 50px; /* Ample space above the footer */
+    box-shadow: 0 -4px 15px rgba(0,0,0,0.2); /* Shadow above the footer */
+    border-top-left-radius: 10px; /* Rounded top corners */
+    border-top-right-radius: 10px;
+}
+
+/* Custom Notification Modal */
+.modal {
+    position: fixed; /* Fixed position to cover the entire screen */
+    z-index: 1000; /* High z-index to appear on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.65); /* Darker semi-transparent overlay */
+    display: flex; /* Uses flexbox to center the modal content */
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden; /* Hidden by default using visibility for smooth transition */
+    transition: opacity 0.3s ease, visibility 0.3s ease; /* Smooth fade-in/out */
+}
+
+.modal.active { /* Class added by JavaScript to show the modal */
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: #fff;
+    color: #343a40;
+    padding: 35px 45px; /* Spacious padding inside the modal */
+    border-radius: 20px; /* More rounded modal corners */
+    box-shadow: 0 10px 30px rgba(0,0,0,0.4); /* Stronger shadow for the modal */
+    width: 90%;
+    max-width: 480px; /* Maximum width for the modal */
+    text-align: center;
+    position: relative;
+    border: 1px solid #e0e0e0; /* Light border around the modal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Spacing between elements within the modal */
+    transform: translateY(-20px); /* Starts slightly above for a subtle slide-down effect */
+    transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth slide and fade */
+}
+
+.modal.active .modal-content {
+    transform: translateY(0); /* Slides content into view */
+    opacity: 1;
+}
+
+/* Specific modal types for different colors (e.g., success, error) */
+.modal.success .modal-content { border-left: 8px solid #28a745; } /* Green border for success */
+.modal.error .modal-content { border-left: 8px solid #dc3545; } /* Red border for error */
+.modal.info .modal-content { border-left: 8px solid #17a2b8; } /* Teal border for info */
+.modal.warning .modal-content { border-left: 8px solid #ffc107; } /* Yellow border for warning */
+
+
+.modal-content h2 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 2.5em; /* Large heading for modal title */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-bottom: 0;
+    font-weight: 700;
+}
+
+.modal-content h2 i.icon { /* Generic icon for modal title */
+    font-size: 2.8em; /* Large icon in modal title */
+    color: #3498db; /* Default blue icon */
+}
+
+/* Specific icon colors for different modal types */
+.modal.success h2 i.icon { color: #28a745; }
+.modal.error h2 i.icon { color: #dc3545; }
+.modal.info h2 i.icon { color: #17a2b8; }
+.modal.warning h2 i.icon { color: #ffc107; }
+
+
+.modal-content p {
+    font-size: 1.25em;
+    color: #555;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.modal .close-button {
+    color: #aaa;
+    position: absolute;
+    top: 18px;
+    right: 28px;
+    font-size: 40px; /* Large close button */
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.modal .close-button:hover,
+.modal .close-button:focus {
+    color: #333;
+    text-decoration: none;
+}
+
+.modal .button-primary {
+    padding: 12px 30px;
+    font-size: 1.1em;
+    border-radius: 10px; /* Rounded button */
+    background-color: #007bff; /* Blue dismiss button */
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.25);
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.modal .button-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: translateY(-2px); /* Lifts button on hover */
+    box-shadow: 0 6px 15px rgba(0, 123, 255, 0.35); /* More prominent shadow on hover */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) { /* Styles for screens smaller than 768px (tablets and mobile) */
+    .app-header {
+        flex-direction: column; /* Stack header items vertically */
+        text-align: center;
+        padding: 15px;
+    }
+    .logo-title {
+        margin-bottom: 15px;
+    }
+    .logo-title img {
+        height: 40px;
+    }
+    .logo-title h1 {
+        font-size: 1.8em;
+        gap: 6px;
+    }
+    .logo-title .subtitle {
+        font-size: 0.8em;
+    }
+    .header-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 12px;
+    }
+    .header-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 15px;
+    }
+    .todos-main-content {
+        padding: 20px;
+        margin: 20px auto;
+    }
+    .todos-banner-section {
+        flex-direction: column;
+        padding: 25px;
+    }
+    .todos-banner-left {
+        max-width: 70%; /* Adjusted for better fit on small screens */
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    .todos-banner-text h3 {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+    .todos-banner-text ul li {
+        font-size: 1.05em;
+        margin-bottom: 8px;
+    }
+    .form-card, .list-card {
+        padding: 25px;
+    }
+    .form-card h2, .list-card h2 {
+        font-size: 1.8em;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+    }
+    .form-group label {
+        font-size: 1em;
+        margin-bottom: 8px;
+    }
+    form input[type="text"],
+    form input[type="date"],
+    form select,
+    form textarea {
+        width: calc(100% - 20px); /* Adjust width for smaller screens */
+        padding: 12px 10px;
+        font-size: 1em;
+    }
+    .days-checkbox-group {
+        gap: 10px; /* Adjust gap for smaller screens */
+    }
+    .days-checkbox-group label {
+        padding: 10px 15px;
+        font-size: 0.95em;
+        border-radius: 20px;
+    }
+    .days-checkbox-group input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+    }
+    .days-checkbox-group input[type="checkbox"]:checked::before {
+        font-size: 14px;
+        line-height: 16px;
+    }
+    .add-button {
+        padding: 14px 30px;
+        font-size: 1.1em;
+        min-width: unset; /* Remove min-width on small screens */
+    }
+    .card-grid-container {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Adjust card grid for smaller screens */
+        gap: 18px;
+    }
+    .todo-card {
+        padding: 20px;
+        border-left: 6px solid #3498db;
+    }
+    .card-title {
+        font-size: 1.3em;
+    }
+    .card-description {
+        font-size: 0.95em;
+    }
+    .card-actions button {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1em;
+    }
+    .notes-table th, .notes-table td {
+        padding: 10px 12px;
+        font-size: 0.9em;
+    }
+    .export-buttons {
+        flex-direction: column;
+        gap: 15px;
+    }
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+        padding: 10px 20px;
+    }
+    .modal-content {
+        padding: 25px;
+        max-width: 380px;
+    }
+    .modal-content h2 {
+        font-size: 2em;
+    }
+    .modal-content h2 i.icon {
+        font-size: 2.2em;
+    }
+    .modal-content p {
+        font-size: 1.1em;
+    }
+    .modal .close-button {
+        font-size: 30px;
+        top: 10px;
+        right: 20px;
+    }
+    .modal .button-primary {
+        padding: 10px 20px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) { /* Styles for very small screens (most mobile phones) */
+    .logo-title h1 {
+        font-size: 1.6em;
+    }
+    .logo-title .subtitle {
+        font-size: 0.7em;
+    }
+    .header-btn {
+        font-size: 0.9em;
+        padding: 8px 10px;
+    }
+    .todos-banner-text h3 {
+        font-size: 1.7em;
+    }
+    .todos-banner-text li {
+        font-size: 0.95em;
+    }
+    .form-card h2, .list-card h2 {
+        font-size: 1.5em;
+    }
+    .card-grid-container {
+        grid-template-columns: 1fr; /* Force single column on very small screens */
+    }
+    .notes-table th, .notes-table td {
+        font-size: 0.8em;
+        padding: 8px 10px;
+    }
+}

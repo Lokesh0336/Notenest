@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>NoteNest - Weekly Todo</title>
+  <link rel="stylesheet" href="todos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .subtitle { font-size: 0.9rem; color: #666; margin-top: -10px; }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <a href="index.html" class="logo-title">
+      <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo">
+      <div>
+        <h1>NoteNest</h1>
+        <p class="subtitle">Your Smart Note Keeper</p>
+      </div>
+    </a>
+    <div class="header-buttons">
+      <a href="index.html" class="header-btn"><i class="fas fa-home"></i> Home</a>
+      <a href="reports.html" class="header-btn"><i class="fas fa-chart-line"></i> Reports</a>
+    </div>
+  </header>
+
+  <main class="todos-main-content">
+    <section class="todos-banner-section">
+      <div class="todos-banner-left">
+        <img src="https://i.ibb.co/Xxt1wRSr/Gemini-Generated-Image-dp2e8udp2e8udp2e.jpg" alt="Todo Banner Image">
+      </div>
+      <div class="todos-banner-text">
+        <h3><i class="fas fa-clipboard-list"></i> Organize Your Day, Every Day!</h3>
+        <ul>
+          <li><i class="fas fa-check-circle"></i> Keep track of daily, weekly, or monthly tasks.</li>
+          <li><i class="fas fa-check-circle"></i> Prioritize what's important with categories.</li>
+          <li><i class="fas fa-check-circle"></i> Mark tasks complete and celebrate your progress.</li>
+          <li><i class="fas fa-check-circle"></i> Export your lists for easy sharing or backup.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="form-card">
+      <h2><i class="fas fa-plus-square"></i> Add New To-Do</h2>
+      <form id="todo-form">
+        <div class="form-group">
+          <label for="todo-title">Task Title:</label>
+          <input type="text" id="todo-title" placeholder="e.g., Finish report, Buy groceries" required>
+        </div>
+
+        <div class="form-group">
+          <label for="todo-description">Description (Optional):</label>
+          <textarea id="todo-description" placeholder="Add more details about your task..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="todo-category">Category:</label>
+          <select id="todo-category">
+            <option value="Personal">Personal</option>
+            <option value="Work">Work</option>
+            <option value="Study">Study</option>
+            <option value="Shopping">Shopping</option>
+            <option value="Health">Health & Fitness</option>
+            <option value="Finance">Finance</option>
+            <option value="Children">Children</option>
+            <option value="Meetings">Meetings</option>
+            <option value="Others">Others</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="todo-date">Date:</label>
+          <input type="date" id="todo-date">
+        </div>
+
+        <div class="form-group">
+          <label><input type="checkbox" id="enable-time"> Do you want to set time?</label>
+          <input type="time" id="todo-time" style="display:none">
+        </div>
+
+        <div class="form-group">
+          <label>Applicable Days:</label>
+          <div class="days-checkbox-group">
+            <label><input type="checkbox" name="todo-day" value="Mon"> Mon</label>
+            <label><input type="checkbox" name="todo-day" value="Tue"> Tue</label>
+            <label><input type="checkbox" name="todo-day" value="Wed"> Wed</label>
+            <label><input type="checkbox" name="todo-day" value="Thu"> Thu</label>
+            <label><input type="checkbox" name="todo-day" value="Fri"> Fri</label>
+            <label><input type="checkbox" name="todo-day" value="Sat"> Sat</label>
+            <label><input type="checkbox" name="todo-day" value="Sun"> Sun</label>
+            <label><input type="checkbox" id="everyday-checkbox" name="todo-day" value="Everyday"> Everyday</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Reminders (Optional):</label>
+          <div class="days-checkbox-group">
+            <label><input type="checkbox" name="todo-reminder" value="Email"> Email</label>
+            <label><input type="checkbox" name="todo-reminder" value="Popup"> Popup</label>
+            <label><input type="checkbox" name="todo-reminder" value="SMS"> SMS</label>
+            <label><input type="checkbox" name="todo-reminder" value="Alarm"> Set Alarm</label>
+          </div>
+        </div>
+
+        <button type="submit" class="add-button"><i class="fas fa-calendar-plus"></i> Add To-Do</button>
+      </form>
+    </section>
+
+    <section class="list-card">
+      <h2><i class="fas fa-tasks"></i> Your To-Do List</h2>
+      <div class="view-toggle-buttons">
+        <button id="cardViewBtn" class="toggle-btn active-view"><i class="fas fa-th-large"></i> Card View</button>
+        <button id="tableViewBtn" class="toggle-btn"><i class="fas fa-table"></i> Table View</button>
+      </div>
+      <p id="noTodosMessage" class="info-message">No todos added yet. Start by adding a task!</p>
+      <div id="cardViewContainer" class="card-grid-container"></div>
+      <div id="tableViewContainer" class="table-responsive hidden-view">
+        <table class="notes-table">
+          <thead>
+            <tr>
+              <th>S.No.</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Days</th>
+              <th>Created At</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="todosTableBody"></tbody>
+        </table>
+      </div>
+      <div class="export-buttons">
+        <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+        <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2025 NoteNest. All rights reserved.</p>
+  </footer>
+
+  <div id="notification-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2 id="modal-title"><i class="icon fas fa-info-circle"></i> Notification</h2>
+      <p id="modal-message">This is a generic message.</p>
+      <button id="modal-dismiss-button" class="button-primary">OK</button>
+    </div>
+  </div>
+
+  <script src="todos.js"></script>
+  <script>
+    document.getElementById("everyday-checkbox").addEventListener("change", function () {
+      const checkboxes = document.querySelectorAll("input[name='todo-day']");
+      checkboxes.forEach(cb => {
+        if (cb !== this) cb.checked = this.checked;
+      });
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const dateInput = document.getElementById("todo-date");
+      const timeInput = document.getElementById("todo-time");
+      const timeToggle = document.getElementById("enable-time");
+      const now = new Date();
+      if (dateInput) dateInput.value = now.toISOString().split("T")[0];
+
+      timeToggle.addEventListener("change", () => {
+        if (timeToggle.checked) {
+          timeInput.style.display = "inline-block";
+          timeInput.value = now.toTimeString().slice(0, 5);
+        } else {
+          timeInput.style.display = "none";
+          timeInput.value = "";
+        }
+      });
+    });
+  </script>
+</body>
+</html>
