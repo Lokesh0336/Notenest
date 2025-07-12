@@ -959,3 +959,243 @@ footer {
 .add-note-button:hover {
     background-color: #43a047;
 }
+/* General button style for section actions - if not already defined globally */
+.button-primary {
+    background-color: #3498db; /* Blue */
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-decoration: none; /* For anchor tags */
+    display: inline-flex; /* Align icon and text */
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+}
+
+.button-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* To-Do Form Specifics */
+.days-checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 15px; /* Adjust spacing as needed */
+    margin-top: 10px;
+}
+
+.days-checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: normal; /* Override form label default */
+    color: #555;
+    cursor: pointer;
+}
+
+.days-checkbox-group input[type="checkbox"] {
+    width: auto; /* Allow checkbox to be natural size */
+    margin: 0;
+    accent-color: #3498db; /* Blue accent color for checkboxes */
+}
+
+/* To-Do List Display Filtering */
+.todos-filter-and-view {
+    display: flex;
+    justify-content: flex-end; /* Align filter to right */
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.todos-filter-group label {
+    font-weight: 500;
+    color: #555;
+}
+
+.todos-filter-group select {
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 15px;
+    min-width: 150px;
+    background-color: #fff;
+    appearance: none; /* Remove default browser select arrow */
+    /* Custom arrow for select (SVG data URL) */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7l-118%20118.3L18.4%2075.1a17.6%2017.6%200%200%200-25.7%2023.7l130.4%20130.4c6.8%206.8%2017.8%206.8%2024.6%200l130.4-130.4a17.6%2017.6%200%200%200-11.3-30.7z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 10px top 50%;
+    background-size: 12px auto;
+}
+
+/* Individual To-Do Item Styling */
+.todo-item {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+}
+
+.todo-item.completed {
+    background-color: #e6ffe6; /* Light green for completed */
+    border-color: #c0f1c0;
+    opacity: 0.8;
+}
+
+.todo-item.completed .todo-item-header h3,
+.todo-item.completed .todo-item-body p,
+.todo-item.completed .todo-item-footer span {
+    text-decoration: line-through;
+    color: #888;
+}
+
+.todo-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping */
+    gap: 10px;
+}
+
+.todo-item-header h3 {
+    margin: 0;
+    font-size: 20px;
+    color: #2c3e50;
+    flex-grow: 1;
+}
+
+.todo-item-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.todo-item-actions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 5px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.todo-item-actions .complete-btn {
+    color: #28a745; /* Green */
+}
+.todo-item-actions .complete-btn:hover {
+    background-color: #e6ffe6;
+}
+
+.todo-item-actions .edit-btn {
+    color: #3498db; /* Blue */
+}
+.todo-item-actions .edit-btn:hover {
+    background-color: #e0f2ff;
+}
+
+.todo-item-actions .delete-btn {
+    color: #dc3545; /* Red */
+}
+.todo-item-actions .delete-btn:hover {
+    background-color: #ffe0e0;
+}
+
+.todo-item-body p {
+    margin: 0;
+    font-size: 15px;
+    color: #555;
+    line-height: 1.5;
+}
+
+.todo-item-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #777;
+    border-top: 1px dashed #eee;
+    padding-top: 10px;
+}
+
+.todo-item-footer .todo-category {
+    font-weight: 500;
+    color: #34495e;
+}
+
+/* Responsive adjustments for To-Dos page */
+@media (max-width: 768px) {
+    .todos-filter-and-view {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .todos-filter-group select {
+        width: 100%;
+        min-width: unset;
+    }
+    .todo-item-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .todo-item-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+/* Styling for highlighted words in Quick Create Note description */
+.highlight-expenses {
+    color: #dc3545; /* Red, similar to expenses card */
+    font-weight: 600;
+}
+
+.highlight-income {
+    color: #28a745; /* Green, similar to income card */
+    font-weight: 600;
+}
+
+.highlight-casual {
+    color: #007bff; /* Blue, similar to casual notes card */
+    font-weight: 600;
+}
+
+.highlight-bills {
+    color: #6f42c1; /* Purple */
+    font-weight: 600;
+}
+
+.highlight-debts {
+    color: #fd7e14; /* Orange */
+    font-weight: 600;
+}
+
+.highlight-goals {
+    color: #20c997; /* Teal/Aqua */
+    font-weight: 600;
+}
+
+.highlight-travel {
+    color: #17a2b8; /* Cyan */
+    font-weight: 600;
+}
+
+.highlight-reports {
+    color: #6c757d; /* Grey */
+    font-weight: 600;
+}
+
+/* You might want to remove the default strong/bold styling from the ul li strong elements
+   if the span's font-weight isn't overriding it correctly.
+   However, wrapping with <span> and applying font-weight: 600 should be sufficient. */
