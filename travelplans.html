@@ -117,7 +117,7 @@
         <section class="form-card">
             <h2><i class="fas fa-plus-circle"></i> Add New Travel Plan</h2>
             <form id="travelPlanForm">
-                <div class="form-group">
+                <input type="hidden" id="travelPlanId" value=""> <div class="form-group">
                     <label for="planTitle">Plan Title:</label>
                     <input type="text" id="planTitle" required placeholder="e.g., European Backpacking, Family Beach Trip" />
                 </div>
@@ -139,10 +139,316 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="destination">Destination(s):</label>
-                    <input type="text" id="destination" placeholder="e.g., Paris, Rome; Tokyo" />
+                    <label for="destination">Destination (Country):</label>
+                    <select id="destination" required>
+                        <option value="" disabled selected>-- Select a Country --</option>
+                        <option value="Other">Other (Not Listed)</option> <option value="India">India</option>
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="France">France</option>
+                        <option value="Germany">Germany</option>
+                        <option value="Italy">Italy</option>
+                        <option value="Spain">Spain</option>
+                        <option value="Australia">Australia</option>
+                        <option value="New Zealand">New Zealand</option>
+                        <option value="Japan">Japan</option>
+                        <option value="China">China</option>
+                        <option value="South Korea">South Korea</option>
+                        <option value="Singapore">Singapore</option>
+                        <option value="Thailand">Thailand</option>
+                        <option value="Vietnam">Vietnam</option>
+                        <option value="Indonesia">Indonesia</option>
+                        <option value="Malaysia">Malaysia</option>
+                        <option value="United Arab Emirates">United Arab Emirates</option>
+                        <option value="Brazil">Brazil</option>
+                        <option value="Mexico">Mexico</option>
+                        <option value="Argentina">Argentina</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="South Africa">South Africa</option>
+                        <option value="Morocco">Morocco</option>
+                        <option value="Greece">Greece</option>
+                        <option value="Portugal">Portugal</option>
+                        <option value="Netherlands">Netherlands</option>
+                        <option value="Belgium">Belgium</option>
+                        <option value="Switzerland">Switzerland</option>
+                        <option value="Austria">Austria</option>
+                        <option value="Sweden">Sweden</option>
+                        <option value="Norway">Norway</option>
+                        <option value="Denmark">Denmark</option>
+                        <option value="Finland">Finland</option>
+                        <option value="Ireland">Ireland</option>
+                        <option value="Russia">Russia</option>
+                        <option value="Turkey">Turkey</option>
+                        <option value="Israel">Israel</option>
+                        <option value="Jordan">Jordan</option>
+                        <option value="Egypt">Egypt</option>
+                        <option value="Colombia">Colombia</option>
+                        <option value="Peru">Peru</option>
+                        <option value="Chile">Chile</option>
+                        <option value="Iceland">Iceland</option>
+                        <option value="Croatia">Croatia</option>
+                        <option value="Czech Republic">Czech Republic</option>
+                        <option value="Hungary">Hungary</option>
+                        <option value="Poland">Poland</option>
+                        <option value="Romania">Romania</option>
+                        <option value="Bulgaria">Bulgaria</option>
+                        <option value="Philippines">Philippines</option>
+                        <option value="Sri Lanka">Sri Lanka</option>
+                        <option value="Nepal">Nepal</option>
+                        <option value="Bhutan">Bhutan</option>
+                        <option value="Maldives">Maldives</option>
+                        <option value="Fiji">Fiji</option>
+                        </select>
                 </div>
 
+                <div class="form-group">
+                    <label for="tripCity">City/State:</label>
+                    <input type="text" id="tripCity" list="cityOptions" required placeholder="Search for a city or state..." />
+                    <datalist id="cityOptions">
+                        <option value="Other">Other (Not Listed)</option> <option value="Hyderabad"></option>
+                        <option value="Mumbai, Maharashtra"></option>
+                        <option value="Delhi"></option>
+                        <option value="Bengaluru, Karnataka"></option>
+                        <option value="Chennai, Tamil Nadu"></option>
+                        <option value="Kolkata, West Bengal"></option>
+                        <option value="Pune, Maharashtra"></option>
+                        <option value="Ahmedabad, Gujarat"></option>
+                        <option value="Jaipur, Rajasthan"></option>
+                        <option value="Lucknow, Uttar Pradesh"></option>
+                        <option value="Chandigarh"></option>
+                        <option value="Goa"></option>
+                        <option value="Kochi, Kerala"></option>
+                        <option value="Srinagar, Jammu and Kashmir"></option>
+                        <option value="Udaipur, Rajasthan"></option>
+                        <option value="Varanasi, Uttar Pradesh"></option>
+                        <option value="Amritsar, Punjab"></option>
+                        <option value="Bhopal, Madhya Pradesh"></option>
+                        <option value="Indore, Madhya Pradesh"></option>
+                        <option value="Mysuru, Karnataka"></option>
+                        <option value="Shimla, Himachal Pradesh"></option>
+                        <option value="Darjeeling, West Bengal"></option>
+                        <option value="Agra, Uttar Pradesh"></option>
+                        <option value="Thiruvananthapuram, Kerala"></option>
+                        <option value="Bhubaneswar, Odisha"></option>
+                        <option value="Patna, Bihar"></option>
+                        <option value="Guwahati, Assam"></option>
+                        <option value="Ranchi, Jharkhand"></option>
+                        <option value="Dehradun, Uttarakhand"></option>
+                        <option value="Gangtok, Sikkim"></option>
+                        <option value="Shillong, Meghalaya"></option>
+                        <option value="Itanagar, Arunachal Pradesh"></option>
+                        <option value="Aizawl, Mizoram"></option>
+                        <option value="Kohima, Nagaland"></option>
+                        <option value="Imphal, Manipur"></option>
+                        <option value="Agartala, Tripura"></option>
+                        <option value="Panaji, Goa"></option>
+                        <option value="Port Blair, Andaman and Nicobar Islands"></option>
+                        <option value="Visakhapatnam, Andhra Pradesh"></option>
+                        <option value="Amaravati, Andhra Pradesh"></option>
+                        <option value="Raipur, Chhattisgarh"></option>
+                        <option value="Gandhinagar, Gujarat"></option>
+                        <option value="Puducherry"></option>
+                        <option value="Leh, Ladakh"></option>
+                        <option value="Jammu, Jammu and Kashmir"></option>
+                        <option value="Nagpur, Maharashtra"></option>
+                        <option value="Surat, Gujarat"></option>
+                        <option value="Kanpur, Uttar Pradesh"></option>
+                        <option value="Nashik, Maharashtra"></option>
+                        <option value="Coimbatore, Tamil Nadu"></option>
+                        <option value="Madurai, Tamil Nadu"></option>
+                        <option value="Kozhikode, Kerala"></option>
+                        <option value="Tiruchirappalli, Tamil Nadu"></option>
+                        <option value="Mangaluru, Karnataka"></option>
+                        <option value="Nellore, Andhra Pradesh"></option>
+                        <option value="Warangal, Telangana"></option>
+                        <option value="Vijayawada, Andhra Pradesh"></option>
+                        <option value="Jodhpur, Rajasthan"></option>
+                        <option value="Bikaner, Rajasthan"></option>
+                        <option value="Jaisalmer, Rajasthan"></option>
+                        <option value="Ajmer, Rajasthan"></option>
+                        <option value="Pushkar, Rajasthan"></option>
+                        <option value="Gwalior, Madhya Pradesh"></option>
+                        <option value="Jabalpur, Madhya Pradesh"></option>
+                        <option value="Ujjain, Madhya Pradesh"></option>
+                        <option value="Rishikesh, Uttarakhand"></option>
+                        <option value="Haridwar, Uttarakhand"></option>
+                        <option value="Nainital, Uttarakhand"></option>
+                        <option value="Mussoorie, Uttarakhand"></option>
+                        <option value="Manali, Himachal Pradesh"></option>
+                        <option value="Dharamshala, Himachal Pradesh"></option>
+                        <option value="Vellore, Tamil Nadu"></option>
+                        <option value="Salem, Tamil Nadu"></option>
+                        <option value="Alappuzha, Kerala"></option>
+                        <option value="Thrissur, Kerala"></option>
+                        <option value="Kollam, Kerala"></option>
+                        <option value="Alleppey, Kerala"></option>
+                        <option value="Hampi, Karnataka"></option>
+                        <option value="Puducherry"></option>
+                        <option value="Dispur, Assam"></option>
+                        <option value="Ranchi, Jharkhand"></option>
+                        <option value="Raipur, Chhattisgarh"></option>
+                        <option value="Bhubaneswar, Odisha"></option>
+                        <option value="Kavaratti, Lakshadweep"></option>
+                        <option value="Daman, Daman & Diu"></option>
+                        <option value="Silvassa, Dadra & Nagar Haveli"></option>
+                        <option value="Amravati, Maharashtra"></option>
+                        <option value="Aurangabad, Maharashtra"></option>
+                        <option value="Solapur, Maharashtra"></option>
+                        <option value="Kota, Rajasthan"></option>
+                        <option value="Rourkela, Odisha"></option>
+                        <option value="Cuttack, Odisha"></option>
+                        <option value="Tirupati, Andhra Pradesh"></option>
+                        <option value="Kurnool, Andhra Pradesh"></option>
+                        <option value="Guntur, Andhra Pradesh"></option>
+                        <option value="Kakinada, Andhra Pradesh"></option>
+                        <option value="Rajahmundry, Andhra Pradesh"></option>
+                        <option value="Karimnagar, Telangana"></option>
+                        <option value="Nizamabad, Telangana"></option>
+                        <option value="Khammam, Telangana"></option>
+                        <option value="Nalgonda, Telangana"></option>
+                        <option value="Ongole, Andhra Pradesh"></option>
+                        <option value="Palakkad, Kerala"></option>
+                        <option value="Kannur, Kerala"></option>
+                        <option value="Malappuram, Kerala"></option>
+                        <option value="Kottayam, Kerala"></option>
+                        <option value="Erode, Tamil Nadu"></option>
+                        <option value="Tiruppur, Tamil Nadu"></option>
+                        <option value="Thanjavur, Tamil Nadu"></option>
+                        <option value="Dindigul, Tamil Nadu"></option>
+                        <option value="Anantapur, Andhra Pradesh"></option>
+                        <option value="Kadapa, Andhra Pradesh"></option>
+                        <option value="Vizianagaram, Andhra Pradesh"></option>
+                        <option value="Srikakulam, Andhra Pradesh"></option>
+                        <option value="Eluru, Andhra Pradesh"></option>
+                        <option value="Machilipatnam, Andhra Pradesh"></option>
+                        <option value="Puri, Odisha"></option>
+                        <option value="Konark, Odisha"></option>
+                        <option value="Gaya, Bihar"></option>
+                        <option value="Darbhanga, Bihar"></option>
+                        <option value="Bhagalpur, Bihar"></option>
+                        <option value="Muzaffarpur, Bihar"></option>
+                        <option value="Jamshedpur, Jharkhand"></option>
+                        <option value="Dhanbad, Jharkhand"></option>
+                        <option value="Bokaro Steel City, Jharkhand"></option>
+                        <option value="Dibrugarh, Assam"></option>
+                        <option value="Silchar, Assam"></option>
+                        <option value="Sivakasi, Tamil Nadu"></option>
+                        <option value="Hosur, Tamil Nadu"></option>
+                        <option value="Pollachi, Tamil Nadu"></option>
+                        <option value="Tenkasi, Tamil Nadu"></option>
+                        <option value="Perambalur, Tamil Nadu"></option>
+                        <option value="Ariyalur, Tamil Nadu"></option>
+                        <option value="Dharmapuri, Tamil Nadu"></option>
+                        <option value="Krishnagiri, Tamil Nadu"></option>
+                        <option value="Nagapattinam, Tamil Nadu"></option>
+                        <option value="Tiruvarur, Tamil Nadu"></option>
+                        <option value="Karur, Tamil Nadu"></option>
+                        <option value="Namakkal, Tamil Nadu"></option>
+                        <option value="Ramanathapuram, Tamil Nadu"></option>
+                        <option value="Virudhunagar, Tamil Nadu"></option>
+                        <option value="Cuddalore, Tamil Nadu"></option>
+                        <option value="Villupuram, Tamil Nadu"></option>
+                        <option value="Pudukkottai, Tamil Nadu"></option>
+                        <option value="Sivaganga, Tamil Nadu"></option>
+                        <option value="Tuticorin, Tamil Nadu"></option>
+                        <option value="Tirunelveli, Tamil Nadu"></option>
+                        <option value="Kanyakumari, Tamil Nadu"></option>
+                        <option value="Nagercoil, Tamil Nadu"></option>
+                        <option value="Kodaikanal, Tamil Nadu"></option>
+                        <option value="Ooty, Tamil Nadu"></option>
+                        <option value="Kumbakonam, Tamil Nadu"></option>
+                        <option value="Mayiladuthurai, Tamil Nadu"></option>
+                        <option value="Neyveli, Tamil Nadu"></option>
+                        <option value="Tiruvannamalai, Tamil Nadu"></option>
+                        <option value="Chidambaram, Tamil Nadu"></option>
+                        <option value="Thanjavur, Tamil Nadu"></option>
+                        <option value="Trichy, Tamil Nadu"></option>
+                        <option value="Hubli, Karnataka"></option>
+                        <option value="Dharwad, Karnataka"></option>
+                        <option value="Belagavi, Karnataka"></option>
+                        <option value="Kalaburagi, Karnataka"></option>
+                        <option value="Davangere, Karnataka"></option>
+                        <option value="Ballari, Karnataka"></option>
+                        <option value="Vijayapura, Karnataka"></option>
+                        <option value="Shivamogga, Karnataka"></option>
+                        <option value="Tumakuru, Karnataka"></option>
+                        <option value="Raichur, Karnataka"></option>
+                        <option value="Bidar, Karnataka"></option>
+                        <option value="Hassan, Karnataka"></option>
+                        <option value="Chitradurga, Karnataka"></option>
+                        <option value="Udupi, Karnataka"></option>
+                        <option value="Kundapur, Karnataka"></option>
+                        <option value="Kolar, Karnataka"></option>
+                        <option value="Chikkamagaluru, Karnataka"></option>
+                        <option value="Madikeri, Karnataka"></option>
+                        <option value="Gokarna, Karnataka"></option>
+                        <option value="Karaikal, Puducherry"></option>
+                        <option value="Mahe, Puducherry"></option>
+                        <option value="Yanam, Puducherry"></option>
+                        <option value="Silvassa, Dadra and Nagar Haveli"></option>
+                        <option value="Daman, Daman and Diu"></option>
+                        <option value="Kavaratti, Lakshadweep"></option>
+                        <option value="New York"></option>
+                        <option value="London"></option>
+                        <option value="Paris"></option>
+                        <option value="Dubai"></option>
+                        <option value="Singapore"></option>
+                        <option value="Sydney"></option>
+                        <option value="Rome"></option>
+                        <option value="Tokyo"></option>
+                        <option value="San Francisco"></option>
+                        <option value="Rio de Janeiro"></option>
+                        <option value="Cairo"></option>
+                        <option value="Bangkok"></option>
+                        <option value="Berlin"></option>
+                        <option value="Barcelona"></option>
+                        <option value="Amsterdam"></option>
+                        <option value="Toronto"></option>
+                        <option value="Vancouver"></option>
+                        <option value="Mexico City"></option>
+                        <option value="Buenos Aires"></option>
+                        <option value="Cape Town"></option>
+                        <option value="Moscow"></option>
+                        <option value="Beijing"></option>
+                        <option value="Shanghai"></option>
+                        <option value="Seoul"></option>
+                        <option value="Istanbul"></option>
+                        <option value="Prague"></option>
+                        <option value="Vienna"></option>
+                        <option value="Lisbon"></option>
+                        <option value="Dublin"></option>
+                        <option value="Edinburgh"></option>
+                        <option value="Zurich"></option>
+                        <option value="Geneva"></option>
+                        <option value="Helsinki"></option>
+                        <option value="Oslo"></option>
+                        <option value="Stockholm"></option>
+                        <option value="Copenhagen"></option>
+                        <option value="Brussels"></option>
+                        <option value="Warsaw"></option>
+                        <option value="Budapest"></option>
+                        <option value="Athens"></option>
+                        <option value="Marrakech"></option>
+                        <option value="Nairobi"></option>
+                        <option value="Johannesburg"></option>
+                        <option value="Kyoto"></option>
+                        <option value="Osaka"></option>
+                        <option value="Hong Kong"></option>
+                        <option value="Kuala Lumpur"></option>
+                        <option value="Manila"></option>
+                        <option value="Jakarta"></option>
+                        <option value="Phuket"></option>
+                        <option value="Hanoi"></option>
+                        <option value="Ho Chi Minh City"></option>
+                        <option value="Santiago"></option>
+                        <option value="Lima"></option>
+                        <option value="Bogota"></option>
+                        <option value="Caracas"></option>
+                        <option value="Quito"></option>
+                        <option value="Reykjavik"></option>
+                        </datalist>
+                </div>
                 <div class="form-group inline-group">
                     <div class="input-with-label">
                         <label for="budgetAmount">Budget Amount (Optional):</label>
@@ -202,7 +508,8 @@
                         <tr>
                             <th>S.No.</th>
                             <th>Title</th>
-                            <th>Destination(s)</th>
+                            <th>Destination (Country)</th>
+                            <th>City/State</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Budget</th>
@@ -216,10 +523,9 @@
                         </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="5" class="table-total-label">Total Budgeted:</td>
+                            <td colspan="6" class="table-total-label">Total Budgeted:</td>
                             <td id="totalBudgetCell" class="table-total-amount">0.00</td>
-                            <td colspan="3"></td>
-                            <td></td>
+                            <td colspan="4"></td>
                         </tr>
                     </tfoot>
                 </table>
