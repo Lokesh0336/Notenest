@@ -4,24 +4,29 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Casual - NoteNest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&family=Caveat&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="stylesheet" href="casual.css" />
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png">
 </head>
 <body>
   <header>
-    <div class="logo">
+    <a href="index.html" class="logo-title">
       <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
-      <h1>NoteNest - Casual Notes</h1>
-    </div>
-    <div class="header-links">
-      <a href="reports.html" class="report-link">📊 Reports</a>
-      <a href="index.html" class="back-link">← Back to Dashboard</a>
+      <div>
+        <h1>NoteNest</h1>
+        <p class="subtitle">Your Smart Note Keeper</p>
+      </div>
+    </a>
+    <div class="header-buttons">
+      <a href="reports.html" class="header-btn"><i class="fas fa-chart-pie"></i> Reports</a>
+      <a href="index.html" class="header-btn"><i class="fas fa-arrow-left"></i> Dashboard</a>
     </div>
   </header>
 
   <main>
     <section class="form-container">
-      <h2>Add Casual Note</h2>
+      <h2><i class="fas fa-plus-circle"></i> Add Casual Note</h2>
 
       <div class="note-form-layout">
         <div class="note-image">
@@ -30,7 +35,7 @@
 
         <form id="casualForm">
           <label for="title">Note Title:</label>
-          <input type="text" id="title" required />
+          <input type="text" id="title" required placeholder="e.g., Ideas for Project X" />
 
           <label for="type">Note Type:</label>
           <select id="type" required>
@@ -43,17 +48,27 @@
           </select>
 
           <label for="content">Note Content:</label>
-          <textarea id="content" rows="5" required></textarea>
+          <textarea id="content" rows="5" required placeholder="Write your note here..."></textarea>
 
-          <button type="submit" class="small-button">Add Note</button>
+          <button type="submit" class="small-button"><i class="fas fa-plus-circle"></i> Add Note</button>
         </form>
       </div>
     </section>
 
-
     <section class="list-container">
-      <h3>Casual Notes</h3>
-      <div id="casualList">No casual notes yet.</div>
+      <h2><i class="fas fa-clipboard-list"></i> Casual Notes</h2>
+
+      <div id="noCasualNotesMessage" class="info-message" style="display: none;">
+        <p>No casual notes recorded yet. Add your first note!</p>
+      </div>
+
+      <div id="casualList">
+        </div>
+
+      <div class="export-buttons">
+        <button id="exportCsvBtn" class="export-btn"><i class="fas fa-file-csv"></i> Export to CSV</button>
+        <button id="exportPdfBtn" class="export-btn"><i class="fas fa-file-pdf"></i> Export to PDF</button>
+      </div>
     </section>
   </main>
 
@@ -61,6 +76,8 @@
     <p>© 2025 NoteNest. All rights reserved.</p>
   </footer>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
   <script src="casual.js"></script>
 </body>
 </html>
