@@ -1199,3 +1199,196 @@ footer {
 /* You might want to remove the default strong/bold styling from the ul li strong elements
    if the span's font-weight isn't overriding it correctly.
    However, wrapping with <span> and applying font-weight: 600 should be sufficient. */
+/* --- Travel Plan Slideshow Styling --- */
+
+#upcoming-trips-section {
+    background-color: #f0f4f8; /* Light background for the section */
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    position: relative; /* For arrow positioning */
+    overflow: hidden; /* Hide overflowing content from slides */
+}
+
+#upcoming-trips-section h2 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 25px;
+    font-size: 1.8em;
+    font-weight: 700;
+}
+
+.slideshow-container {
+    position: relative;
+    max-width: 800px; /* Adjust as needed */
+    margin: auto;
+    background-color: #ffffff; /* Background for the active slide area */
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px; /* Padding inside the container */
+    display: flex; /* Ensures slideDiv.style.display = "block" works like a block in flex context */
+    align-items: center; /* Vertically center content if slides are smaller */
+    justify-content: center; /* Horizontally center content */
+    min-height: 200px; /* Minimum height to prevent collapse */
+}
+
+.trip-slide {
+    display: none; /* Hidden by default */
+    text-align: center;
+    padding: 20px 30px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    width: 100%; /* Make slide take full width of its container */
+    box-sizing: border-box; /* Include padding/border in width */
+    color: #333;
+}
+
+.trip-slide h4 {
+    font-size: 1.6em;
+    color: #007bff; /* Primary blue for titles */
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.trip-slide p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 8px;
+}
+
+.trip-slide p i {
+    margin-right: 8px;
+    color: #6c757d; /* Gray for icons */
+}
+
+/* Status Badges */
+.status-planning {
+    background-color: #ffc107; /* Orange for planning */
+    color: #343a40;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap; /* Keep status text on one line */
+}
+
+.status-booked {
+    background-color: #28a745; /* Green for booked */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.status-completed {
+    background-color: #6c757d; /* Gray for completed */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.status-cancelled {
+    background-color: #dc3545; /* Red for cancelled */
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    padding: 16px;
+    color: #007bff; /* Blue for arrows */
+    font-weight: bold;
+    font-size: 24px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(0, 123, 255, 0.3);
+    z-index: 10; /* Ensure arrows are above slides */
+}
+
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev {
+    left: 0;
+}
+
+/* On hover, add a black background with a little more opacity */
+.prev:hover, .next:hover {
+    background-color: rgba(0, 123, 255, 0.2); /* Lighter blue on hover */
+}
+
+/* Dots (indicators) */
+.slideshow-dots {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 4px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.dot.active, .dot:hover {
+    background-color: #007bff; /* Active dot is blue */
+}
+
+/* Fade animation */
+.fade {
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@keyframes fade {
+    from {opacity: .4}
+    to {opacity: 1}
+}
+
+/* No Upcoming Trips Message */
+#noUpcomingTripsMessage {
+    text-align: center;
+    font-size: 1.2em;
+    color: #6c757d;
+    padding: 40px;
+    background-color: #e9ecef;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Ensure icons display correctly - Font Awesome might be needed */
+.fas {
+    /* Basic styling for Font Awesome icons if not globally defined */
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
