@@ -294,6 +294,35 @@ form textarea {
     margin-top: 20px;
 }
 
+/* IMPORTANT: Styles for the card that uses background-image */
+.travel-plan-card { /* This class is used in JS for cards with images */
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    position: relative;
+    color: #fff; /* Text color for content over image */
+    min-height: 280px; /* Ensure sufficient height for the image */
+    background-size: cover; /* THIS IS THE FIX: Scales image to cover the container */
+    background-position: center; /* THIS IS THE FIX: Centers the image */
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Pushes content to the bottom of the card */
+}
+
+.travel-plan-card .card-content {
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0)); /* Gradient for text readability */
+}
+
+.travel-plan-card .card-content h3,
+.travel-plan-card .card-content p {
+    color: #fff; /* Ensure text is visible over the image */
+}
+
+/* Original .travel-card from your provided CSS. If you're not using it anymore, you can remove it.
+   If you have other cards without background images, keep it. */
 .travel-card {
     background-color: #fff;
     border: 1px solid #eee;
@@ -563,13 +592,17 @@ footer {
     .table-total-label, .table-total-amount {
         font-size: 14px;
     }
-    .travel-card {
+    /* Adjusted .travel-plan-card for smaller screens if needed, but 'cover' usually handles well */
+    .travel-plan-card {
+        min-height: 250px; /* Slightly reduce height on smaller screens */
+    }
+    .travel-card { /* If you're still using this class */
         padding: 15px;
     }
-    .travel-card h4 {
+    .travel-card h4 { /* If you're still using this class */
         font-size: 16px;
     }
-    .travel-card p, .card-budget {
+    .travel-card p, .card-budget { /* If you're still using this class */
         font-size: 13px;
     }
 }
