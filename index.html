@@ -1,45 +1,38 @@
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>NoteNest: Your Personal Expense & Income Tracker</title>
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-        <link rel="stylesheet" href="style.css" />
-        <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>NoteNest: Your Personal Expense & Income Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Caveat:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
 
-        <header>
-            <a href="index.html" class="logo-title">
-                <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
-                <div>
-                    <h1>NoteNest</h1>
-                    <p class="subtitle">Your Smart Note Keeper</p>
-                </div>
-            </a>
-            <div class="header-icons" style="display: flex; align-items: center; gap: 10px;">
-                <span style="font-size: 0.95em; font-weight: 500; margin-right: 8px; color: #ffffff;">Follow us on:</span>
-                <a href="https://www.instagram.com/lokesh_ragutla96?igsh=ZHY2ZmcyZG1leGRh" target="_blank" title="Instagram" style="color: #C13584; font-size: 1.4em;">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://x.com/lokeshragutla2?t=zNATjgNQnXrpWt6T4ZcCxQ&s=09" target="_blank" title="Twitter" style="color: #1DA1F2; font-size: 1.4em;">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://www.threads.net/@lokesh_ragutla96" target="_blank" title="Threads" style="color: #ffffff; font-size: 1.4em;">
-                    <i class="fas fa-at"></i>
-                </a>
+    <header>
+        <a href="index.html" class="logo-title">
+            <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
+            <div>
+                <h1>NoteNest</h1>
+                <p class="subtitle">Your Smart Note Keeper</p>
             </div>
-        </header>
-
-
-
-    <!-- Everything below this is unchanged -->
-    <!-- Your nav, main, footer, styles, scripts remain exactly the same -->
-
-    <!-- [ The rest of your existing code continues here... ] -->
+        </a>
+        <div class="header-icons" style="display: flex; align-items: center; gap: 10px;">
+            <span style="font-size: 0.95em; font-weight: 500; margin-right: 8px; color: #ffffff;">Follow us on:</span>
+            <a href="https://www.instagram.com/lokesh_ragutla96?igsh=ZHY2ZmcyZG1leGRh" target="_blank" title="Instagram" style="color: #C13584; font-size: 1.4em;">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://x.com/lokeshragutla2?t=zNATjgNQnXrpWt6T4ZcCxQ&s=09" target="_blank" title="Twitter" style="color: #1DA1F2; font-size: 1.4em;">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.threads.net/@lokesh_ragutla96" target="_blank" title="Threads" style="color: #ffffff; font-size: 1.4em;">
+                <i class="fas fa-at"></i>
+            </a>
+        </div>
+    </header>
 
     <nav>
         <ul class="navigation">
@@ -52,7 +45,8 @@
             <li class="category"><a href="taxrelated.html"><i class="fas fa-file-invoice-dollar"></i> Tax Related</a></li>
             <li class="category"><a href="goals.html"><i class="fas fa-bullseye"></i> Goals</a></li>
             <li class="category"><a href="travelplans.html"><i class="fas fa-plane"></i> Travel Plans</a></li>
-            <li class="category"><a href="todo.html"><i class="fas fa-tasks"></i> To-Do</a></li> <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
+            <li class="category"><a href="todo.html"><i class="fas fa-tasks"></i> To-Do</a></li>
+            <li class="category"><a href="reports.html"><i class="fas fa-chart-pie"></i> Reports</a></li>
         </ul>
     </nav>
 
@@ -69,20 +63,20 @@
             </h3>
             <div class="slideshow-container">
                 <div id="tripSlides" class="trip-slides">
-                
-                        <!-- social icons here -->
-            
-
                     </div>
 
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-                <div style="text-align:center; margin-top: 15px;" id="slideshow-dots">
-                    </div>
+                <div id="slideshow-dots" class="slideshow-dots">
+                </div>
             </div>
-        
+            <div id="noUpcomingTripsMessage" class="info-message hidden">
+                <p>No upcoming travel plans. Start planning your next adventure!</p>
+                <p><a href="travelplans.html">Go to Travel Plans page to add.</a></p>
+            </div>
         </section>
+
 
         <section class="create-note-section card-style">
             <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
@@ -104,7 +98,7 @@
                 <form id="noteForm" class="note-form">
                     <div class="form-group">
                         <label for="noteDate">Note Date:</label>
-                        <input type="date" id="noteDate" required value="2025-07-12"/>
+                        <input type="date" id="noteDate" required />
                     </div>
 
                     <div class="form-group">
@@ -201,7 +195,7 @@
             </div>
 
             <div id="cardViewContainer" class="note-card-grid-container">
-                </div>
+            </div>
 
             <div id="tableViewContainer" class="notes-table-container hidden-view">
                 <table class="notes-table">
@@ -219,7 +213,7 @@
                         </tr>
                     </thead>
                     <tbody id="notesTableBody">
-                        </tbody>
+                    </tbody>
                 </table>
             </div>
         </section>
@@ -230,292 +224,6 @@
     </footer>
 
     <script src="script.js"></script>
-
-    <style>
-        /* Basic styling for the slideshow */
-        .slideshow-container {
-            max-width: 100%;
-            position: relative;
-            margin: auto;
-            overflow: hidden;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
-            background-color: #fff;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .trip-slides {
-            display: flex; /* Changed to flex for proper horizontal slide arrangement */
-            transition: transform 0.5s ease-in-out;
-            width: 100%; /* Ensures inner container takes full width */
-        }
-
-        .trip-slide {
-            min-width: 100%; /* Each slide takes full width of its container */
-            flex-shrink: 0; /* Prevent slides from shrinking */
-            box-sizing: border-box;
-            text-align: center;
-            padding: 20px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            border: 1px solid #eee;
-            color: #333;
-            transition: opacity 0.6s ease-in-out;
-            display: none; /* Initially hidden, controlled by JS */
-        }
-
-        .trip-slide h4 {
-            color: #2c3e50;
-            margin-bottom: 10px;
-            font-size: 1.4em;
-        }
-
-        .trip-slide p {
-            margin-bottom: 8px;
-            font-size: 1em;
-            color: #555;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .trip-slide p i {
-            margin-right: 8px;
-            color: #007bff;
-            font-size: 1.1em;
-        }
-
-        /* Status badges */
-        .status-planning {
-            background-color: #ffc107; /* Yellow */
-            color: #333;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-        .status-booked {
-            background-color: #28a745; /* Green */
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-        .status-completed {
-            background-color: #6c757d; /* Grey */
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-        .status-cancelled {
-            background-color: #dc3545; /* Red */
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-weight: 600;
-            font-size: 0.9em;
-        }
-
-
-        /* Next & previous buttons */
-        .prev, .next {
-            cursor: pointer;
-            position: absolute;
-            top: 50%;
-            width: auto;
-            padding: 16px;
-            margin-top: -22px;
-            color: #555;
-            font-weight: bold;
-            font-size: 24px;
-            transition: 0.6s ease;
-            border-radius: 0 3px 3px 0;
-            user-select: none;
-            background-color: rgba(0,0,0,0.1);
-        }
-
-        /* Position the "next button" to the right */
-        .next {
-            right: 0;
-            border-radius: 3px 0 0 3px;
-        }
-
-        /* On hover, add a black background color with a little more opacity */
-        .prev:hover, .next:hover {
-            background-color: rgba(0,0,0,0.3);
-            color: white;
-        }
-
-        /* The dots/bullets/indicators */
-        .dot {
-            cursor: pointer;
-            height: 12px;
-            width: 12px;
-            margin: 0 4px;
-            background-color: #bbb;
-            border-radius: 50%;
-            display: inline-block;
-            transition: background-color 0.6s ease;
-        }
-
-        .active {
-            background-color: #717171;
-        }
-
-        /* Fading animation */
-        .fade {
-            animation-name: fade;
-            animation-duration: 1.5s;
-        }
-
-        @keyframes fade {
-            from {opacity: .4}
-            to {opacity: 1}
-        }
-
-        /* Adjustments for no trips found */
-        .upcoming-trips-section #noUpcomingTripsMessage {
-            display: block; /* Always show if no trips, hidden by JS if trips exist */
-            margin-top: 20px;
-            font-style: italic;
-            color: #777;
-        }
-        .upcoming-trips-section .slideshow-container {
-            display: block; /* Ensure container is block */
-        }
-        /* Override previous hidden class if it existed on the section itself */
-        #upcoming-trips-section.hidden {
-            display: block !important; /* Ensure the section is visible for the message to show */
-        }
-        .info-message.hidden {
-            display: none !important;
-        }
-
-        /* Add New Trip link styling */
-        .add-trip-link {
-            font-size: 0.9em;
-            margin-left: 15px;
-            text-decoration: none;
-            color: #007bff;
-            display: inline-flex;
-            align-items: center;
-            transition: color 0.3s ease;
-        }
-
-        .add-trip-link:hover {
-            color: #0056b3;
-        }
-
-        .add-trip-link i {
-            margin-right: 5px;
-            font-size: 1.1em;
-        }
-    </style>
-    <style>
-    .trip-card-container {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .trip-card {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      padding: 15px;
-      width: 280px;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .trip-card h3 {
-      margin-top: 0;
-      font-size: 1.2em;
-      color: #444;
-    }
-
-    .trip-card p {
-      margin: 6px 0;
-      font-size: 0.95em;
-      color: #555;
-    }
-
-    /* Styling for highlighted words in Quick Create Note description */
-    .highlight-expenses {
-        color: #dc3545; /* Red, similar to expenses card */
-        font-weight: 600;
-    }
-
-    .highlight-income {
-        color: #28a745; /* Green, similar to income card */
-        font-weight: 600;
-    }
-
-    .highlight-casual {
-        color: #007bff; /* Blue, similar to casual notes card */
-        font-weight: 600;
-    }
-
-    .highlight-bills {
-        color: #6f42c1; /* Purple */
-        font-weight: 600;
-    }
-
-    .highlight-debts {
-        color: #fd7e14; /* Orange */
-        font-weight: 600;
-    }
-
-    .highlight-goals {
-        color: #20c997; /* Teal/Aqua */
-        font-weight: 600;
-    }
-
-    .highlight-travel {
-        color: #17a2b8; /* Cyan */
-        font-weight: 600;
-    }
-
-    .highlight-reports {
-        color: #6c757d; /* Grey */
-        font-weight: 600;
-    }
-
-    </style>
-    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const container = document.getElementById("planningTripsContainer");
-      if (!container) return;
-
-      const travelPlans = JSON.parse(localStorage.getItem("travelPlans")) || [];
-
-      const filteredPlans = travelPlans.filter(plan =>
-        plan.status === "Planning" || plan.status === "Booked"
-      );
-
-      if (filteredPlans.length === 0) {
-        container.innerHTML = "<p>No Planning or Booked trips yet.</p>";
-        return;
-      }
-
-      filteredPlans.forEach(plan => {
-        const card = document.createElement("div");
-        card.className = "trip-card";
-        card.innerHTML = `
-          <h3>${plan.planTitle}</h3>
-          <p><strong>Destination:</strong> ${plan.destination}</p>
-          <p><strong>Dates:</strong> ${plan.startDate} to ${plan.endDate}</p>
-          <p><strong>Status:</strong> ${plan.status}</p>
-        `;
-        container.appendChild(card);
-      });
-    });
-    </script>
-
 
 </body>
 </html>
