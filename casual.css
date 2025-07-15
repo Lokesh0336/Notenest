@@ -1,200 +1,535 @@
-/* General body */
+/* General Body and Container Styles - Adapted from debts.css */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f8f9;
-  margin: 0;
-  padding: 0;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f7f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* Header */
-header {
-  background-color: #2e8b57;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ccc;
-  flex-wrap: wrap;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-}
-
-.logo img {
-  width: 32px;
-  margin-right: 10px;
-}
-
-.logo h1 {
-  font-size: 20px;
-  margin: 0;
-}
-
-.header-links {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
-
-.back-link,
-.report-link {
-  background-color: white;
-  color: #2e8b57;
-  text-decoration: none;
-  padding: 6px 12px;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 13px;
-}
-
-/* Main container */
 main {
-  padding: 20px;
+    flex: 1;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
+    display: grid; /* Use grid for main content layout */
+    gap: 30px; /* Space between form and list cards */
+    grid-template-columns: 1fr; /* Default to single column on small screens */
 }
 
-/* Form container */
+/* Adjust grid for larger screens for main content */
+@media (min-width: 992px) {
+    main {
+        grid-template-columns: 1fr 2fr; /* Form (1 part) and List (2 parts) */
+    }
+}
+
+/* --- Keyframe Animations - Consistent with debts.css --- */
+@keyframes icon-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes arrow-move-left {
+    0%, 100% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-8px);
+    }
+}
+
+/* Header Styles - Consistent with NoteNest global header */
+header {
+    background-color: #2c3e50; /* Dark blue/grey */
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    font-family: 'Poppins', sans-serif; /* Ensure font is applied */
+}
+
+.logo-title { /* Added this for consistency with index and debts */
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+}
+
+.logo-title img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.logo-title h1 {
+    font-size: 24px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.logo-title .subtitle { /* Added this for consistency with index and debts */
+    font-family: 'Caveat', cursive;
+    font-size: 18px;
+    margin: -5px 0 0 0;
+    color: #a7d9f7; /* Lighter blue for subtitle */
+}
+
+
+/* Header Links/Buttons - Similar to header-buttons in debts.css */
+.header-buttons { /* Renamed from header-links for consistency */
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.header-btn { /* Renamed from header-links a for consistency */
+    background-color: #3498db; /* Blue */
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.header-btn:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: translateY(-2px); /* Lift effect on hover */
+}
+
+/* Apply bounce animation to icons inside header buttons on hover */
+.header-btn:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Specific animation for back arrow icon */
+.header-btn.dashboard-icon-arrow-left:hover i { /* Add this class to your HTML arrow icon if needed, currently using generic header-btn:hover i */
+    animation: arrow-move-left 0.8s ease-in-out infinite;
+    will-change: transform;
+}
+
+
+/* Form Container Styles - Similar to form-card in debts.css */
 .form-container {
-  margin-bottom: 30px;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    grid-column: 1 / 2; /* Occupy the first column in grid */
+    height: fit-content; /* Adjust height to content */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Banner layout */
-.casual-banner-section {
-  display: flex;
-  align-items: center;
-  gap: 30px;
-  margin: 20px 0;
-  flex-wrap: wrap;
+.form-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-.casual-banner-left {
-  max-width: 300px;
-  flex-shrink: 0;
+
+.form-container h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.casual-banner-left img {
-  width: 100%;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* Animation for icons within form/list card headings */
+.form-container h2:hover i,
+.list-container h2:hover i { /* Changed from h3 to h2 for consistency with debts.html */
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
 }
 
-.casual-banner-text {
-  max-width: 500px;
-  color: #333;
-  font-size: 16px;
-}
 
-.casual-banner-text h3 {
-  margin-bottom: 10px;
-  color: #2e8b57;
-}
-
-.casual-banner-text ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.casual-banner-text li {
-  margin-bottom: 8px;
-  display: flex;
-  align-items: center;
-}
-
-/* Form inputs */
-form label {
-  display: block;
-  margin-top: 10px;
-  font-weight: bold;
-}
-
-form input,
-form select,
-form textarea {
-  width: 100%;
-  padding: 10px;
-  font-size: 14px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-}
-
-form button {
-  margin-top: 15px;
-  padding: 10px 16px;
-  background-color: #2e8b57;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-form button:hover {
-  background-color: #256f48;
-}
-
-/* Notes list */
-.list-container {
-  margin-top: 30px;
-}
-
-.casual-entry {
-  background-color: #fff;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 6px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 12px;
-  font-size: 14px;
-  background-color: #f1f1f1;
-  color: #444;
-  margin-top: 30px;
-}
+/* Note Form Layout for image and form */
 .note-form-layout {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 30px;
-  align-items: flex-start;
-  justify-content: center;
+    display: flex;
+    flex-direction: column; /* Default to column on small screens */
+    gap: 20px;
+}
+
+.note-image {
+    flex: 1; /* Image takes one part */
+    min-width: 200px; /* Ensure image has some minimum size */
 }
 
 .note-image img {
-  max-width: 260px;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    display: block; /* Remove extra space below image */
 }
 
-.note-form-layout form,
-.note-form-layout .export-bar {
-  flex: 1 1 360px;
+/* Adjust layout for larger screens */
+@media (min-width: 768px) {
+    .note-form-layout {
+        flex-direction: row; /* Row layout on larger screens */
+        align-items: flex-start; /* Align items to the top */
+    }
+    #casualForm {
+        flex: 2; /* Form takes two parts */
+    }
 }
 
-form .small-button,
-.export-bar .small-button {
-  padding: 10px 16px;
-  font-size: 0.95em;
-  width: fit-content;
-  margin: 10px 0;
-  background-color: #28a745;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
+
+/* Form Element Styles - Consistent with debts.css forms */
+#casualForm label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    margin-top: 15px; /* Add some spacing above labels */
 }
 
-form .small-button:hover,
-.export-bar .small-button:hover {
-  background-color: #218838;
+#casualForm input[type="text"],
+#casualForm select,
+#casualForm textarea {
+    width: calc(100% - 24px); /* Adjust for padding and border (12px padding + 1px border on each side = 2 * (12+1) = 26px, but for 1px border it's 2*12 + 2*1 = 26px total horiz. space) */
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #333;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    margin-bottom: 15px; /* Spacing below inputs */
+}
+
+#casualForm input[type="text"]:focus,
+#casualForm select:focus,
+#casualForm textarea:focus {
+    border-color: #6a6a99; /* A new shade of blue/purple for casual focus */
+    box-shadow: 0 0 0 3px rgba(106, 106, 153, 0.2);
+    outline: none;
+}
+
+#casualForm textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.small-button {
+    background-color: #6a6a99; /* Purple-blue for add button */
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+    margin-top: 20px;
+}
+
+.small-button:hover {
+    background-color: #555580; /* Darker purple-blue on hover */
+    transform: translateY(-2px);
+}
+
+/* Animation for add button icon on hover */
+.small-button:hover i {
+    animation: icon-bounce 0.7s ease-in-out infinite;
+    will-change: transform;
+}
+
+
+/* List Container Styles - Similar to list-card in debts.css */
+.list-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    grid-column: 1 / -1; /* Span full width by default or 2nd column on larger screens */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (min-width: 992px) {
+    .list-container {
+        grid-column: 2 / 3; /* Occupy the second column on larger screens */
+    }
+}
+
+.list-container:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+.list-container h2 { /* Changed from h3 to h2 for consistency with debts.html */
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.info-message { /* Added for consistency with debts.css */
+    text-align: center;
+    padding: 30px;
+    background-color: #fff8e1; /* Very light yellow for info */
+    border: 1px dashed #ffecb3;
+    border-radius: 8px;
+    color: #ff8f00; /* Darker yellow for text */
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Individual Note Card Design - Similar to debt-card */
+#casualList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjusted for notes */
+    gap: 20px;
+    margin-top: 20px;
+}
+
+/* Removed the #casualList p style here, it's now handled by .info-message */
+
+
+.note-card {
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 5px solid #6a6a99; /* Casual note specific border color */
+}
+
+.note-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.note-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #eee; /* Subtle separator */
+    padding-bottom: 10px;
+}
+
+.note-card h4 {
+    color: #2c3e50;
+    margin: 0;
+    font-size: 18px;
+    word-break: break-word;
+    flex-grow: 1; /* Allow title to take space */
+    padding-right: 10px;
+}
+
+.note-type {
+    background-color: #e0e0f2; /* Light purple-blue for type tag */
+    color: #4a4a80;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap; /* Prevent wrapping */
+}
+
+.note-content {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+    margin-bottom: 15px; /* Space before actions */
+    flex-grow: 1; /* Allows content to push actions to bottom */
+    white-space: pre-wrap; /* Preserves whitespace and line breaks */
+}
+
+.note-date {
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.note-card-actions {
+    display: flex;
+    justify-content: flex-end; /* Align actions to the right */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.note-card-actions .action-button {
+    background-color: #4CAF50; /* Green for Edit */
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex; /* To align icon */
+    align-items: center;
+    gap: 5px; /* Space between icon and text */
+}
+
+.note-card-actions .action-button:hover {
+    transform: translateY(-2px);
+}
+
+.note-card-actions .action-button:nth-child(2) { /* Targeting the second button (Delete) */
+    background-color: #dc3545; /* Red for Delete */
+}
+
+.note-card-actions .action-button:nth-child(2):hover {
+    background-color: #c82333;
+}
+
+/* Animation for action button icons within cards on hover */
+.note-card-actions .action-button:hover i {
+    animation: icon-bounce 0.5s ease-in-out forwards;
+    will-change: transform;
+}
+
+
+/* Export Buttons - Copied from debts.css */
+.export-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.export-btn {
+    background-color: #6c757d; /* Grey */
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.export-btn:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Animation for export button icons on hover */
+.export-btn:hover i {
+    animation: icon-bounce 0.6s ease-in-out infinite;
+    will-change: transform;
+}
+
+/* Footer Styles - Consistent with debts.css */
+footer {
+    margin-top: 30px;
+    padding: 15px;
+    background-color: #2c3e50;
+    color: #f4f7f6;
+    text-align: center;
+    font-size: 14px;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Adjustments - Adapted for casual.html structure */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+    .header-buttons { /* Changed from header-links for consistency */
+        justify-content: center;
+        width: 100%;
+    }
+    .header-btn { /* Changed from header-links a for consistency */
+        flex-grow: 1;
+        justify-content: center;
+    }
+    main {
+        padding: 15px;
+    }
+    .form-container, .list-container {
+        padding: 20px;
+    }
+    .form-container h2, .list-container h2 { /* Changed from h3 to h2 */
+        font-size: 20px;
+    }
+    #casualForm input[type="text"],
+    #casualForm select,
+    #casualForm textarea {
+        width: calc(100% - 24px);
+    }
+    .small-button {
+        width: 100%;
+    }
+    #casualList {
+        grid-template-columns: 1fr; /* Single column on small screens */
+    }
+    .note-card {
+        padding: 15px;
+    }
+    .note-card h4 {
+        font-size: 16px;
+    }
+    .note-content, .note-date {
+        font-size: 13px;
+    }
+    .note-type {
+        font-size: 11px;
+        padding: 3px 8px;
+    }
+    .note-card-actions .action-button {
+        font-size: 13px;
+        padding: 6px 10px;
+    }
+    .export-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+    .export-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-title h1 {
+        font-size: 20px;
+    }
+    .logo-title .subtitle {
+        font-size: 16px;
+    }
+    .header-btn {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+    .form-container h2, .list-container h2 { /* Changed from h3 to h2 */
+        font-size: 18px;
+    }
 }
