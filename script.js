@@ -14,10 +14,11 @@
 /**
  * @typedef {Object} TravelPlan
  * @property {string} id - Unique ID for the travel plan.
+ * @property {string} planTitle - A title for the trip (e.g., "Europe Adventure").
  * @property {string} destination - The travel destination.
  * @property {string} startDate - Start date of the trip (YYYY-MM-DD).
  * @property {string} endDate - End date of the trip (YYYY-MM-DD).
- * @property {string} budgetCurrency - Currency for the budget.
+ * @property {string} budgetCurrency - Currency for the budget (e.g., '₹', '$').
  * @property {number} budgetAmount - Total budget for the trip.
  * @property {string} status - Current status ('Planning', 'Booked', 'Completed', 'Cancelled').
  * @property {string} [notes] - Optional notes for the travel plan.
@@ -57,7 +58,7 @@ let slideIndex = 0;
 let slideshowInterval;
 const AUTO_SLIDE_DELAY = 5000; // 5 seconds for auto-slide
 
-// Global functions for slideshow navigation
+// Global functions for slideshow navigation (made truly global)
 function plusSlides(n) {
     showSlides(slideIndex += n);
     resetSlideshowTimer();
@@ -68,7 +69,51 @@ function currentSlide(n) {
     resetSlideshowTimer();
 }
 
-// Function to delete notes
+// Function to display specific slide (made truly global)
+function showSlides(n) {
+    const slides = document.getElementsByClassName("trip-slide");
+    const dots = document.getElementsByClassName("dot");
+
+    if (slides.length === 0) { // No slides to show
+        return;
+    }
+
+    if (n > slides.length) { slideIndex = 1 }
+    if (n < 1) { slideIndex = slides.length }
+
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+    }
+    for (let i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+
+    // Ensure slideIndex is valid for array access
+    if (slideIndex - 1 >= 0 && slideIndex - 1 < slides.length) {
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+    }
+}
+
+// Function to start the automatic slideshow (made truly global)
+function startSlideshow() {
+    clearInterval(slideshowInterval); // Ensure only one interval is running
+    const slides = document.getElementsByClassName("trip-slide");
+    if (slides.length > 0) { // Only start if there are slides
+        slideshowInterval = setInterval(() => {
+            plusSlides(1);
+        }, AUTO_SLIDE_DELAY);
+    }
+}
+
+// Function to reset the slideshow timer on manual navigation (made truly global)
+function resetSlideshowTimer() {
+    clearInterval(slideshowInterval);
+    startSlideshow();
+}
+
+
+// Function to delete notes (made truly global)
 function deleteNote(id) {
     if (confirm("Are you sure you want to delete this note?")) {
         /** @type {Note[]} */
@@ -77,11 +122,19 @@ function deleteNote(id) {
         saveNotes(currentNotes);
 
         // Re-render and update UI to reflect changes
-        renderNotes(document.getElementById("filterCategory").value, currentView);
+        // Access elements from within the window.onload scope, or pass them
+        // For simplicity, we'll refetch them if needed, or rely on functions
+        // being called from within the onload scope.
+        // The render and update functions are within the onload scope, so direct call should be fine after initialization.
+        renderNotes(document.getElementById("filterCategory").value, currentView); // currentView needs to be accessible
         updateCategoryChart();
         updateTotals();
     }
 }
+
+// Define variables globally or within the scope where they are used
+let currentView = 'card'; // Set card view as default, needs to be accessible by deleteNote
+let categoryChartInstance; // Needs to be accessible by updateCategoryChart
 
 // Everything within window.onload ensures the DOM is fully loaded before script runs
 window.onload = function () {
@@ -95,8 +148,8 @@ window.onload = function () {
     const dashboardTotalExpenses = document.getElementById('dashboardTotalExpenses');
     const dashboardCasualCount = document.getElementById('dashboardCasualCount');
     const dashboardCasualAmount = document.getElementById('dashboardCasualAmount');
-    const calculatorToggle = document.getElementById('calculator-toggle');
-    const calculatorIframe = document.getElementById('calculator-iframe');
+    // const calculatorToggle = document.getElementById('calculator-toggle'); // This element doesn't seem to be in index.html, comment out if not present
+    // const calculatorIframe = document.getElementById('calculator-iframe'); // This element doesn't seem to be in index.html, comment out if not present
     const noteForm = document.getElementById("noteForm");
     const filterCategorySelect = document.getElementById("filterCategory");
     const noNotesMessage = document.getElementById('noNotesMessage');
@@ -105,11 +158,7 @@ window.onload = function () {
     const upcomingTripsSection = document.getElementById('upcoming-trips-section');
     const tripSlidesContainer = document.getElementById('tripSlides');
     const slideshowDotsContainer = document.getElementById('slideshow-dots');
-    const noUpcomingTripsMessage = document.getElementById('noUpcomingTripsMessage');
-
-
-    // State variable for the current view
-    let currentView = 'card'; // Set card view as default
+    const noUpcomingTripsMessage = document.getElementById('noUpcomingTripsMessage'); // Corrected ID
 
     // Function to save notes to localStorage
     function saveNotes(notesArray) {
@@ -191,8 +240,8 @@ window.onload = function () {
             const div = document.createElement("div");
             div.className = `note-card ${note.category.toLowerCase().replace(/\s/g, '-')}`;
             const amountDisplay = (note.category === 'Casual Note' && (note.amount || 0) === 0)
-                                        ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
-                                        : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
+                                    ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
+                                    : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
 
             div.innerHTML = `
                 <h4>${note.title}</h4>
@@ -217,7 +266,11 @@ window.onload = function () {
                                             : `${note.currency}${(note.amount || 0).toFixed(2)}`;
 
             const amountClass = note.category === 'Expenses' ? 'expense-amount-table' : (note.category === 'Income' ? 'income-amount-table' : '');
-            const [currencySymbol, countryName] = note.currencyCountry ? note.currencyCountry.split(" - ") : [note.currency, note.country];
+            // Corrected: currencyCountry is not directly stored as a single string field on Note, but currency and country are.
+            // If you want a combined display, use the separate fields.
+            const currencySymbol = note.currency || '-';
+            const countryName = note.country || '-';
+
 
             row.innerHTML = `
                 <td>${note.title}</td>
@@ -225,7 +278,7 @@ window.onload = function () {
                 <td>${note.subcategory}</td>
                 <td class="${amountClass}">${tableAmountDisplay}</td>
                 <td>${currencySymbol}</td>
-                <td>${countryName || note.country || '-'}</td>
+                <td>${countryName}</td>
                 <td>${new Date(note.date).toLocaleDateString()}</td>
                 <td>${note.description || '-'}</td>
                 <td>
@@ -243,7 +296,6 @@ window.onload = function () {
         renderNotes(this.value, currentView);
     });
 
-    let categoryChartInstance;
     function updateCategoryChart() {
         /** @type {Note[]} */
         const notes = JSON.parse(localStorage.getItem("notes")) || [];
@@ -374,14 +426,17 @@ window.onload = function () {
     cardViewBtn.addEventListener('click', () => switchView('card'));
     tableViewBtn.addEventListener('click', () => switchView('table'));
 
-    // Calculator Toggle Functionality
-    calculatorToggle.addEventListener('click', function (event) {
-        event.preventDefault();
-        calculatorIframe.classList.toggle('active');
-        if (calculatorIframe.classList.contains('active')) {
-            calculatorIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    });
+    // // Calculator Toggle Functionality - Commented out as elements are not in index.html
+    // if (calculatorToggle && calculatorIframe) {
+    //     calculatorToggle.addEventListener('click', function (event) {
+    //         event.preventDefault();
+    //         calculatorIframe.classList.toggle('active');
+    //         if (calculatorIframe.classList.contains('active')) {
+    //             calculatorIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    //         }
+    //     });
+    // }
+
 
     // Function to get only upcoming travel plans with 'Planning' or 'Booked' status
     function getUpcomingTrips() {
@@ -410,13 +465,13 @@ window.onload = function () {
         slideshowDotsContainer.innerHTML = ''; // Clear previous dots
         clearInterval(slideshowInterval); // Clear any existing auto-slide interval
 
+        const prevButton = document.querySelector('#upcoming-trips-section .prev');
+        const nextButton = document.querySelector('#upcoming-trips-section .next');
+
         if (upcomingTrips.length === 0) {
             // If no upcoming trips, hide the slideshow container and show the message
             tripSlidesContainer.style.display = 'none';
             slideshowDotsContainer.style.display = 'none';
-            // Hide prev/next buttons only if they exist (prevents error if slideshow-container is hidden)
-            const prevButton = document.querySelector('#upcoming-trips-section .prev');
-            const nextButton = document.querySelector('#upcoming-trips-section .next');
             if (prevButton) prevButton.style.display = 'none';
             if (nextButton) nextButton.style.display = 'none';
             noUpcomingTripsMessage.classList.remove('hidden'); // Show "no trips" message
@@ -424,75 +479,37 @@ window.onload = function () {
             // If trips exist, show the slideshow container and hide the message
             tripSlidesContainer.style.display = 'flex'; // Use flex for horizontal slides
             slideshowDotsContainer.style.display = 'block';
-            const prevButton = document.querySelector('#upcoming-trips-section .prev');
-            const nextButton = document.querySelector('#upcoming-trips-section .next');
             if (prevButton) prevButton.style.display = 'block';
             if (nextButton) nextButton.style.display = 'block';
             noUpcomingTripsMessage.classList.add('hidden'); // Hide "no trips" message
+
+            upcomingTrips.forEach((trip, index) => {
+                const slideDiv = document.createElement('div');
+                slideDiv.className = 'trip-slide fade';
+
+                const startDate = new Date(trip.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                const endDate = new Date(trip.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+
+                slideDiv.innerHTML = `
+                    <h4>${trip.planTitle || trip.destination}</h4>
+                    <p><i class="fas fa-map-marker-alt"></i> Destination: ${trip.destination}</p>
+                    <p><i class="fas fa-calendar-alt"></i> Dates: ${startDate} - ${endDate}</p>
+                    <p><i class="fas fa-money-bill-wave"></i> Budget: ${trip.budgetCurrency}${(trip.budgetAmount || 0).toFixed(2)}</p>
+                    <p><i class="fas fa-tasks"></i> Status: <span class="status-${trip.status.toLowerCase()}">${trip.status}</span></p>
+                    ${trip.notes ? `<p><i class="fas fa-info-circle"></i> Notes: ${trip.notes}</p>` : ''}
+                `;
+                tripSlidesContainer.appendChild(slideDiv);
+
+                const dotSpan = document.createElement('span');
+                dotSpan.className = 'dot';
+                dotSpan.onclick = () => currentSlide(index + 1);
+                slideshowDotsContainer.appendChild(dotSpan);
+            });
+
+            slideIndex = 0; // Reset slide index for fresh start
+            showSlides(1); // Show the first slide
+            startSlideshow(); // Start auto-sliding
         }
-
-
-        upcomingTrips.forEach((trip, index) => {
-            const slideDiv = document.createElement('div');
-            slideDiv.className = 'trip-slide fade';
-
-            const startDate = new Date(trip.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-            const endDate = new Date(trip.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-
-            slideDiv.innerHTML = `
-                <h4>${trip.planTitle || trip.destination}</h4> <p><i class="fas fa-calendar-alt"></i> Dates: ${startDate} - ${endDate}</p>
-                <p><i class="fas fa-money-bill-wave"></i> Budget: ${trip.currency}${(trip.budgetAmount || 0).toFixed(2)}</p>
-                <p><i class="fas fa-tasks"></i> Status: <span class="status-${trip.status.toLowerCase()}">${trip.status}</span></p>
-                ${trip.notes ? `<p><i class="fas fa-info-circle"></i> Notes: ${trip.notes}</p>` : ''}
-            `;
-            tripSlidesContainer.appendChild(slideDiv);
-
-            const dotSpan = document.createElement('span');
-            dotSpan.className = 'dot';
-            dotSpan.onclick = () => currentSlide(index + 1);
-            slideshowDotsContainer.appendChild(dotSpan);
-        });
-
-        slideIndex = 0; // Reset slide index for fresh start
-        showSlides(1); // Show the first slide
-        startSlideshow(); // Start auto-sliding
-    }
-
-    // Function to display specific slide
-    function showSlides(n) {
-        const slides = document.getElementsByClassName("trip-slide");
-        const dots = document.getElementsByClassName("dot");
-
-        if (slides.length === 0) { // No slides to show
-            return;
-        }
-
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        for (let i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-    }
-
-    // Function to start the automatic slideshow
-    function startSlideshow() {
-        clearInterval(slideshowInterval); // Ensure only one interval is running
-        slideshowInterval = setInterval(() => {
-            plusSlides(1);
-        }, AUTO_SLIDE_DELAY);
-    }
-
-    // Function to reset the slideshow timer on manual navigation
-    function resetSlideshowTimer() {
-        clearInterval(slideshowInterval);
-        startSlideshow();
     }
 
     // Initialize the date input to today's date
@@ -510,6 +527,12 @@ window.onload = function () {
         if (event.key === 'travelPlans') {
             console.log("travelPlans localStorage changed. Updating slideshow.");
             renderUpcomingTripsSlideshow();
+        }
+        if (event.key === 'notes') { // Also listen for notes changes
+            console.log("Notes localStorage changed. Updating dashboard.");
+            renderNotes(filterCategorySelect.value, currentView);
+            updateCategoryChart();
+            updateTotals();
         }
     });
 }; // End of window.onload
