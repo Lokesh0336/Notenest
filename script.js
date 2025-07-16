@@ -1,3 +1,5 @@
+// script.js
+
 /**
  * @typedef {Object} Note
  * @property {string} id - A unique identifier for the note.
@@ -14,16 +16,16 @@
 /**
  * @typedef {Object} TravelPlan
  * @property {string} id - Unique ID for the travel plan.
- * @property {string} planTitle - A title for the trip (e.g., "Europe Adventure").
- * @property {string} destination - The travel destination.
+ * @property {string} destinationCountry - The country or main region (e.g., "India", "United States").
+ * @property {string} city - The specific city (e.g., "Hyderabad", "New York").
  * @property {string} startDate - Start date of the trip (YYYY-MM-DD).
  * @property {string} endDate - End date of the trip (YYYY-MM-DD).
  * @property {string} budgetCurrency - Currency for the budget (e.g., '₹', '$').
  * @property {number} budgetAmount - Total budget for the trip.
  * @property {string} status - Current status ('Planning', 'Booked', 'Completed', 'Cancelled').
  * @property {string} [notes] - Optional notes for the travel plan.
+ * @property {string} [reminderTime] - Optional time for a reminder.
  */
-
 
 // Utility function to generate a unique ID
 function generateUniqueId() {
@@ -53,33 +55,38 @@ function populateSubcategories() {
     }
 }
 
-// Slideshow variables
-let slideIndex = 0;
+// Global slideshow variables and functions (for dashboard upcoming trips)
+let slideIndex = 1; // Start with 1 for human-readable slide numbers
 let slideshowInterval;
 const AUTO_SLIDE_DELAY = 5000; // 5 seconds for auto-slide
 
-// Global functions for slideshow navigation (made truly global)
+// Function to navigate slideshow forward/backward
 function plusSlides(n) {
     showSlides(slideIndex += n);
     resetSlideshowTimer();
 }
 
+// Function to go to a specific slide
 function currentSlide(n) {
     showSlides(slideIndex = n);
     resetSlideshowTimer();
 }
 
-// Function to display specific slide (made truly global)
+// Function to display specific slide (for upcoming trips slideshow)
 function showSlides(n) {
-    const slides = document.getElementsByClassName("trip-slide");
+    const slides = document.getElementsByClassName("mySlides");
     const dots = document.getElementsByClassName("dot");
 
-    if (slides.length === 0) { // No slides to show
+    if (slides.length === 0) {
         return;
     }
 
-    if (n > slides.length) { slideIndex = 1 }
-    if (n < 1) { slideIndex = slides.length }
+    if (n > slides.length) {
+        slideIndex = 1;
+    }
+    if (n < 1) {
+        slideIndex = slides.length;
+    }
 
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
@@ -88,32 +95,34 @@ function showSlides(n) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
 
-    // Ensure slideIndex is valid for array access
-    if (slideIndex - 1 >= 0 && slideIndex - 1 < slides.length) {
-        slides[slideIndex - 1].style.display = "block";
+    // Ensure the current slide is displayed as 'flex' for its internal content alignment
+    if (slides[slideIndex - 1]) {
+        slides[slideIndex - 1].style.display = "flex"; // Changed to flex
+    }
+    if (dots[slideIndex - 1]) {
         dots[slideIndex - 1].className += " active";
     }
 }
 
-// Function to start the automatic slideshow (made truly global)
+// Function to start the automatic slideshow
 function startSlideshow() {
-    clearInterval(slideshowInterval); // Ensure only one interval is running
-    const slides = document.getElementsByClassName("trip-slide");
-    if (slides.length > 0) { // Only start if there are slides
+    clearInterval(slideshowInterval); // Clear any existing interval
+    const slides = document.getElementsByClassName("mySlides");
+    if (slides.length > 1) { // Only start if there's more than one slide
         slideshowInterval = setInterval(() => {
             plusSlides(1);
         }, AUTO_SLIDE_DELAY);
     }
 }
 
-// Function to reset the slideshow timer on manual navigation (made truly global)
+// Function to reset the slideshow timer on manual navigation
 function resetSlideshowTimer() {
     clearInterval(slideshowInterval);
     startSlideshow();
 }
 
 
-// Function to delete notes (made truly global)
+// Function to delete notes
 function deleteNote(id) {
     if (confirm("Are you sure you want to delete this note?")) {
         /** @type {Note[]} */
@@ -121,50 +130,53 @@ function deleteNote(id) {
         currentNotes = currentNotes.filter(note => note.id !== id);
         saveNotes(currentNotes);
 
-        // Re-render and update UI to reflect changes
-        // Access elements from within the window.onload scope, or pass them
-        // For simplicity, we'll refetch them if needed, or rely on functions
-        // being called from within the onload scope.
-        // The render and update functions are within the onload scope, so direct call should be fine after initialization.
-        renderNotes(document.getElementById("filterCategory").value, currentView); // currentView needs to be accessible
+        // Re-render notes using the current view (card/table)
+        renderNotes(document.getElementById("filterCategory").value, currentViewNotes);
         updateCategoryChart();
         updateTotals();
     }
 }
 
 // Define variables globally or within the scope where they are used
-let currentView = 'card'; // Set card view as default, needs to be accessible by deleteNote
-let categoryChartInstance; // Needs to be accessible by updateCategoryChart
+let currentViewNotes = 'card'; // Set card view as default for notes
+
+// Needs to be accessible by updateCategoryChart
+let categoryChartInstance;
 
 // Everything within window.onload ensures the DOM is fully loaded before script runs
 window.onload = function () {
     // DOM Element References (caching them for performance)
-    const cardViewContainer = document.getElementById('cardViewContainer');
-    const tableViewContainer = document.getElementById('tableViewContainer');
+    const cardViewContainerNotes = document.getElementById('cardViewContainerNotes');
+    const tableViewContainerNotes = document.getElementById('tableViewContainerNotes');
     const notesTableBody = document.getElementById('notesTableBody');
-    const cardViewBtn = document.getElementById('cardViewBtn');
-    const tableViewBtn = document.getElementById('tableViewBtn');
+    // Renamed IDs for notes view buttons to avoid conflict with travelplans.js
+    const cardViewBtnNotes = document.getElementById('cardViewBtnNotes');
+    const tableViewBtnNotes = document.getElementById('tableViewBtnNotes');
+
     const dashboardTotalIncome = document.getElementById('dashboardTotalIncome');
     const dashboardTotalExpenses = document.getElementById('dashboardTotalExpenses');
     const dashboardCasualCount = document.getElementById('dashboardCasualCount');
     const dashboardCasualAmount = document.getElementById('dashboardCasualAmount');
-    // const calculatorToggle = document.getElementById('calculator-toggle'); // This element doesn't seem to be in index.html, comment out if not present
-    // const calculatorIframe = document.getElementById('calculator-iframe'); // This element doesn't seem to be in index.html, comment out if not present
     const noteForm = document.getElementById("noteForm");
     const filterCategorySelect = document.getElementById("filterCategory");
     const noNotesMessage = document.getElementById('noNotesMessage');
 
     // Elements for upcoming trips slideshow
     const upcomingTripsSection = document.getElementById('upcoming-trips-section');
+    const slideshowContainer = document.querySelector('.slideshow-container'); // Get the container
     const tripSlidesContainer = document.getElementById('tripSlides');
     const slideshowDotsContainer = document.getElementById('slideshow-dots');
-    const noUpcomingTripsMessage = document.getElementById('noUpcomingTripsMessage'); // Corrected ID
+    const noUpcomingTripsMessage = document.getElementById('noUpcomingTripsMessage');
+
+    // Navigation buttons for slideshow (for dashboard upcoming trips)
+    const prevButton = document.querySelector('#upcoming-trips-section .prev');
+    const nextButton = document.querySelector('#upcoming-trips-section .next');
+
 
     // Function to save notes to localStorage
     function saveNotes(notesArray) {
         try {
             localStorage.setItem("notes", JSON.stringify(notesArray));
-            console.log("Notes saved successfully.");
         } catch (e) {
             console.error("Error saving notes to localStorage:", e);
             alert("Could not save notes. Your browser's storage might be full or blocked.");
@@ -206,7 +218,7 @@ window.onload = function () {
         saveNotes(currentNotes);
 
         // Re-render and update all dashboard components
-        renderNotes(filterCategorySelect.value, currentView);
+        renderNotes(filterCategorySelect.value, currentViewNotes);
         updateCategoryChart();
         updateTotals();
 
@@ -217,19 +229,19 @@ window.onload = function () {
     });
 
     // Function to render notes into both card and table views
-    function renderNotes(filter = "All", viewType = currentView) {
+    function renderNotes(filter = "All", viewType = currentViewNotes) {
         /** @type {Note[]} */
         const notes = JSON.parse(localStorage.getItem("notes")) || [];
 
         const sortedNotes = [...notes].sort((a, b) => new Date(b.date) - new Date(a.date));
         const filtered = filter === "All" ? sortedNotes : sortedNotes.filter(n => n.category === filter);
 
-        cardViewContainer.innerHTML = "";
+        cardViewContainerNotes.innerHTML = "";
         notesTableBody.innerHTML = "";
 
         if (filtered.length === 0) {
             noNotesMessage.classList.remove('hidden');
-            cardViewContainer.innerHTML = "";
+            cardViewContainerNotes.innerHTML = "";
             notesTableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #777; padding: 20px;">No notes match your filter.</td></tr>`;
         } else {
             noNotesMessage.classList.add('hidden');
@@ -240,8 +252,8 @@ window.onload = function () {
             const div = document.createElement("div");
             div.className = `note-card ${note.category.toLowerCase().replace(/\s/g, '-')}`;
             const amountDisplay = (note.category === 'Casual Note' && (note.amount || 0) === 0)
-                                    ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
-                                    : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
+                                     ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
+                                     : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
 
             div.innerHTML = `
                 <h4>${note.title}</h4>
@@ -253,7 +265,7 @@ window.onload = function () {
                     <button onclick="deleteNote('${note.id}')" title="Delete Note" class="delete-btn"><i class="fas fa-trash-alt"></i> Delete</button>
                 </div>
             `;
-            cardViewContainer.appendChild(div);
+            cardViewContainerNotes.appendChild(div);
         });
 
         // Populate Table View
@@ -266,11 +278,8 @@ window.onload = function () {
                                             : `${note.currency}${(note.amount || 0).toFixed(2)}`;
 
             const amountClass = note.category === 'Expenses' ? 'expense-amount-table' : (note.category === 'Income' ? 'income-amount-table' : '');
-            // Corrected: currencyCountry is not directly stored as a single string field on Note, but currency and country are.
-            // If you want a combined display, use the separate fields.
             const currencySymbol = note.currency || '-';
             const countryName = note.country || '-';
-
 
             row.innerHTML = `
                 <td>${note.title}</td>
@@ -288,12 +297,12 @@ window.onload = function () {
             notesTableBody.appendChild(row);
         });
 
-        switchView(viewType, false);
+        switchViewNotes(viewType, false); // Use switchViewNotes
     }
 
     // Event listener for filtering notes by category dropdown
     filterCategorySelect.addEventListener("change", function () {
-        renderNotes(this.value, currentView);
+        renderNotes(this.value, currentViewNotes); // Use currentViewNotes
     });
 
     function updateCategoryChart() {
@@ -400,139 +409,196 @@ window.onload = function () {
         dashboardCasualAmount.textContent = casualAmountTotal.toFixed(2);
     }
 
-    // View Switching Logic for Card/Table view
-    function switchView(viewType, triggerRender = true) {
-        currentView = viewType;
+    // View Switching Logic for Card/Table view for NOTES
+    function switchViewNotes(viewType, triggerRender = true) {
+        currentViewNotes = viewType;
 
-        cardViewBtn.classList.remove('active-view');
-        tableViewBtn.classList.remove('active-view');
+        cardViewBtnNotes.classList.remove('active-view');
+        tableViewBtnNotes.classList.remove('active-view');
 
         if (viewType === 'card') {
-            cardViewBtn.classList.add('active-view');
-            cardViewContainer.classList.remove('hidden-view');
-            tableViewContainer.classList.add('hidden-view');
+            cardViewBtnNotes.classList.add('active-view');
+            cardViewContainerNotes.classList.remove('hidden-view');
+            tableViewContainerNotes.classList.add('hidden-view');
         } else {
-            tableViewBtn.classList.add('active-view');
-            cardViewContainer.classList.add('hidden-view');
-            tableViewContainer.classList.remove('hidden-view');
+            tableViewBtnNotes.classList.add('active-view');
+            cardViewContainerNotes.classList.add('hidden-view');
+            tableViewContainerNotes.classList.remove('hidden-view');
         }
 
         if (triggerRender) {
-            renderNotes(filterCategorySelect.value, currentView);
+            renderNotes(filterCategorySelect.value, currentViewNotes);
         }
     }
 
-    // Event listeners for view toggle buttons
-    cardViewBtn.addEventListener('click', () => switchView('card'));
-    tableViewBtn.addEventListener('click', () => switchView('table'));
-
-    // // Calculator Toggle Functionality - Commented out as elements are not in index.html
-    // if (calculatorToggle && calculatorIframe) {
-    //     calculatorToggle.addEventListener('click', function (event) {
-    //         event.preventDefault();
-    //         calculatorIframe.classList.toggle('active');
-    //         if (calculatorIframe.classList.contains('active')) {
-    //             calculatorIframe.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    //         }
-    //     });
-    // }
+    // Event listeners for notes view toggle buttons
+    if (cardViewBtnNotes) { // Check if element exists before adding listener
+        cardViewBtnNotes.addEventListener('click', () => switchViewNotes('card'));
+    }
+    if (tableViewBtnNotes) { // Check if element exists before adding listener
+        tableViewBtnNotes.addEventListener('click', () => switchViewNotes('table'));
+    }
 
 
-    // Function to get only upcoming travel plans with 'Planning' or 'Booked' status
-    function getUpcomingTrips() {
+    // --- CODE FOR UPCOMING TRIPS SLIDESHOW ON DASHBOARD ---
+
+    // Function to render upcoming trips slideshow for the Dashboard
+    function renderDashboardUpcomingTrips() {
         /** @type {TravelPlan[]} */
         const allTravelPlans = JSON.parse(localStorage.getItem("travelPlans") || "[]");
         const today = new Date();
         today.setHours(0, 0, 0, 0); // Normalize today's date to start of day
 
         // Filter for "Planning" or "Booked" status AND start date today or in the future
-        return allTravelPlans.filter(plan => {
+        const upcomingTrips = allTravelPlans.filter(plan => {
             const planStartDate = new Date(plan.startDate);
-            planStartDate.setHours(0, 0, 0, 0); // Normalize plan's start date
+            planStartDate.setHours(0, 0, 0, 0);
+            return (plan.status === 'Planning' || plan.status === 'Booked') && planStartDate >= today;
+        }).sort((a, b) => new Date(a.startDate) - new Date(b.startDate)); // Sort by closest date first
 
-            const isRelevantStatus = plan.status === 'Planning' || plan.status === 'Booked';
-            const isUpcoming = planStartDate >= today;
+        // Debugging: Check how many upcoming trips are found
+        console.log("Found upcoming trips:", upcomingTrips.length, upcomingTrips);
 
-            return isRelevantStatus && isUpcoming;
-        }).sort((a, b) => new Date(a.startDate) - new Date(b.startDate)); // Sort by start date ascending
-    }
 
-    // Function to render the upcoming trips slideshow
-    function renderUpcomingTripsSlideshow() {
-        const upcomingTrips = getUpcomingTrips();
+        if (!slideshowContainer || !tripSlidesContainer || !slideshowDotsContainer || !noUpcomingTripsMessage || !prevButton || !nextButton) {
+            console.error("One or more dashboard upcoming trips elements not found. Skipping dashboard rendering.");
+            return;
+        }
 
         tripSlidesContainer.innerHTML = ''; // Clear previous slides
         slideshowDotsContainer.innerHTML = ''; // Clear previous dots
-        clearInterval(slideshowInterval); // Clear any existing auto-slide interval
-
-        const prevButton = document.querySelector('#upcoming-trips-section .prev');
-        const nextButton = document.querySelector('#upcoming-trips-section .next');
 
         if (upcomingTrips.length === 0) {
-            // If no upcoming trips, hide the slideshow container and show the message
-            tripSlidesContainer.style.display = 'none';
-            slideshowDotsContainer.style.display = 'none';
-            if (prevButton) prevButton.style.display = 'none';
-            if (nextButton) nextButton.style.display = 'none';
-            noUpcomingTripsMessage.classList.remove('hidden'); // Show "no trips" message
+            noUpcomingTripsMessage.classList.remove('hidden');
+            // Hide navigation buttons and dots if no trips
+            prevButton.style.display = 'none';
+            nextButton.style.display = 'none';
+            clearInterval(slideshowInterval); // Stop auto-slide if no trips
+            slideshowContainer.style.display = 'none'; // Hide the entire slideshow container
+            return;
         } else {
-            // If trips exist, show the slideshow container and hide the message
-            tripSlidesContainer.style.display = 'flex'; // Use flex for horizontal slides
-            slideshowDotsContainer.style.display = 'block';
-            if (prevButton) prevButton.style.display = 'block';
-            if (nextButton) nextButton.style.display = 'block';
-            noUpcomingTripsMessage.classList.add('hidden'); // Hide "no trips" message
+            noUpcomingTripsMessage.classList.add('hidden');
+            slideshowContainer.style.display = 'block'; // Show the entire slideshow container
 
-            upcomingTrips.forEach((trip, index) => {
-                const slideDiv = document.createElement('div');
-                slideDiv.className = 'trip-slide fade';
-
-                const startDate = new Date(trip.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-                const endDate = new Date(trip.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-
-                slideDiv.innerHTML = `
-                    <h4>${trip.planTitle || trip.destination}</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Destination: ${trip.destination}</p>
-                    <p><i class="fas fa-calendar-alt"></i> Dates: ${startDate} - ${endDate}</p>
-                    <p><i class="fas fa-money-bill-wave"></i> Budget: ${trip.budgetCurrency}${(trip.budgetAmount || 0).toFixed(2)}</p>
-                    <p><i class="fas fa-tasks"></i> Status: <span class="status-${trip.status.toLowerCase()}">${trip.status}</span></p>
-                    ${trip.notes ? `<p><i class="fas fa-info-circle"></i> Notes: ${trip.notes}</p>` : ''}
-                `;
-                tripSlidesContainer.appendChild(slideDiv);
-
-                const dotSpan = document.createElement('span');
-                dotSpan.className = 'dot';
-                dotSpan.onclick = () => currentSlide(index + 1);
-                slideshowDotsContainer.appendChild(dotSpan);
-            });
-
-            slideIndex = 0; // Reset slide index for fresh start
-            showSlides(1); // Show the first slide
-            startSlideshow(); // Start auto-sliding
+            // Show navigation buttons only if there's more than one trip
+            if (upcomingTrips.length > 1) {
+                prevButton.style.display = 'flex'; // Use flex to center arrow
+                nextButton.style.display = 'flex'; // Use flex to center arrow
+                slideshowDotsContainer.style.display = 'block'; // Show dots
+            } else { // Only one trip, hide arrows and dots
+                prevButton.style.display = 'none';
+                nextButton.style.display = 'none';
+                slideshowDotsContainer.style.display = 'none';
+            }
         }
+
+        upcomingTrips.forEach((plan, index) => {
+            const slideDiv = document.createElement('div');
+            slideDiv.classList.add('mySlides', 'fade', 'dashboard-upcoming-trip-card');
+
+            // --- Refined City/Country Display Logic ---
+            let locationParts = [];
+            // Ensure city and country are treated as valid strings, trimming whitespace
+            const city = (plan.city && typeof plan.city === 'string') ? plan.city.trim() : '';
+            const country = (plan.destinationCountry && typeof plan.destinationCountry === 'string') ? plan.destinationCountry.trim() : '';
+
+            // Debugging: Log the raw values and processed values
+            console.log(`Processing Plan ID: ${plan.id}`);
+            console.log(`  Raw City: '${plan.city}', Raw Country: '${plan.destinationCountry}'`);
+            console.log(`  Trimmed City: '${city}', Trimmed Country: '${country}'`);
+
+            if (city !== '') {
+                locationParts.push(city);
+            }
+            if (country !== '') {
+                locationParts.push(country);
+            }
+            const locationDisplay = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
+            console.log(`  Final Location Display: '${locationDisplay}'`);
+
+
+            // The `trip-details-overlay` will now have a plain background color via CSS
+            slideDiv.innerHTML = `
+                <div class="numbertext">${index + 1} / ${upcomingTrips.length}</div>
+                <div class="trip-details-overlay">
+                     <h4 class="trip-title">${plan.planTitle}</h4>
+                     <p class="trip-destination">${locationDisplay}</p>
+                     <p class="trip-dates">${new Date(plan.startDate).toLocaleDateString()} - ${new Date(plan.endDate).toLocaleDateString()}</p>
+                     <p class="trip-travelers">Travelers: ${(plan.travelers && plan.travelers.length > 0) ? plan.travelers.join(', ') : 'N/A'}</p>
+                     <p class="trip-budget">Budget: ${plan.budgetCurrency || '₹'} ${parseFloat(plan.budgetAmount || 0).toFixed(2)}</p>
+                     <p class="trip-status">Status: <span class="status-${(plan.status || 'Planning').toLowerCase().replace(/\s/g, '-')}">${plan.status || 'Planning'}</span></p>
+                </div>
+            `;
+            tripSlidesContainer.appendChild(slideDiv);
+
+            const dotSpan = document.createElement('span');
+            dotSpan.classList.add('dot');
+            dotSpan.onclick = () => currentSlide(index + 1);
+            slideshowDotsContainer.appendChild(dotSpan);
+        });
+
+        // Initialize slideshow
+        slideIndex = 0; // Reset slide index before showing first slide (showSlides will increment it to 1)
+        showSlides(1); // Show the first slide (which is index 0 in array, but 1 for human count)
+        startSlideshow(); // Start auto-slide (will only run if >1 slide)
     }
 
-    // Initialize the date input to today's date
-    document.getElementById("noteDate").value = new Date().toISOString().split('T')[0];
+    // Expose renderDashboardUpcomingTrips to the global scope if travelplans.js needs to call it
+    window.renderDashboardUpcomingTrips = renderDashboardUpcomingTrips;
 
-    // Initial render calls on page load
-    populateSubcategories(); // Populate subcategories for the default selected category
-    renderNotes("All", "card"); // Render all notes initially in card view
-    updateCategoryChart(); // Update chart with initial data
-    updateTotals(); // Update income/expense totals
-    renderUpcomingTripsSlideshow(); // Render upcoming trips slideshow on page load
+    // Initial renders and updates when the page loads
+    document.getElementById("noteDate").value = new Date().toISOString().split('T')[0]; // Set default date for quick note
+    populateSubcategories(); // Initial population for quick note form
+    renderNotes(filterCategorySelect.value, currentViewNotes); // Render notes (expenses/income/casual)
+    updateCategoryChart(); // Update dashboard chart
+    updateTotals(); // Update dashboard total income/expenses/casual counts
 
-    // Listen for changes in localStorage to update travel plans
-    window.addEventListener('storage', (event) => {
-        if (event.key === 'travelPlans') {
-            console.log("travelPlans localStorage changed. Updating slideshow.");
-            renderUpcomingTripsSlideshow();
-        }
-        if (event.key === 'notes') { // Also listen for notes changes
-            console.log("Notes localStorage changed. Updating dashboard.");
-            renderNotes(filterCategorySelect.value, currentView);
-            updateCategoryChart();
-            updateTotals();
+    // Crucially, call the dashboard trip rendering after all elements are loaded
+    renderDashboardUpcomingTrips();
+
+
+    // Event listener for tab switching to re-render relevant sections
+    document.addEventListener('DOMContentLoaded', () => {
+        const tabButtons = document.querySelectorAll('.tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const tabId = button.dataset.tab;
+
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                tabContents.forEach(content => content.classList.remove('active'));
+
+                button.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+
+                // If the travel plans tab is clicked, re-render it
+                if (tabId === 'travel-plans-section') {
+                    if (typeof renderTravelPlans === 'function') {
+                        renderTravelPlans(); // Ensure the main travel plans table/cards are updated
+                    }
+                }
+                // If the dashboard tab is clicked, re-render it
+                if (tabId === 'dashboard-section') {
+                    renderDashboardUpcomingTrips(); // Refresh dashboard on tab switch
+                }
+            });
+        });
+
+        // Activate default tab on load (e.g., dashboard)
+        const defaultTab = document.querySelector('.tab-button.active');
+        if (defaultTab) {
+            defaultTab.click(); // Simulate a click to activate and render its content
+        } else {
+            // Fallback if no active class, activate the first tab or a specific one
+            const firstTab = document.querySelector('.tab-button');
+            if (firstTab) {
+                firstTab.click();
+            } else {
+                // If no tabs, just render the dashboard content if it's visible by default
+                renderDashboardUpcomingTrips();
+            }
         }
     });
+
 }; // End of window.onload
