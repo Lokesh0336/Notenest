@@ -1,1394 +1,1314 @@
-/* General Body and Container Styles */
+/* style.css */
+
+/* CSS Variables for easier theme management */
+:root {
+    --primary-color: #2c3e50; /* Dark blue-grey */
+    --secondary-color: #34495e; /* Slightly lighter blue-grey */
+    --accent-color: #2980b9; /* Vibrant blue */
+    --success-color: #27ae60; /* Green */
+    --danger-color: #e74c3c; /* Red */
+    --warning-color: #f39c12; /* Orange */
+    --info-color: #3498db; /* Light blue */
+    --background-light: #f4f7f6;
+    --background-card: #ffffff;
+    --border-color: #e0e0e0;
+    --text-color-dark: #333;
+    --text-color-medium: #555;
+    --text-color-light: #666;
+    --shadow-small: 0 2px 4px rgba(0, 0, 0, 0.1);
+    --shadow-medium: 0 5px 15px rgba(0, 0, 0, 0.08);
+    --shadow-large: 0 8px 20px rgba(0, 0, 0, 0.15);
+    --border-radius-small: 5px;
+    --border-radius-medium: 8px;
+    --border-radius-large: 10px;
+}
+
+/* General Body and Font Styles */
 body {
     font-family: 'Poppins', sans-serif;
     margin: 0;
-    padding: 0;
-    background-color: #f4f7f6; /* Light grey background */
-    color: #333; /* Dark grey text */
+    background-color: var(--background-light);
+    color: var(--text-color-dark);
+    line-height: 1.6;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
 }
 
-main {
-    flex: 1; /* Allows main content to grow and push footer down */
-    padding: 20px;
-    max-width: 1200px; /* Max width for content */
-    margin: 20px auto; /* Center main content with some vertical margin */
-    display: flex;
-    flex-direction: column;
-    gap: 30px; /* Space between major sections */
+/* Global Box Sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
-/* --- Header Styles --- */
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Montserrat', sans-serif; /* Or keep Poppins if preferred */
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 0.8em;
+}
+
+/* Paragraphs and Links */
+p {
+    margin-bottom: 1em;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #217dbb; /* Darker accent on hover */
+}
+
+/* Header Styles */
 header {
-    background-color: #2c3e50; /* Dark blue/grey */
-    color: #fff;
-    padding: 15px 20px;
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    flex-wrap: wrap; /* Allow wrapping on smaller screens */
+    box-shadow: var(--shadow-small);
 }
 
-.logo-title {
+header .logo-title {
     display: flex;
     align-items: center;
-    text-decoration: none; /* Remove underline from link */
-    color: #fff;
-    margin-right: 20px; /* Space between logo and other header items */
+    text-decoration: none;
+    color: inherit;
+    gap: 10px;
 }
 
-.logo-title img {
-    height: 40px;
-    margin-right: 10px;
+header .logo-title img {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%; /* Make logo round */
+    object-fit: cover;
 }
 
-.logo-title h1 {
-    font-size: 24px;
+header .logo-title h1 {
     margin: 0;
-    font-weight: 600;
+    font-size: 1.8em;
+    font-weight: 700;
+    line-height: 1.2;
+    color: white; /* Ensure title is white */
 }
 
-.logo-title .subtitle {
-    font-family: 'Caveat', cursive;
-    font-size: 18px;
-    margin: -5px 0 0 0;
-    color: #a7d9f7; /* Lighter blue for subtitle */
+header .logo-title .subtitle {
+    margin: 0;
+    font-size: 0.85em;
+    font-weight: 400;
+    opacity: 0.8;
 }
 
-.header-icons {
-    display: flex;
-    gap: 15px;
+.header-icons a {
+    transition: filter 0.3s ease;
+    color: #ffffff;
+    font-size: 1.5em;
+    margin-left: 15px;
 }
 
-.calculator-button {
-    background-color: #3498db; /* Blue */
-    color: #fff;
-    border: none;
-    border-radius: 50%; /* Circular button */
-    width: 45px;
-    height: 45px;
-    font-size: 20px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease, transform 0.2s ease;
+.header-icons a:hover {
+    filter: brightness(1.2);
 }
 
-.calculator-button:hover {
-    background-color: #2980b9; /* Darker blue on hover */
-    transform: translateY(-2px);
-}
-
-/* --- Navigation Styles --- */
+/* Navigation Styles */
 nav {
-    background-color: #34495e; /* Slightly lighter dark blue/grey for nav */
+    background-color: var(--secondary-color);
     padding: 10px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow-small);
 }
 
 .navigation {
     list-style: none;
-    padding: 0;
     margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
-    flex-wrap: wrap; /* Allow navigation items to wrap */
-    gap: 15px 25px; /* Vertical and horizontal gap */
+    flex-wrap: wrap;
 }
 
-.navigation .category a {
+.navigation li {
+    margin: 0 15px;
+}
+
+.navigation a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ecf0f1;
     text-decoration: none;
-    color: #ecf0f1; /* Light grey text */
-    font-weight: 500;
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 10px 15px;
+    border-radius: var(--border-radius-small);
     transition: background-color 0.3s ease, color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px; /* Space between icon and text */
+    font-weight: 500;
 }
 
-.navigation .category a:hover,
-.navigation .category a.active {
-    background-color: #3498db; /* Blue on hover/active */
-    color: #fff;
+.navigation a:hover,
+.navigation a.active {
+    background-color: var(--accent-color);
+    color: #ffffff;
 }
 
-/* --- Keyframe Animations --- */
-
-@keyframes icon-bounce {
-    0%, 100% {
-        transform: translateY(0); /* Start and end at original position */
-    }
-    50% {
-        transform: translateY(-5px); /* Move up 5 pixels */
-    }
+.navigation a i {
+    font-size: 1.1em;
 }
 
-@keyframes airplane-fly-hover {
-    0%, 100% {
-        transform: translateX(0); /* Start and end at original position */
-    }
-    50% {
-        transform: translateX(8px); /* Move right 8 pixels */
-    }
+/* Main Content Layout */
+main {
+    flex: 1; /* Allows main content to grow */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 20px auto;
 }
 
-/* New: Continuous airplane fly-through animation for Upcoming Trips */
-@keyframes airplane-fly-through {
-    0% {
-        transform: translateX(-100%) translateY(0); /* Start off-screen left of its parent, centered vertically */
-        opacity: 0;
-    }
-    5% {
-        opacity: 1; /* Appear quickly */
-    }
-    95% {
-        transform: translateX(calc(100% + 100vw)) translateY(0); /* Move across and off screen right. calc ensures it fully exits even if parent is narrow */
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(calc(100% + 100vw)) translateY(0);
-        opacity: 0; /* Disappear off-screen */
-    }
-}
-
-
-/* --- Application of Animations --- */
-
-/* For Header Calculator Button Icon */
-.calculator-button:hover i { /* Targeting the <i> tag INSIDE the button */
-    animation: icon-bounce 0.8s ease-in-out infinite; /* Slower, continuous bounce */
-    transform: translateZ(0); /* Performance optimization */
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-/* For Navigation Category Icons */
-.navigation .category a:hover i { /* Targeting the <i> tag INSIDE the link */
-    animation: icon-bounce 0.6s ease-in-out infinite; /* Default bounce for general category icons */
-    transform: translateZ(0); /* Performance optimization */
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-/* Specific rule for the airplane icon in navigation (if exists) */
-.navigation .category a:hover .fa-plane,
-.navigation .category a:hover .fa-plane-departure,
-.navigation .category a:hover .fa-plane-arrival {
-    animation: airplane-fly-hover 1s ease-in-out infinite; /* Airplane flying motion on hover */
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-
-/* For Add Note Button Icon */
-.add-note-button:hover i { /* Targeting the <i> tag INSIDE the button */
-    animation: icon-bounce 0.7s ease-in-out infinite; /* Medium bounce */
-    transform: translateZ(0); /* Performance optimization */
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-/* For Note Intro Description List Item Icons (green checkmarks) */
-.note-intro-description ul li:hover i {
-    animation: icon-bounce 0.5s ease-in-out forwards; /* Bounce once on hover and stay slightly up */
-    transform: translateZ(0); /* Performance optimization */
-    backface-visibility: hidden;
-    perspective: 1000px;
-    will-change: transform;
-}
-
-/* Shaking effect removed from these elements */
-.navigation .category a:hover {
-    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    transform: translateY(-2px); /* Gentle lift instead of shake */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.overview-card:hover {
-    transform: translateY(-5px); /* Gentle lift instead of shake */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-
-/* --- Main Content Sections --- */
-.dashboard-main-content {
+/* Dashboard Specific Layout (assuming grid areas are defined in HTML/JS for dashboard) */
+main.dashboard-main-content {
     display: grid;
-    grid-template-columns: 1fr; /* Default to single column */
-    gap: 30px;
-}
-
-@media (min-width: 992px) {
-    .dashboard-main-content {
-        grid-template-columns: 1fr 2fr; /* Two columns for larger screens */
-        grid-template-areas:
-            "welcome welcome"
-            "upcoming-trips upcoming-trips"
-            "calculator calculator"
-            "create-note dashboard-overview";
-    }
-    .welcome-note { grid-area: welcome; }
-    #upcoming-trips-section { grid-area: upcoming-trips; }
-    .calculator-embed-container { grid-area: calculator; }
-    .create-note-section { grid-area: create-note; }
-    .dashboard-overview-section { grid-area: dashboard-overview; }
-}
-
-/* Calculator Embed */
-.calculator-embed-container {
-    width: 100%;
-    height: 0; /* Initially hidden */
-    transition: height 0.4s ease-out, opacity 0.4s ease-out;
-    opacity: 0;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    overflow: hidden; /* Hide scrollbars if content overflows during transition */
-    margin-top: 0; /* Reset default margin */
-}
-
-.calculator-embed-container.active {
-    height: 450px; /* Height when active */
-    opacity: 1;
-    margin-top: 20px; /* Add margin when visible */
-}
-
-
-/* Welcome Note Section */
-.welcome-note {
-    text-align: center;
-    padding: 40px 20px;
-    background: linear-gradient(45deg, #e0f7fa, #b2ebf2); /* Light blue gradient */
-    border-radius: 15px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-    color: #2c3e50;
-}
-
-.welcome-note h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    position: relative; /* Ensure the aeroplane can be absolutely positioned relative to this H2 */
-    overflow: hidden; /* Hide parts of aeroplane outside H2 bounds */
-}
-
-.welcome-note h2 .highlight {
-    color: #3498db; /* Blue highlight */
-}
-
-.welcome-note .tagline {
-    font-size: 18px;
-    color: #555;
-    margin-top: 0;
-    margin-bottom: 20px;
-}
-
-.welcome-note .creator {
-    font-family: 'Caveat', cursive;
-    font-size: 22px;
-    color: #777;
-    margin-top: 25px;
-}
-
-.welcome-note .lokesh-name {
-    color: #e74c3c; /* Red for name */
-    font-weight: bold;
-}
-
-/* Card Style for Sections */
-.card-style {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-}
-
-.card-style h2, .card-style h3 {
-    color: #2c3e50;
-    margin-top: 0;
-    margin-bottom: 25px;
-    font-size: 24px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-/* --- Crucial for the continuous aeroplane animation --- */
-#upcoming-trips-section {
-    position: relative; /* Set this section as the positioning context for the absolute airplane icon */
-    overflow: hidden; /* Ensure the airplane icon is hidden when outside this section */
-    /* Other styles for #upcoming-trips-section remain as before */
-}
-
-#upcoming-trips-section h2 {
-    position: relative; /* Keeps the H2 content in flow */
-    z-index: 1; /* Ensure text is above the flying airplane if they overlap */
-}
-
-#upcoming-trips-section h2 .fa-plane,
-#upcoming-trips-section h2 .fa-plane-departure,
-#upcoming-trips-section h2 .fa-plane-arrival {
-    position: absolute; /* Take the icon out of normal document flow */
-    top: 50%; /* Center vertically within the H2 */
-    left: -10%; /* Start slightly off-screen to the left (adjust as needed) */
-    transform: translateY(-50%); /* Adjust for vertical centering based on its own height */
-    font-size: 2em; /* Make it visible */
-    color: #3498db; /* Or any other color you prefer for the flying plane */
-    animation: airplane-fly-through 15s linear infinite; /* Increased duration for slower flight, adjust as needed */
-    z-index: 0; /* Ensure it flies *behind* the H2 text if they overlap, or adjust as desired */
-    white-space: nowrap; /* Prevent icon from wrapping */
-    will-change: transform, opacity; /* Performance hint */
-}
-
-
-/* Quick Create Note Section */
-.note-form-layout {
-    display: grid;
+    gap: 25px;
     grid-template-columns: 1fr;
-    gap: 30px;
+    grid-template-areas:
+        "welcome"
+        "trips"
+        "create-note"
+        "overview";
 }
 
 @media (min-width: 768px) {
-    .note-form-layout {
-        grid-template-columns: 1fr 1fr; /* Two columns for intro and form */
+    main.dashboard-main-content {
+        grid-template-columns: 2fr 1fr;
+        grid-template-areas:
+            "welcome welcome"
+            "trips trips"
+            "create-note overview";
     }
+}
+
+@media (min-width: 1024px) {
+    main.dashboard-main-content {
+        grid-template-columns: 3fr 2fr;
+        grid-template-areas:
+            "welcome welcome"
+            "trips trips"
+            "create-note overview";
+    }
+}
+
+.welcome-note { grid-area: welcome; }
+.create-note-section { grid-area: create-note; }
+.dashboard-overview-section { grid-area: overview; }
+#upcoming-trips-section { grid-area: trips; } /* This is the slideshow area */
+
+
+/* Card Style for Sections */
+.card-style {
+    background-color: var(--background-card);
+    padding: 25px;
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+}
+
+.card-style h2, .card-style h3 {
+    color: var(--secondary-color);
+    margin-top: 0;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.6em;
+}
+
+.card-style h3 {
+    font-size: 1.3em;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    justify-content: space-between;
+}
+
+
+/* Welcome Note Specific Styles */
+.welcome-note {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome-note h2 .highlight {
+    color: var(--accent-color);
+}
+
+.welcome-note .tagline {
+    font-style: italic;
+    color: var(--text-color-medium);
+    margin-bottom: 15px;
+}
+
+.welcome-note .creator {
+    font-weight: 500;
+    color: var(--text-color-light);
+}
+
+.welcome-note .lokesh-name {
+    font-family: 'Caveat', cursive; /* Ensure this font is imported if used */
+    font-size: 1.2em;
+    color: var(--danger-color);
+    font-weight: 700;
+}
+
+/* Quick Create Note Section */
+.note-form-layout {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-top: 20px;
 }
 
 .note-intro-description {
-    padding-right: 20px;
-    border-right: 1px solid #eee; /* Separator line */
-}
-
-@media (max-width: 767px) {
-    .note-intro-description {
-        border-right: none;
-        border-bottom: 1px solid #eee; /* Separator for small screens */
-        padding-right: 0;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-    }
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+    padding: 15px;
+    background-color: #ecf0f1;
+    border-radius: var(--border-radius-medium);
 }
 
 .note-intro-description img {
     max-width: 100%;
     height: auto;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-
-.note-intro-description p {
-    font-size: 15px;
-    line-height: 1.6;
-    color: #555;
+    border-radius: var(--border-radius-small);
     margin-bottom: 15px;
 }
 
 .note-intro-description ul {
     list-style: none;
     padding: 0;
-    margin-bottom: 20px;
+    text-align: left;
+    margin-top: 15px;
 }
 
 .note-intro-description ul li {
-    margin-bottom: 10px;
-    font-size: 15px;
-    color: #444;
+    margin-bottom: 8px;
+    color: var(--text-color-medium);
     display: flex;
     align-items: flex-start;
     gap: 8px;
 }
 
 .note-intro-description ul li i {
-    color: #28a745; /* Green checkmark */
-    font-size: 16px;
+    color: var(--success-color);
+    font-size: 1.1em;
     margin-top: 3px;
 }
 
-/* Form Styles */
-.note-form .form-group {
-    margin-bottom: 18px;
+.note-intro-description .highlight-expenses { color: var(--danger-color); font-weight: 600; }
+.note-intro-description .highlight-income { color: var(--success-color); font-weight: 600; }
+.note-intro-description .highlight-casual { color: var(--warning-color); font-weight: 600; }
+.note-intro-description .highlight-bills { color: #8e44ad; font-weight: 600; }
+.note-intro-description .highlight-debts { color: #c0392b; font-weight: 600; }
+.note-intro-description .highlight-goals { color: #3498db; font-weight: 600; }
+.note-intro-description .highlight-travel { color: #1abc9c; font-weight: 600; }
+.note-intro-description .highlight-reports { color: #f1c40f; font-weight: 600; }
+
+
+.note-form {
+    flex: 2;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
-.note-form label {
+.form-group label {
     display: block;
-    margin-bottom: 7px;
-    font-weight: 500;
-    color: #444;
-    font-size: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: var(--text-color-medium);
 }
 
-.note-form input[type="text"],
-.note-form input[type="number"],
-.note-form input[type="date"],
-.note-form select,
-.note-form textarea {
-    width: calc(100% - 24px); /* Adjust for padding and border */
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    color: #333;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-small);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1em;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    color: var(--text-color-dark);
 }
 
-.note-form input[type="text"]:focus,
-.note-form input[type="number"]:focus,
-.note-form input[type="date"]:focus,
-.note-form select:focus,
-.note-form textarea:focus {
-    border-color: #3498db;
-    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--accent-color);
     outline: none;
-}
-
-.note-form textarea {
-    resize: vertical;
-    min-height: 80px;
+    box-shadow: 0 0 5px rgba(41, 128, 185, 0.3);
 }
 
 .add-note-button {
-    background-color: #28a745; /* Green for add button */
-    color: #fff;
-    padding: 12px 25px;
+    background-color: var(--success-color);
+    color: white;
+    padding: 12px 20px;
     border: none;
-    border-radius: 6px;
-    font-size: 18px;
+    border-radius: var(--border-radius-small);
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    width: 100%;
+    font-size: 1.1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
     display: flex;
-    justify-content: center;
     align-items: center;
-    gap: 10px;
-    font-weight: 500;
-    margin-top: 25px;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 10px;
 }
 
 .add-note-button:hover {
-    background-color: #218838; /* Darker green on hover */
-    transform: translateY(-2px);
+    background-color: #229a54;
 }
 
 /* Dashboard Overview Section */
-.overview-cards-grid {
+.dashboard-overview-section .overview-cards-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* Responsive grid */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    margin-bottom: 30px;
-}
-
-.overview-card {
-    background-color: #f8f8f8;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-    text-align: center;
-    transition: transform 0.2s ease; /* Keep existing transform transition */
-}
-
-.overview-card h3 {
-    font-size: 20px;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #2c3e50;
-}
-
-.overview-card .total-amount {
-    font-size: 26px;
-    font-weight: 700;
-    margin: 0;
-}
-
-.income-card { border-bottom: 5px solid #43aa8b; } /* Green border */
-.expenses-card { border-bottom: 5px solid #f94144; } /* Red border */
-.casual-card { border-bottom: 5px solid #577590; } /* Blue-grey border */
-
-.income-card .total-amount { color: #43aa8b; }
-.expenses-card .total-amount { color: #f94144; }
-.casual-card .total-amount { color: #577590; }
-
-/* Chart Styles */
-.chart-container {
-    padding: 25px;
-    margin-bottom: 30px;
-}
-.stats-charts canvas {
-    max-height: 400px; /* Limit chart height */
-    width: 100% !important; /* Override Chart.js inline style */
-    height: auto !important; /* Override Chart.js inline style */
-}
-
-/* Filter and View Toggle */
-.notes-filter-and-view {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
-.notes-filter-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.notes-filter-group label {
-    font-weight: 500;
-    color: #555;
-}
-
-.notes-filter-group select {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 15px;
-    min-width: 150px;
-    background-color: #fff;
-    appearance: none; /* Remove default dropdown arrow */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7l-118%20118.3L18.4%2075.1a17.6%2017.6%200%200%200-25.7%2023.7l130.4%20130.4c6.8%206.8%2017.8%206.8%2024.6%200l130.4-130.4a17.6%2017.6%200%200%200-11.3-30.7z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: 12px auto;
-}
-
-
-.view-toggle-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.view-toggle-button {
-    background-color: #ecf0f1; /* Light grey */
-    color: #2c3e50;
-    padding: 10px 15px;
-    border: 1px solid #bdc3c7;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: 500;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
-}
-
-.view-toggle-button:hover {
-    background-color: #dbe4e6;
-}
-
-.view-toggle-button.active-view {
-    background-color: #3498db; /* Blue for active view */
-    color: #fff;
-    border-color: #3498db;
-}
-
-.view-toggle-button.active-view:hover {
-    background-color: #2980b9;
-}
-
-.info-message {
-    text-align: center;
-    padding: 30px;
-    background-color: #eaf6ff;
-    border: 1px dashed #aed9f7;
-    border-radius: 8px;
-    color: #3498db;
-    font-size: 16px;
     margin-top: 20px;
 }
 
-.info-message.hidden {
-    display: none;
+.overview-card {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: var(--border-radius-medium);
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-color);
 }
 
-/* Note Cards Grid */
-.note-card-grid-container {
+.overview-card h3 {
+    margin-top: 0;
+    font-size: 1.2em;
+    color: var(--secondary-color);
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.overview-card .total-amount {
+    font-size: 1.8em;
+    font-weight: 700;
+    margin-top: 10px;
+    color: var(--primary-color);
+}
+
+.overview-card.income-card .total-amount { color: var(--success-color); }
+.overview-card.expenses-card .total-amount { color: var(--danger-color); }
+.overview-card.casual-card .total-amount { color: var(--warning-color); }
+
+/* Chart Styles */
+.chart-container {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    height: 400px; /* Fixed height for chart */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.chart-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+/* Notes Filter and View Controls */
+.notes-filter-and-view {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    gap: 15px;
+}
+
+.notes-filter-group label {
+    margin-right: 10px;
+    font-weight: 600;
+    color: var(--text-color-medium);
+}
+
+.notes-filter-group select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius-small);
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.95em;
+    background-color: #f8f8f8;
+    color: var(--text-color-dark);
+}
+
+.view-toggle-buttons button {
+    background-color: var(--info-color);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-left: 10px;
+}
+
+.view-toggle-buttons button:hover {
+    background-color: #217dbb;
+    transform: translateY(-2px);
+}
+
+.view-toggle-buttons button.active-view {
+    background-color: var(--primary-color);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Notes Display (Card and Table) */
+.info-message {
+    text-align: center;
+    padding: 20px;
+    background-color: #e0f2f7;
+    border: 1px solid #b3e5fc;
+    border-radius: var(--border-radius-medium);
+    color: #01579b;
+    margin-top: 20px;
+}
+
+.info-message p {
+    margin: 0 0 10px 0;
+}
+
+.info-message a {
+    color: #01579b;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.hidden-view {
+    display: none !important;
+}
+
+/* Card View for Notes */
+#cardViewContainerNotes { /* Renamed from .note-card-grid-container for clarity */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     margin-top: 20px;
 }
 
 .note-card {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
+    background-color: var(--background-card);
     padding: 20px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
 }
 
+.note-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 5px;
+    height: 100%;
+    background-color: #ccc; /* Default border color */
+}
+
+.note-card.expenses-card::before { background-color: var(--danger-color); }
+.note-card.income-card::before { background-color: var(--success-color); }
+.note-card.casual-note-card::before { background-color: var(--warning-color); }
+
+
 .note-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
 }
 
 .note-card h4 {
-    color: #2c3e50;
     margin-top: 0;
-    margin-bottom: 8px;
-    font-size: 19px;
-    word-break: break-word;
-    font-weight: 600;
+    font-size: 1.4em;
+    color: var(--secondary-color);
+    margin-bottom: 10px;
+}
+
+.note-card p {
+    margin: 5px 0;
+    font-size: 0.95em;
+    color: var(--text-color-light);
 }
 
 .note-card .category-info {
-    font-size: 13px;
-    color: #888;
+    font-weight: 600;
+    color: var(--text-color-medium);
     margin-bottom: 10px;
 }
 
 .note-card .card-amount-display {
-    font-size: 22px;
+    font-size: 1.6em;
     font-weight: 700;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
+.note-card .expense-amount { color: var(--danger-color); }
+.note-card .income-amount { color: var(--success-color); }
+.note-card .casual-description-display { font-style: italic; font-size: 0.9em; color: #777;}
+
+
 .note-card .date-country {
-    font-size: 13px;
-    color: #777;
-    margin-bottom: 15px;
+    font-size: 0.85em;
+    color: #888;
+    margin-top: 10px;
 }
 
 .note-card .description-text {
-    font-size: 14px;
-    color: #666;
-    margin-top: 0;
-    margin-bottom: 15px;
-    line-height: 1.5;
-}
-
-.note-card .casual-description-display {
+    font-size: 0.9em;
     font-style: italic;
-    color: #577590;
-    font-size: 15px;
-}
-
-/* Card specific colors */
-.note-card.income { border-left: 5px solid #43aa8b; }
-.note-card.expenses { border-left: 5px solid #f94144; }
-.note-card.casual-note { border-left: 5px solid #577590; }
-
-.expense-amount { color: #f94144; }
-.income-amount { color: #43aa8b; }
-
-.card-actions {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: auto; /* Pushes actions to the bottom */
-}
-
-.card-actions .delete-btn {
-    background-color: #dc3545; /* Red */
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 8px 12px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.card-actions .delete-btn:hover {
-    background-color: #c82333;
-    transform: translateY(-1px);
-}
-
-/* Notes Table */
-.notes-table-container {
-    overflow-x: auto; /* Enable horizontal scrolling for tables on small screens */
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.notes-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-}
-
-.notes-table th,
-.notes-table td {
-    padding: 12px 15px;
-    text-align: left;
-    border-bottom: 1px solid #eee;
-    vertical-align: middle;
-}
-
-.notes-table th {
-    background-color: #3498db; /* Blue header */
-    color: #fff;
-    font-weight: 600;
-    font-size: 15px;
-    white-space: nowrap;
-}
-
-.notes-table tr:nth-child(even) {
+    color: #777;
     background-color: #f9f9f9;
-}
-
-.notes-table tr:hover {
-    background-color: #f1f7fc;
-}
-
-.expense-amount-table { color: #f94144; font-weight: 500; }
-.income-amount-table { color: #43aa8b; font-weight: 500; }
-
-.table-action-btn {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #dc3545; /* Red for delete */
-    padding: 5px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.table-action-btn:hover {
-    background-color: #ffe0e0;
-    color: #a71d2a;
-}
-
-/* Utility Class */
-.hidden-view {
-    display: none;
-}
-
-/* Footer Styles */
-footer {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #2c3e50;
-    color: #f4f7f6;
-    text-align: center;
-    font-size: 14px;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-}
-
-/* --- Responsive Adjustments --- */
-@media (max-width: 991px) {
-    .navigation {
-        justify-content: flex-start; /* Align nav items to start on smaller screens */
-        padding: 0 10px; /* Add some horizontal padding */
-    }
-}
-
-@media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        gap: 15px;
-        text-align: center;
-    }
-    .header-icons {
-        justify-content: center;
-        width: 100%;
-    }
-    .dashboard-main-content {
-        padding: 15px;
-        grid-template-columns: 1fr; /* Stack all sections */
-        grid-template-areas:
-            "welcome"
-            "upcoming-trips"
-            "calculator"
-            "create-note"
-            "dashboard-overview";
-    }
-
-    .welcome-note h2 {
-        font-size: 28px;
-    }
-    .welcome-note .tagline {
-        font-size: 16px;
-    }
-
-    .card-style {
-        padding: 20px;
-    }
-    .card-style h2, .card-style h3 {
-        font-size: 20px;
-        text-align: center;
-        justify-content: center;
-    }
-    .note-intro-description {
-        padding-right: 0;
-        border-right: none;
-        border-bottom: 1px solid #eee;
-        padding-bottom: 20px;
-        margin-bottom: 20px;
-    }
-    .note-form input, .note-form select, .note-form textarea {
-        width: calc(100% - 20px); /* Adjust for smaller padding */
-    }
-
-    .overview-cards-grid {
-        grid-template-columns: 1fr; /* Stack overview cards */
-    }
-    .notes-filter-and-view {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 15px;
-    }
-    .view-toggle-buttons {
-        width: 100%;
-        justify-content: center;
-    }
-    .view-toggle-button {
-        flex-grow: 1; /* Make toggle buttons fill width */
-        justify-content: center;
-    }
-    .notes-table th, .notes-table td {
-        padding: 10px;
-        font-size: 13px;
-    }
-}
-
-@media (max-width: 480px) {
-    .logo-title h1 {
-        font-size: 20px;
-    }
-    .logo-title .subtitle {
-        font-size: 16px;
-    }
-    .navigation .category a {
-        font-size: 14px;
-        padding: 6px 10px;
-        gap: 5px;
-    }
-    .welcome-note h2 {
-        font-size: 24px;
-    }
-    .welcome-note .tagline {
-        font-size: 14px;
-    }
-    .add-note-button {
-        font-size: 16px;
-        padding: 10px 20px;
-    }
-    .note-card h4 {
-        font-size: 17px;
-    }
-    .note-card .card-amount-display {
-        font-size: 20px;
-    }
-    .notes-filter-group select {
-        min-width: unset; /* Remove min-width for very small screens */
-        width: 100%;
-    }
-}
-/* Compact layout for the Quick Create Note form */
-.note-form-layout.compact-layout {
-    padding: 15px 10px;
-}
-
-.note-form .form-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: space-between;
-}
-
-.note-form .form-group {
-    flex: 1 1 200px;
-    min-width: 180px;
-}
-
-.note-form .form-group.wide {
-    flex: 2 1 100%;
-}
-
-.note-form .form-group label {
-    font-weight: 500;
-    margin-bottom: 5px;
-    display: block;
-}
-
-.note-form input,
-.note-form select,
-.note-form textarea {
-    width: 100%;
-    padding: 7px 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
-    font-size: 14px;
-}
-
-.note-form textarea {
-    resize: vertical;
-}
-
-.add-note-button {
+    padding: 8px;
+    border-radius: var(--border-radius-small);
     margin-top: 15px;
-    padding: 10px 18px;
-    background-color: #4CAF50;
+    border-left: 3px solid #ccc;
+}
+
+.note-card .card-actions {
+    margin-top: 15px;
+    text-align: right;
+}
+
+.note-card .card-actions .delete-btn {
+    background-color: var(--danger-color);
     color: white;
-    font-size: 15px;
-    font-weight: 600;
+    padding: 8px 12px;
     border: none;
-    border-radius: 6px;
+    border-radius: var(--border-radius-small);
     cursor: pointer;
-    transition: background 0.3s;
-}
-
-.add-note-button:hover {
-    background-color: #43a047;
-}
-/* General button style for section actions - if not already defined globally */
-.button-primary {
-    background-color: #3498db; /* Blue */
-    color: #fff;
-    padding: 12px 20px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-    text-decoration: none; /* For anchor tags */
-    display: inline-flex; /* Align icon and text */
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-}
-
-.button-primary:hover {
-    background-color: #2980b9;
-    transform: translateY(-2px);
-}
-
-/* To-Do Form Specifics */
-.days-checkbox-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px 15px; /* Adjust spacing as needed */
-    margin-top: 10px;
-}
-
-.days-checkbox-group label {
-    display: flex;
+    font-size: 0.9em;
+    display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-weight: normal; /* Override form label default */
-    color: #555;
-    cursor: pointer;
-}
-
-.days-checkbox-group input[type="checkbox"] {
-    width: auto; /* Allow checkbox to be natural size */
-    margin: 0;
-    accent-color: #3498db; /* Blue accent color for checkboxes */
-}
-
-/* To-Do List Display Filtering */
-.todos-filter-and-view {
-    display: flex;
-    justify-content: flex-end; /* Align filter to right */
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 15px;
-    margin-bottom: 25px;
-}
-
-.todos-filter-group label {
-    font-weight: 500;
-    color: #555;
-}
-
-.todos-filter-group select {
-    padding: 10px 15px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 15px;
-    min-width: 150px;
-    background-color: #fff;
-    appearance: none; /* Remove default browser select arrow */
-    /* Custom arrow for select (SVG data URL) */
-    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23666%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13%205.7l-118%20118.3L18.4%2075.1a17.6%2017.6%200%200%200-25.7%2023.7l130.4%20130.4c6.8%206.8%2017.8%206.8%2024.6%200l130.4-130.4a17.6%2017.6%200%200%200-11.3-30.7z%22%2F%3E%3C%2Fsvg%3E');
-    background-repeat: no-repeat;
-    background-position: right 10px top 50%;
-    background-size: 12px auto;
-}
-
-/* Individual To-Do Item Styling */
-.todo-item {
-    background-color: #fff;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    position: relative;
-}
-
-.todo-item.completed {
-    background-color: #e6ffe6; /* Light green for completed */
-    border-color: #c0f1c0;
-    opacity: 0.8;
-}
-
-.todo-item.completed .todo-item-header h3,
-.todo-item.completed .todo-item-body p,
-.todo-item.completed .todo-item-footer span {
-    text-decoration: line-through;
-    color: #888;
-}
-
-.todo-item-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap; /* Allow wrapping */
-    gap: 10px;
-}
-
-.todo-item-header h3 {
-    margin: 0;
-    font-size: 20px;
-    color: #2c3e50;
-    flex-grow: 1;
-}
-
-.todo-item-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.todo-item-actions button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1.1em;
-    padding: 5px;
-    border-radius: 4px;
     transition: background-color 0.3s ease;
 }
 
-.todo-item-actions .complete-btn {
-    color: #28a745; /* Green */
-}
-.todo-item-actions .complete-btn:hover {
-    background-color: #e6ffe6;
+.note-card .card-actions .delete-btn:hover {
+    background-color: #c0392b;
 }
 
-.todo-item-actions .edit-btn {
-    color: #3498db; /* Blue */
-}
-.todo-item-actions .edit-btn:hover {
-    background-color: #e0f2ff;
+
+/* Table View for Notes */
+#tableViewContainerNotes { /* Container for the table, allows hiding */
+    overflow-x: auto; /* Enables horizontal scroll on small screens */
+    margin-top: 20px;
+    box-shadow: var(--shadow-medium);
+    border-radius: var(--border-radius-large);
+    background-color: var(--background-card);
 }
 
-.todo-item-actions .delete-btn {
-    color: #dc3545; /* Red */
-}
-.todo-item-actions .delete-btn:hover {
-    background-color: #ffe0e0;
+#notesTable { /* The actual table element */
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px; /* Ensures table doesn't get too squished */
 }
 
-.todo-item-body p {
-    margin: 0;
-    font-size: 15px;
-    color: #555;
+#notesTable th,
+#notesTable td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+}
+
+#notesTable th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8em;
+    position: sticky; /* Keeps header visible on scroll */
+    top: 0;
+    z-index: 10;
+}
+
+#notesTable tbody tr:nth-child(even) {
+    background-color: var(--table-row-even-bg);
+}
+
+#notesTable tbody tr:hover {
+    background-color: var(--table-row-hover-bg);
+}
+
+#notesTable .expense-amount-table { color: var(--danger-color); font-weight: 600; }
+#notesTable .income-amount-table { color: var(--success-color); font-weight: 600; }
+
+#notesTable .table-action-btn {
+    background-color: var(--danger-color);
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 0.8em;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.3s ease;
+}
+
+#notesTable .table-action-btn:hover {
+    background-color: #c0392b;
+}
+
+/* --- Travel Plans Section (from travelplans.js) --- */
+.display-section h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: var(--primary-color);
+}
+
+#noTravelPlansMessage {
+    text-align: center;
+    color: var(--text-color-light);
+    font-style: italic;
+    padding: 30px;
+    border: 1px dashed var(--border-color);
+    border-radius: var(--border-radius-medium);
+    margin-top: 20px;
+    background-color: var(--background-card);
+    box-shadow: var(--shadow-small);
+}
+
+/* Travel Plan Cards (main travel plans page) */
+#cardViewContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 10px 0;
+}
+
+.travel-plan-card {
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.travel-plan-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-medium);
+}
+
+.card-image-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+    background-color: #f0f0f0;
+}
+
+.card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+}
+
+.travel-plan-card:hover .card-image {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    color: var(--primary-color);
+}
+
+.card-content p {
+    margin-bottom: 8px;
+    font-size: 0.95em;
+    color: var(--text-color-light);
+}
+
+.card-notes {
+    font-style: italic;
+    color: var(--text-color-lighter);
+    margin-top: 10px;
+    max-height: 70px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reminder-text {
+    color: var(--accent-color);
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 0.9em;
+}
+
+.reminder-text i {
+    margin-right: 5px;
+    font-size: 1.1em;
+}
+
+.card-actions {
+    padding: 15px;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid var(--border-color);
+    justify-content: flex-end;
+    background-color: var(--input-bg);
+}
+
+.card-actions button {
+    padding: 8px 15px;
+    border: none;
+    border-radius: var(--border-radius-small);
+    cursor: pointer;
+    font-size: 0.9em;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.edit-plan-btn {
+    background-color: var(--button-edit-bg);
+    color: white;
+}
+.edit-plan-btn:hover {
+    background-color: var(--button-edit-hover);
+    transform: translateY(-1px);
+}
+
+.delete-plan-btn {
+    background-color: var(--button-delete-bg);
+    color: white;
+}
+.delete-plan-btn:hover {
+    background-color: var(--button-delete-hover);
+    transform: translateY(-1px);
+}
+
+/* Travel Plan Table (main travel plans page) */
+#travelTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: var(--shadow-small);
+    border-radius: var(--border-radius-medium);
+    overflow: hidden; /* For rounded corners */
+    background-color: var(--background-card);
+}
+
+#travelTable th,
+#travelTable td {
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    text-align: left;
+}
+
+#travelTable th {
+    background-color: var(--table-header-bg);
+    color: var(--table-header-text);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85em;
+}
+
+#travelTable tbody tr:nth-child(even) {
+    background-color: var(--table-row-even-bg);
+}
+
+#travelTable tbody tr:hover {
+    background-color: var(--table-row-hover-bg);
+}
+
+#travelTable .edit-plan-btn,
+#travelTable .delete-plan-btn {
+    padding: 6px 10px;
+    font-size: 0.8em;
+}
+
+/* Total Budget Cell */
+#totalBudgetCell {
+    font-weight: bold;
+    color: var(--accent-color);
+    font-size: 1.1em;
+}
+
+/* --- Status Badges (reused for both notes and travel plans) --- */
+.status-planning,
+.status-booked, /* Added for travel plans */
+.status-upcoming,
+.status-completed,
+.status-cancelled {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: white;
+    text-transform: capitalize;
+    text-align: center;
+    min-width: 80px;
+}
+
+.status-planning {
+    background-color: var(--status-planning-bg);
+}
+.status-booked { /* Specific color for booked */
+    background-color: var(--success-color);
+}
+.status-upcoming {
+    background-color: var(--status-upcoming-bg);
+    color: var(--text-color-dark);
+}
+.status-completed {
+    background-color: var(--status-completed-bg);
+}
+.status-cancelled {
+    background-color: var(--status-cancelled-bg);
+}
+
+
+/* --- Traveler Input Management (from travelplans.js) --- */
+.traveler-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.traveler-input-group:last-of-type {
+    margin-bottom: 0;
+}
+
+.traveler-name {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid var(--input-border);
+    border-radius: var(--border-radius-small);
+    font-size: 1em;
+    background-color: white;
+}
+
+.remove-traveler-btn {
+    background: none;
+    border: none;
+    color: var(--button-delete-bg);
+    cursor: pointer;
+    font-size: 1.6em;
+    padding: 0;
+    line-height: 1;
+    transition: color 0.2s ease;
+}
+
+.remove-traveler-btn:hover {
+    color: var(--button-delete-hover);
+}
+
+/* --- Professional Reminder Display (from travelplans.js) --- */
+#professionalReminderDisplay {
+    display: none; /* Hidden by default, shown by JS */
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--reminder-bg);
+    color: white;
+    padding: 18px 30px;
+    border-radius: var(--border-radius-medium);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    max-width: 320px;
+    text-align: center;
+    border-left: 6px solid var(--accent-color);
+    font-family: var(--font-family-body);
+    box-sizing: border-box;
+    overflow: hidden;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    opacity: 0;
+    transform: translateX(100%);
+}
+
+#professionalReminderDisplay h4#reminderTitle {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.3em;
+    color: var(--reminder-title-color);
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+#professionalReminderDisplay p#reminderMessage {
+    margin-bottom: 0;
+    font-size: 1em;
     line-height: 1.5;
 }
 
-.todo-item-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #777;
-    border-top: 1px dashed #eee;
-    padding-top: 10px;
-}
-
-.todo-item-footer .todo-category {
-    font-weight: 500;
-    color: #34495e;
-}
-
-/* Responsive adjustments for To-Dos page */
-@media (max-width: 768px) {
-    .todos-filter-and-view {
-        flex-direction: column;
-        align-items: flex-start;
+/* Keyframe animation for fadeInOut (controlled by JS) */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateX(100%);
     }
-    .todos-filter-group select {
-        width: 100%;
-        min-width: unset;
+    10% {
+        opacity: 1;
+        transform: translateX(0);
     }
-    .todo-item-header {
-        flex-direction: column;
-        align-items: flex-start;
+    90% {
+        opacity: 1;
+        transform: translateX(0);
     }
-    .todo-item-actions {
-        width: 100%;
-        justify-content: flex-end;
+    100% {
+        opacity: 0;
+        transform: translateX(100%);
     }
 }
-/* Styling for highlighted words in Quick Create Note description */
-.highlight-expenses {
-    color: #dc3545; /* Red, similar to expenses card */
-    font-weight: 600;
+
+/* Hide the audio element */
+#alarmSound {
+    display: none;
 }
 
-.highlight-income {
-    color: #28a745; /* Green, similar to income card */
-    font-weight: 600;
-}
-
-.highlight-casual {
-    color: #007bff; /* Blue, similar to casual notes card */
-    font-weight: 600;
-}
-
-.highlight-bills {
-    color: #6f42c1; /* Purple */
-    font-weight: 600;
-}
-
-.highlight-debts {
-    color: #fd7e14; /* Orange */
-    font-weight: 600;
-}
-
-.highlight-goals {
-    color: #20c997; /* Teal/Aqua */
-    font-weight: 600;
-}
-
-.highlight-travel {
-    color: #17a2b8; /* Cyan */
-    font-weight: 600;
-}
-
-.highlight-reports {
-    color: #6c757d; /* Grey */
-    font-weight: 600;
-}
-
-/* You might want to remove the default strong/bold styling from the ul li strong elements
-   if the span's font-weight isn't overriding it correctly.
-   However, wrapping with <span> and applying font-weight: 600 should be sufficient. */
-/* --- Travel Plan Slideshow Styling --- */
-
+/* --- Dashboard Upcoming Trips Slideshow (from script.js) --- */
 #upcoming-trips-section {
-    background-color: #f0f4f8; /* Light background for the section */
-    padding: 30px 20px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-    position: relative; /* For arrow positioning */
-    overflow: hidden; /* Hide overflowing content from slides */
+    padding: 20px;
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-medium);
+    border: 1px solid var(--border-color);
+    position: relative; /* For navigation buttons */
+    overflow: hidden;
 }
 
 #upcoming-trips-section h2 {
     text-align: center;
-    color: #2c3e50;
     margin-bottom: 25px;
-    font-size: 1.8em;
-    font-weight: 700;
+    color: var(--primary-color);
 }
 
 .slideshow-container {
-    position: relative;
     max-width: 800px; /* Adjust as needed */
+    position: relative;
     margin: auto;
-    background-color: #ffffff; /* Background for the active slide area */
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-    padding: 20px; /* Padding inside the container */
-    display: flex; /* Ensures slideDiv.style.display = "block" works like a block in flex context */
-    align-items: center; /* Vertically center content if slides are smaller */
-    justify-content: center; /* Horizontally center content */
-    min-height: 200px; /* Minimum height to prevent collapse */
+    background-color: #f0f0f0; /* Fallback background for container */
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-small);
+    overflow: hidden;
+    min-height: 250px; /* Ensure space for content */
+    display: flex; /* To center content if no slides */
+    align-items: center;
+    justify-content: center;
 }
 
-.trip-slide {
-    display: none; /* Hidden by default */
+#tripSlides {
+    width: 100%;
+    height: 100%;
+}
+
+.mySlides {
+    display: none; /* Controlled by JS */
     text-align: center;
-    padding: 20px 30px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    background-color: #ffffff;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    width: 100%; /* Make slide take full width of its container */
-    box-sizing: border-box; /* Include padding/border in width */
-    color: #333;
+    min-height: 250px; /* Ensure a minimum height for slides */
+    display: flex; /* Use flexbox for content alignment */
+    align-items: center; /* Center vertically */
+    justify-content: center;
+    position: relative; /* For positioning numbertext */
+    color: white; /* Default text color for overlay */
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Enhance text readability */
+    background-color: var(--secondary-color); /* Fallback background if image fails */
 }
 
-.trip-slide h4 {
-    font-size: 1.6em;
-    color: #007bff; /* Primary blue for titles */
-    margin-bottom: 15px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
-}
-
-.trip-slide p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 8px;
-}
-
-.trip-slide p i {
-    margin-right: 8px;
-    color: #6c757d; /* Gray for icons */
-}
-
-/* Status Badges */
-.status-planning {
-    background-color: #ffc107; /* Orange for planning */
-    color: #343a40;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9em;
-    white-space: nowrap; /* Keep status text on one line */
-}
-
-.status-booked {
-    background-color: #28a745; /* Green for booked */
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-.status-completed {
-    background-color: #6c757d; /* Gray for completed */
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-.status-cancelled {
-    background-color: #dc3545; /* Red for cancelled */
-    color: #fff;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-
-/* Next & previous buttons */
-.prev, .next {
-    cursor: pointer;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: auto;
-    padding: 16px;
-    color: #007bff; /* Blue for arrows */
-    font-weight: bold;
-    font-size: 24px;
-    transition: 0.6s ease;
-    border-radius: 0 3px 3px 0;
-    user-select: none;
-    background-color: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(0, 123, 255, 0.3);
-    z-index: 10; /* Ensure arrows are above slides */
-}
-
-.next {
-    right: 0;
-    border-radius: 3px 0 0 3px;
-}
-
-.prev {
-    left: 0;
-}
-
-/* On hover, add a black background with a little more opacity */
-.prev:hover, .next:hover {
-    background-color: rgba(0, 123, 255, 0.2); /* Lighter blue on hover */
-}
-
-/* Dots (indicators) */
-.slideshow-dots {
-    text-align: center;
-    margin-top: 20px;
-}
-
-.dot {
-    cursor: pointer;
-    height: 12px;
-    width: 12px;
-    margin: 0 4px;
-    background-color: #bbb;
-    border-radius: 50%;
-    display: inline-block;
-    transition: background-color 0.6s ease;
-}
-
-.dot.active, .dot:hover {
-    background-color: #007bff; /* Active dot is blue */
-}
-
-/* Fade animation */
+/* Fade animation for slides */
 .fade {
-    animation-name: fade;
-    animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
 }
 
 @keyframes fade {
-    from {opacity: .4}
-    to {opacity: 1}
+  from {opacity: .4}
+  to {opacity: 1}
 }
 
-/* No Upcoming Trips Message */
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.3);
+  border-bottom-right-radius: var(--border-radius-small);
+}
+
+/* Previous/Next buttons */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  background-color: rgba(0,0,0,0.5); /* Semi-transparent background */
+  z-index: 50; /* Ensure buttons are above slides */
+}
+
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+
+/* The dots/circles */
+#slideshow-dots {
+    padding: 10px;
+    text-align: center;
+}
+
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+  background-color: #717171;
+}
+
+/* Styles for trip details inside slideshow (Dashboard) */
+.mySlides .slide-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trip-details-overlay {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-size: cover;
+    background-position: center;
+    color: white;
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: var(--border-radius-medium); /* Match slide container */
+    overflow: hidden;
+}
+
+.trip-details-overlay h4.trip-title {
+    font-size: 2em;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: white; /* Ensure title is white on image */
+}
+
+.trip-details-overlay p {
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.trip-details-overlay p.trip-dates {
+    font-size: 1.2em;
+    font-weight: 500;
+}
+
+.trip-details-overlay p.trip-budget {
+    font-weight: bold;
+    color: #ffd700; /* Gold color for budget */
+}
+
+/* No upcoming trips message for the dashboard */
 #noUpcomingTripsMessage {
     text-align: center;
+    padding: 40px 20px;
+    color: var(--text-color-light);
     font-size: 1.2em;
-    color: #6c757d;
-    padding: 40px;
-    background-color: #e9ecef;
-    border-radius: 8px;
+    background-color: #f0f0f0;
+    border-radius: var(--border-radius-medium);
     margin-top: 20px;
+    box-shadow: var(--shadow-small);
 }
 
-/* Ensure icons display correctly - Font Awesome might be needed */
-.fas {
-    /* Basic styling for Font Awesome icons if not globally defined */
-    display: inline-block;
-    font-style: normal;
-    font-variant: normal;
-    text-rendering: auto;
-    -webkit-font-smoothing: antialiased;
+#noUpcomingTripsMessage p {
+    margin-bottom: 10px;
+}
+
+#noUpcomingTripsMessage i {
+    margin-right: 8px;
+    color: #999;
+}
+
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    nav {
+        padding: 8px 0;
+    }
+
+    .navigation {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .navigation li {
+        margin: 0;
+    }
+
+    main {
+        padding: 15px;
+        margin: 15px auto;
+    }
+
+    .form-section, .card-style, #upcoming-trips-section {
+        padding: 20px;
+    }
+
+    .note-form-layout {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #cardViewContainer, #cardViewContainerNotes {
+        grid-template-columns: 1fr; /* Stack cards on small screens */
+        gap: 20px;
+    }
+
+    .travel-plan-card, .note-card {
+        margin: 0 auto; /* Center single column cards */
+        max-width: 400px; /* Limit width for very large screens in single column */
+    }
+
+    #travelTable th,
+    #travelTable td,
+    #notesTable th,
+    #notesTable td {
+        padding: 8px 10px;
+        font-size: 0.9em;
+    }
+
+    .card-actions {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .card-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    #professionalReminderDisplay {
+        top: auto;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%); /* Center horizontally */
+        right: auto;
+        max-width: 90%;
+        width: 100%;
+        animation: none !important; /* Disable slide animation on small screens */
+        transition: opacity 0.3s ease; /* Use simple fade for small screens */
+        opacity: 1; /* Override initial opacity for responsive */
+    }
+
+    @keyframes fadeInOut { /* Re-define for smaller screens if needed or handle with JS */
+        0% { opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    .form-section h2, .display-section h2, #upcoming-trips-section h2 {
+        font-size: 1.5em;
+    }
+
+    .add-button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .view-toggle-buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+    .view-toggle-buttons button {
+        margin-left: 0;
+        width: 100%;
+        justify-content: center;
+    }
 }
