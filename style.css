@@ -21,6 +21,15 @@
     --border-radius-small: 5px;
     --border-radius-medium: 8px;
     --border-radius-large: 10px;
+
+    /* New/Modified variables for design */
+    --card-gradient-start: #ffffff; /* Lighter start for professional look */
+    --card-gradient-end: #f0f4f8;   /* Subtle grey-blue end */
+    --card-pattern-color-subtle: rgba(0, 0, 0, 0.02); /* Very subtle pattern */
+    --icon-hover-bounce-y: -5px; /* How much icons move up/down */
+    --icon-hover-scale: 1.1;
+    --icon-hover-color: var(--accent-color);
+    --airplane-hover-translate-x: 10px; /* How much the airplane moves back/forth */
 }
 
 /* General Body and Font Styles */
@@ -104,16 +113,29 @@ header .logo-title .subtitle {
     opacity: 0.8;
 }
 
-.header-icons a {
-    transition: filter 0.3s ease;
-    color: #ffffff;
-    font-size: 1.5em;
-    margin-left: 15px;
+/* Icon hover effect in header (Up and Down) */
+/* Target the icon directly within the anchor */
+.header-icons a i {
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.3s ease; /* Bounce effect */
+    display: inline-block; /* Essential for transform to work on inline elements */
 }
 
-.header-icons a:hover {
-    filter: brightness(1.2);
+.header-icons a:hover i {
+    transform: translateY(var(--icon-hover-bounce-y)) scale(var(--icon-hover-scale)); /* Lift and slightly scale on hover */
+    color: var(--accent-color); /* Change color on hover */
 }
+/* Ensure the anchor itself changes color, but icon moves */
+.header-icons a {
+    color: #ffffff; /* Default color */
+    font-size: 1.5em;
+    margin-left: 15px;
+    /* No direct transform on anchor to allow child icon to move independently */
+    transition: color 0.3s ease; /* Smooth color change for anchor */
+}
+.header-icons a:hover {
+    color: var(--accent-color); /* Anchor color changes */
+}
+
 
 /* Navigation Styles */
 nav {
@@ -143,7 +165,7 @@ nav {
     text-decoration: none;
     padding: 10px 15px;
     border-radius: var(--border-radius-small);
-    transition: background-color 0.3s ease, color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
     font-weight: 500;
 }
 
@@ -151,6 +173,7 @@ nav {
 .navigation a.active {
     background-color: var(--accent-color);
     color: #ffffff;
+    transform: translateY(-2px); /* Lift navigation items on hover */
 }
 
 .navigation a i {
@@ -300,10 +323,18 @@ main.dashboard-main-content {
     gap: 8px;
 }
 
+/* Icon hover effect for list items (Up and Down) */
 .note-intro-description ul li i {
     color: var(--success-color);
     font-size: 1.1em;
     margin-top: 3px;
+    display: inline-block; /* Essential for transform */
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.2s ease; /* Bounce effect */
+}
+
+.note-intro-description ul li:hover i {
+    transform: translateY(var(--icon-hover-bounce-y)) scale(var(--icon-hover-scale)); /* Lift and scale icon on hover */
+    color: var(--icon-hover-color); /* Change icon color on hover */
 }
 
 .note-intro-description .highlight-expenses { color: var(--danger-color); font-weight: 600; }
@@ -511,7 +542,7 @@ main.dashboard-main-content {
     display: none !important;
 }
 
-/* Card View for Notes */
+/* Card View for Notes (Professional Design) */
 #cardViewContainerNotes { /* Renamed from .note-card-grid-container for clarity */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -520,23 +551,58 @@ main.dashboard-main-content {
 }
 
 .note-card {
-    background-color: var(--background-card);
-    padding: 20px;
-    border-radius: var(--border-radius-medium);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.07);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 25px; /* Increased padding for more breathing room */
+    border-radius: var(--border-radius-large); /* Slightly larger radius */
+    box-shadow: var(--shadow-medium); /* Professional shadow */
+    border: none; /* Remove default border to let shadow define the edge */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth transitions */
     position: relative;
     overflow: hidden;
+    /* Default background for note cards */
+    background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
+    background-image:
+        linear-gradient(90deg, var(--card-pattern-color-subtle) 1px, transparent 1px),
+        linear-gradient(var(--card-pattern-color-subtle) 1px, transparent 1px);
+    background-size: 20px 20px; /* Adjust grid size */
 }
+
+/* Specific background designs for different note types */
+.note-card.expenses-card {
+    background: linear-gradient(135deg, #fefefe 0%, #ffebeb 100%); /* Light red tint */
+    background-image:
+        linear-gradient(90deg, rgba(231, 76, 60, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(231, 76, 60, 0.03) 1px, transparent 1px);
+    background-size: 25px 25px;
+}
+
+.note-card.income-card {
+    background: linear-gradient(135deg, #fefefe 0%, #e8ffe8 100%); /* Light green tint */
+    background-image:
+        radial-gradient(circle at 100% 0%, rgba(39, 174, 96, 0.05) 5%, transparent 5%),
+        radial-gradient(circle at 0% 100%, rgba(39, 174, 96, 0.05) 5%, transparent 5%);
+    background-size: 30px 30px;
+}
+
+.note-card.casual-note-card {
+    background: linear-gradient(135deg, #fefefe 0%, #fffde8 100%); /* Light yellow tint */
+    background-image:
+        linear-gradient(45deg, var(--card-pattern-color-subtle) 25%, transparent 25%, transparent 75%, var(--card-pattern-color-subtle) 75%, var(--card-pattern-color-subtle)),
+        linear-gradient(45deg, var(--card-pattern-color-subtle) 25%, transparent 25%, transparent 75%, var(--card-pattern-color-subtle) 75%, var(--card-pattern-color-subtle));
+    background-size: 20px 20px;
+    background-position: 0 0, 10px 10px; /* Offset for brick pattern */
+}
+
 
 .note-card::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
-    width: 5px;
+    width: 6px; /* Slightly thicker border */
     height: 100%;
     background-color: #ccc; /* Default border color */
+    border-top-left-radius: var(--border-radius-large);
+    border-bottom-left-radius: var(--border-radius-large);
 }
 
 .note-card.expenses-card::before { background-color: var(--danger-color); }
@@ -545,78 +611,85 @@ main.dashboard-main-content {
 
 
 .note-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-8px); /* More pronounced lift */
+    box-shadow: var(--shadow-large); /* More pronounced shadow on hover */
 }
 
 .note-card h4 {
     margin-top: 0;
-    font-size: 1.4em;
-    color: var(--secondary-color);
-    margin-bottom: 10px;
+    font-size: 1.5em; /* Slightly larger title */
+    color: var(--primary-color); /* Stronger title color */
+    margin-bottom: 12px; /* More space below title */
 }
 
 .note-card p {
-    margin: 5px 0;
-    font-size: 0.95em;
-    color: var(--text-color-light);
+    margin: 6px 0; /* Adjusted vertical margin */
+    font-size: 1em; /* Slightly larger text */
+    color: var(--text-color-medium); /* Better readability */
 }
 
 .note-card .category-info {
     font-weight: 600;
-    color: var(--text-color-medium);
-    margin-bottom: 10px;
+    color: var(--text-color-dark); /* More emphasis on category */
+    margin-bottom: 15px; /* More space */
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(0,0,0,0.05); /* Subtle separator */
 }
 
 .note-card .card-amount-display {
-    font-size: 1.6em;
-    font-weight: 700;
-    margin: 10px 0;
+    font-size: 1.8em; /* Larger amount */
+    font-weight: 800; /* Bolder amount */
+    margin: 15px 0; /* More spacing */
+    letter-spacing: -0.5px; /* Tighter letter spacing */
 }
 
 .note-card .expense-amount { color: var(--danger-color); }
 .note-card .income-amount { color: var(--success-color); }
-.note-card .casual-description-display { font-style: italic; font-size: 0.9em; color: #777;}
+.note-card .casual-description-display { font-style: italic; font-size: 0.95em; color: #777;}
 
 
 .note-card .date-country {
-    font-size: 0.85em;
-    color: #888;
-    margin-top: 10px;
+    font-size: 0.9em; /* Slightly larger date */
+    color: #999; /* Softer color */
+    margin-top: 15px; /* More space */
 }
 
 .note-card .description-text {
-    font-size: 0.9em;
-    font-style: italic;
-    color: #777;
-    background-color: #f9f9f9;
-    padding: 8px;
+    font-size: 0.95em; /* Slightly larger description */
+    font-style: normal; /* Less italic, more standard */
+    color: var(--text-color-light);
+    background-color: #fcfcfc; /* Lighter background */
+    padding: 10px; /* More padding */
     border-radius: var(--border-radius-small);
-    margin-top: 15px;
-    border-left: 3px solid #ccc;
+    margin-top: 20px; /* More spacing */
+    border-left: 4px solid var(--accent-color); /* Accent border */
 }
 
 .note-card .card-actions {
-    margin-top: 15px;
+    margin-top: 20px; /* More space above actions */
     text-align: right;
+    display: flex; /* Use flex to align buttons */
+    justify-content: flex-end;
+    gap: 10px; /* Space between buttons */
 }
 
 .note-card .card-actions .delete-btn {
     background-color: var(--danger-color);
     color: white;
-    padding: 8px 12px;
+    padding: 10px 15px; /* Larger buttons */
     border: none;
     border-radius: var(--border-radius-small);
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 1em; /* Larger font */
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    transition: background-color 0.3s ease;
+    gap: 8px; /* More gap */
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .note-card .card-actions .delete-btn:hover {
     background-color: #c0392b;
+    transform: translateY(-2px); /* Slight lift on hover */
 }
 
 
@@ -644,8 +717,8 @@ main.dashboard-main-content {
 }
 
 #notesTable th {
-    background-color: var(--table-header-bg);
-    color: var(--table-header-text);
+    background-color: var(--secondary-color); /* Changed table header background */
+    color: #ffffff; /* Changed table header text color */
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.8em;
@@ -655,11 +728,11 @@ main.dashboard-main-content {
 }
 
 #notesTable tbody tr:nth-child(even) {
-    background-color: var(--table-row-even-bg);
+    background-color: #f9fbfd; /* Lighter even row background */
 }
 
 #notesTable tbody tr:hover {
-    background-color: var(--table-row-hover-bg);
+    background-color: #eef3f7; /* More visible hover background */
 }
 
 #notesTable .expense-amount-table { color: var(--danger-color); font-weight: 600; }
@@ -702,7 +775,7 @@ main.dashboard-main-content {
     box-shadow: var(--shadow-small);
 }
 
-/* Travel Plan Cards (main travel plans page) */
+/* Travel Plan Cards (main travel plans page) - Professional Design */
 #cardViewContainer {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -711,19 +784,55 @@ main.dashboard-main-content {
 }
 
 .travel-plan-card {
-    background-color: var(--background-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-medium);
-    box-shadow: var(--shadow-small);
+    border: 1px solid var(--border-color); /* Keep a subtle border */
+    border-radius: var(--border-radius-large); /* Consistent with notes card */
+    box-shadow: var(--shadow-medium);
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    /* Default background for travel cards */
+    background: linear-gradient(135deg, var(--card-gradient-start) 0%, var(--card-gradient-end) 100%);
+    background-image:
+        linear-gradient(90deg, var(--card-pattern-color-subtle) 1px, transparent 1px),
+        linear-gradient(var(--card-pattern-color-subtle) 1px, transparent 1px);
+    background-size: 20px 20px; /* Adjust grid size */
 }
 
+/* Specific background designs for travel cards - can be based on status, destination, etc. */
+.travel-plan-card.status-planning {
+    background: linear-gradient(135deg, #fefefe 0%, #eff2f5 100%); /* Light greyish */
+    background-image:
+        linear-gradient(45deg, rgba(149, 165, 166, 0.05) 12.5%, transparent 12.5%, transparent 87.5%, rgba(149, 165, 166, 0.05) 87.5%),
+        linear-gradient(-45deg, rgba(149, 165, 166, 0.05) 12.5%, transparent 12.5%, transparent 87.5%, rgba(149, 165, 166, 0.05) 87.5%);
+    background-size: 20px 20px;
+}
+
+.travel-plan-card.status-booked {
+    background: linear-gradient(135deg, #fefefe 0%, #e6f7ed 100%); /* Light greenish */
+    background-image:
+        radial-gradient(circle, rgba(39, 174, 96, 0.04) 1px, transparent 1px);
+    background-size: 15px 15px;
+}
+
+.travel-plan-card.status-completed {
+    background: linear-gradient(135deg, #fdfdfd 0%, #e9fdfc 100%); /* Light tealish */
+    background-image:
+        repeating-linear-gradient(45deg, rgba(46, 204, 113, 0.03) 0, rgba(46, 204, 113, 0.03) 2px, transparent 2px, transparent 10px);
+    background-size: 25px 25px;
+}
+
+.travel-plan-card.status-cancelled {
+    background: linear-gradient(135deg, #fefefe 0%, #fdecec 100%); /* Light reddish */
+    background-image:
+        repeating-linear-gradient(-45deg, rgba(231, 76, 60, 0.04) 0, rgba(231, 76, 60, 0.04) 2px, transparent 2px, transparent 10px);
+    background-size: 25px 25px;
+}
+
+
 .travel-plan-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-medium);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-large);
 }
 
 .card-image-wrapper {
@@ -746,7 +855,7 @@ main.dashboard-main-content {
 }
 
 .card-content {
-    padding: 15px;
+    padding: 20px; /* Increased padding */
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -754,20 +863,20 @@ main.dashboard-main-content {
 
 .card-content h3 {
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.3em;
+    margin-bottom: 12px;
+    font-size: 1.4em; /* Slightly larger title */
     color: var(--primary-color);
 }
 
 .card-content p {
     margin-bottom: 8px;
-    font-size: 0.95em;
-    color: var(--text-color-light);
+    font-size: 0.98em; /* Slightly larger text */
+    color: var(--text-color-medium);
 }
 
 .card-notes {
     font-style: italic;
-    color: var(--text-color-lighter);
+    color: var(--text-color-light);
     margin-top: 10px;
     max-height: 70px;
     overflow: hidden;
@@ -779,53 +888,74 @@ main.dashboard-main-content {
     font-weight: bold;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-    font-size: 0.9em;
+    margin-top: 15px; /* More spacing */
+    font-size: 0.95em;
 }
 
-.reminder-text i {
+/* Airplane icon hover effect (Front and Back) */
+.reminder-text i.fa-plane { /* Target specifically the airplane icon */
+    margin-right: 8px;
+    font-size: 1.2em; /* Slightly larger airplane */
+    transition: transform 0.4s ease-in-out, color 0.2s ease; /* Slower, smoother transition for plane */
+    display: inline-block; /* Essential for transform */
+}
+
+.reminder-text:hover i.fa-plane {
+    transform: translateX(var(--airplane-hover-translate-x)) scale(var(--icon-hover-scale)); /* Move forward and scale */
+    color: var(--icon-hover-color);
+}
+
+/* General icon hover effect (Up and Down) for other reminder icons */
+.reminder-text i:not(.fa-plane) { /* Apply to any icon that is NOT an airplane */
     margin-right: 5px;
     font-size: 1.1em;
+    display: inline-block; /* Essential for transform */
+    transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55), color 0.2s ease; /* Bounce effect */
+}
+
+.reminder-text:hover i:not(.fa-plane) {
+    transform: translateY(var(--icon-hover-bounce-y)) scale(var(--icon-hover-scale)); /* Lift and scale on hover */
+    color: var(--icon-hover-color);
 }
 
 .card-actions {
-    padding: 15px;
+    padding: 15px 20px; /* Consistent padding */
     display: flex;
     gap: 10px;
     border-top: 1px solid var(--border-color);
     justify-content: flex-end;
-    background-color: var(--input-bg);
+    background-color: var(--background-card); /* Use card background for actions */
 }
 
 .card-actions button {
-    padding: 8px 15px;
+    padding: 9px 16px; /* Slightly larger buttons */
     border: none;
     border-radius: var(--border-radius-small);
     cursor: pointer;
-    font-size: 0.9em;
+    font-size: 0.95em; /* Slightly larger font */
     font-weight: bold;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
 .edit-plan-btn {
-    background-color: var(--button-edit-bg);
+    background-color: var(--info-color); /* Changed edit button color to info */
     color: white;
 }
 .edit-plan-btn:hover {
-    background-color: var(--button-edit-hover);
-    transform: translateY(-1px);
+    background-color: #217dbb; /* Darker info on hover */
+    transform: translateY(-2px);
 }
 
 .delete-plan-btn {
-    background-color: var(--button-delete-bg);
+    background-color: var(--danger-color);
     color: white;
 }
 .delete-plan-btn:hover {
-    background-color: var(--button-delete-hover);
-    transform: translateY(-1px);
+    background-color: #c0392b;
+    transform: translateY(-2px);
 }
 
 /* Travel Plan Table (main travel plans page) */
@@ -833,50 +963,50 @@ main.dashboard-main-content {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    box-shadow: var(--shadow-small);
-    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow-medium); /* Stronger shadow */
+    border-radius: var(--border-radius-large); /* Consistent radius */
     overflow: hidden; /* For rounded corners */
     background-color: var(--background-card);
 }
 
 #travelTable th,
 #travelTable td {
-    padding: 12px 15px;
+    padding: 14px 18px; /* More padding for table cells */
     border: 1px solid var(--border-color);
     text-align: left;
     white-space: nowrap; /* Prevent text wrapping in cells */
 }
 
 #travelTable th {
-    background-color: var(--table-header-bg);
-    color: var(--table-header-text);
+    background-color: var(--secondary-color); /* Consistent with notes table */
+    color: #ffffff;
     font-weight: bold;
     text-transform: uppercase;
-    font-size: 0.85em;
-    position: sticky; /* Keeps header visible on scroll */
+    font-size: 0.88em; /* Slightly larger header font */
+    position: sticky;
     top: 0;
     z-index: 10;
 }
 
 #travelTable tbody tr:nth-child(even) {
-    background-color: var(--table-row-even-bg);
+    background-color: #f9fbfd;
 }
 
 #travelTable tbody tr:hover {
-    background-color: var(--table-row-hover-bg);
+    background-color: #eef3f7;
 }
 
 #travelTable .edit-plan-btn,
 #travelTable .delete-plan-btn {
-    padding: 6px 10px;
-    font-size: 0.8em;
+    padding: 7px 12px; /* Slightly larger table action buttons */
+    font-size: 0.85em;
 }
 
 /* Total Budget Cell */
 #totalBudgetCell {
     font-weight: bold;
     color: var(--accent-color);
-    font-size: 1.1em;
+    font-size: 1.2em; /* More prominent */
 }
 
 /* --- Status Badges (reused for both notes and travel plans) --- */
@@ -886,31 +1016,32 @@ main.dashboard-main-content {
 .status-completed,
 .status-cancelled {
     display: inline-block;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 0.8em;
+    padding: 6px 12px; /* Slightly more padding */
+    border-radius: 25px; /* More rounded */
+    font-size: 0.85em; /* Slightly larger text */
     font-weight: bold;
     color: white;
     text-transform: capitalize;
     text-align: center;
-    min-width: 80px;
+    min-width: 90px; /* Slightly wider */
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Subtle shadow for badges */
 }
 
 .status-planning {
-    background-color: var(--status-planning-bg);
+    background-color: #95a5a6; /* Greyish */
 }
 .status-booked { /* Specific color for booked */
     background-color: var(--success-color);
 }
 .status-upcoming {
-    background-color: var(--status-upcoming-bg);
+    background-color: #f1c40f; /* Yellowish */
     color: var(--text-color-dark);
 }
 .status-completed {
-    background-color: var(--status-completed-bg);
+    background-color: #2ecc71; /* Green */
 }
 .status-cancelled {
-    background-color: var(--status-cancelled-bg);
+    background-color: #e74c3c; /* Red */
 }
 
 
@@ -929,25 +1060,28 @@ main.dashboard-main-content {
 .traveler-name {
     flex-grow: 1;
     padding: 10px;
-    border: 1px solid var(--input-border);
+    border: 1px solid var(--border-color); /* Consistent border */
     border-radius: var(--border-radius-small);
     font-size: 1em;
     background-color: white;
 }
 
+/* Remove traveler button icon (Up and Down) */
 .remove-traveler-btn {
     background: none;
     border: none;
-    color: var(--button-delete-bg);
+    color: var(--danger-color); /* Use danger color */
     cursor: pointer;
-    font-size: 1.6em;
+    font-size: 1.8em; /* Larger icon */
     padding: 0;
     line-height: 1;
-    transition: color 0.2s ease;
+    display: inline-block; /* Essential for transform */
+    transition: color 0.2s ease, transform 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Bounce effect */
 }
 
 .remove-traveler-btn:hover {
-    color: var(--button-delete-hover);
+    color: #c0392b; /* Darker red on hover */
+    transform: translateY(var(--icon-hover-bounce-y)) scale(var(--icon-hover-scale)); /* Lift and scale */
 }
 
 /* --- Professional Reminder Display (from travelplans.js) --- */
@@ -956,15 +1090,15 @@ main.dashboard-main-content {
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: var(--reminder-bg);
+    background-color: var(--primary-color); /* Darker, more prominent reminder */
     color: white;
-    padding: 18px 30px;
+    padding: 20px 35px; /* More padding */
     border-radius: var(--border-radius-medium);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4); /* Stronger shadow */
     z-index: 1000;
-    max-width: 320px;
+    max-width: 350px; /* Slightly wider */
     text-align: center;
-    border-left: 6px solid var(--accent-color);
+    border-left: 8px solid var(--accent-color); /* Thicker accent border */
     font-family: var(--font-family-body);
     box-sizing: border-box;
     overflow: hidden;
@@ -975,17 +1109,17 @@ main.dashboard-main-content {
 
 #professionalReminderDisplay h4#reminderTitle {
     margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 1.3em;
-    color: var(--reminder-title-color);
+    margin-bottom: 12px;
+    font-size: 1.4em;
+    color: #ffffff; /* Ensure title is white */
     font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3); /* Stronger text shadow */
 }
 
 #professionalReminderDisplay p#reminderMessage {
     margin-bottom: 0;
-    font-size: 1em;
-    line-height: 1.5;
+    font-size: 1.05em; /* Slightly larger message */
+    line-height: 1.6;
 }
 
 /* Keyframe animation for fadeInOut (controlled by JS) */
@@ -1015,10 +1149,10 @@ main.dashboard-main-content {
 
 /* --- Dashboard Upcoming Trips Slideshow (from script.js) --- */
 #upcoming-trips-section {
-    padding: 20px;
+    padding: 30px; /* More padding for the section */
     background-color: var(--background-card);
     border-radius: var(--border-radius-large);
-    box-shadow: var(--shadow-medium);
+    box-shadow: var(--shadow-large); /* More prominent shadow */
     border: 1px solid var(--border-color);
     position: relative; /* For navigation buttons */
     overflow: hidden;
@@ -1026,20 +1160,19 @@ main.dashboard-main-content {
 
 #upcoming-trips-section h2 {
     text-align: center;
-    margin-bottom: 25px;
+    margin-bottom: 30px; /* More space below heading */
     color: var(--primary-color);
+    font-size: 1.8em; /* Larger heading */
 }
 
 .slideshow-container {
-    max-width: 800px; /* Adjust as needed */
+    max-width: 900px; /* Slightly wider slideshow */
     position: relative;
     margin: auto;
-    background-color: #f0f0f0; /* Fallback background for container */
-    border-radius: var(--border-radius-medium);
-    box-shadow: var(--shadow-small);
+    border-radius: var(--border-radius-large); /* Rounded corners */
+    box-shadow: var(--shadow-medium); /* Nice shadow for the container */
     overflow: hidden;
-    min-height: 250px; /* Ensure space for content */
-    /* No padding here, padding moved to .trip-details-overlay */
+    min-height: 300px; /* Ensure ample space */
 }
 
 #tripSlides {
@@ -1050,14 +1183,72 @@ main.dashboard-main-content {
 .mySlides {
     display: none; /* Controlled by JS, will be set to flex when active */
     text-align: center;
-    min-height: 250px; /* Ensure a minimum height for slides */
+    min-height: 300px; /* Ensure a minimum height for slides */
     display: flex; /* Use flexbox for content alignment */
     align-items: center; /* Center vertically */
     justify-content: center;
     position: relative; /* For positioning numbertext */
     color: white; /* Default text color for overlay */
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Enhance text readability */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.8); /* Enhance text readability */
+    border-radius: var(--border-radius-large); /* Match container radius */
+    transition: background 0.5s ease-in-out; /* Smooth transition if backgrounds change */
+    /* Default slide background */
+    background: linear-gradient(135deg, #4CAF50, #8BC34A); /* Fresh Green Gradient */
+    background-size: cover;
+    background-position: center;
 }
+
+/* More Diverse Slide Background Designs */
+.mySlides.slide-1 {
+    /* Subtle diagonal stripes */
+    background: linear-gradient(135deg, #4CAF50, #8BC34A);
+    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 10px, transparent 10px, transparent 20px);
+    background-size: 20px 20px;
+}
+
+.mySlides.slide-2 {
+    /* Geometric dots */
+    background: linear-gradient(135deg, #2196F3, #03A9F4);
+    background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
+    background-size: 25px 25px;
+}
+
+.mySlides.slide-3 {
+    /* Honeycomb pattern */
+    background: linear-gradient(135deg, #FFC107, #FFEB3B);
+    background-image:
+        url('data:image/svg+xml;charset=utf8,%3Csvg width="10" height="17.32" viewBox="0 0 10 17.32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M5 0l5 8.66-5 8.66-5-8.66z" fill="rgba(255,255,255,0.08)"/%3E%3C/svg%3E'); /* Subtle white hexagons */
+    background-size: 10px 17.32px;
+}
+
+.mySlides.slide-4 {
+    /* Subtle diagonal weave */
+    background: linear-gradient(135deg, #9C27B0, #E040FB);
+    background-image:
+        linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.05) 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+}
+
+.mySlides.slide-5 {
+    /* Wave pattern */
+    background: linear-gradient(135deg, #00BCD4, #4DD0E1); /* Cyan gradient */
+    background-image:
+        url('data:image/svg+xml;charset=utf8,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath fill="rgba(255,255,255,0.08)" d="M 0 50 C 25 25 75 25 100 50 L 100 100 L 0 100 Z"/%3E%3C/svg%3E');
+    background-size: 50px 50px;
+}
+
+.mySlides.slide-6 {
+    /* Concentric circles */
+    background: linear-gradient(135deg, #FF5722, #FFAB91); /* Orange gradient */
+    background-image:
+        radial-gradient(circle at center, rgba(255,255,255,0.1) 0, rgba(255,255,255,0.1) 5px, transparent 5px, transparent 100px);
+    background-size: 100px 100px;
+}
+
 
 /* Fade animation for slides */
 .fade {
@@ -1073,133 +1264,141 @@ main.dashboard-main-content {
 /* Number text (1/3 etc) */
 .numbertext {
   color: #f2f2f2;
-  font-size: 12px;
-  padding: 8px 12px;
+  font-size: 14px; /* Slightly larger */
+  padding: 10px 14px;
   position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.3);
+  top: 10px; /* Slightly offset */
+  left: 10px; /* Slightly offset */
+  background-color: rgba(0,0,0,0.4); /* Slightly darker */
   border-bottom-right-radius: var(--border-radius-small);
-  z-index: 60; /* Ensure number text is above content but below arrows */
+  z-index: 60;
 }
 
 /* Previous/Next buttons */
 .prev, .next {
   cursor: pointer;
   position: absolute;
-  top: 0; /* Align to top of slideshow-container */
-  bottom: 0; /* Align to bottom of slideshow-container */
+  top: 50%; /* Center vertically */
+  transform: translateY(-50%); /* Adjust for vertical centering */
   width: auto;
-  padding: 16px;
-  /* margin-top: -22px; Removed as top/bottom 0 with auto margin will center */
+  padding: 20px; /* Larger hit area */
   color: white;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px; /* Larger arrows */
   transition: 0.6s ease;
   user-select: none;
-  background-color: rgba(0,0,0,0.5); /* Semi-transparent background */
-  z-index: 100; /* Ensure buttons are on top of everything */
-  display: flex; /* Use flex to center the arrow vertically */
-  align-items: center; /* Center arrow vertically */
-  justify-content: center; /* Center arrow horizontally */
+  background-color: rgba(0,0,0,0.6); /* Darker background */
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .prev {
-    left: 0; /* Fixed to the left edge of its relative parent (.slideshow-container) */
-    border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
+    left: 0;
+    border-radius: 0 var(--border-radius-medium) var(--border-radius-medium) 0; /* Match container radius */
 }
 
 .next {
-    right: 0; /* Fixed to the right edge of its relative parent (.slideshow-container) */
-    border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
+    right: 0;
+    border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium); /* Match container radius */
 }
 
 
 .prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
+  background-color: rgba(0,0,0,0.9); /* Even darker on hover */
 }
 
 /* The dots/circles */
 #slideshow-dots {
-    padding: 10px;
+    padding: 15px; /* More padding */
     text-align: center;
+    background-color: var(--background-light); /* Background for dots section */
+    border-bottom-left-radius: var(--border-radius-large);
+    border-bottom-right-radius: var(--border-radius-large);
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); /* Subtle inner shadow */
 }
 
 .dot {
   cursor: pointer;
-  height: 15px;
-  width: 15px;
-  margin: 0 2px;
-  background-color: ##14532D;
+  height: 12px; /* Slightly smaller dots */
+  width: 12px;
+  margin: 0 5px; /* More space between dots */
+  background-color: #bbb;
   border-radius: 50%;
   display: inline-block;
-  transition: background-color 0.6s ease;
+  transition: background-color 0.6s ease, transform 0.2s ease; /* Add transform transition */
 }
 
 .active, .dot:hover {
-  background-color: #14532D;
+  background-color: var(--accent-color); /* Highlight with accent color */
+  transform: scale(1.2); /* Slightly grow on active/hover */
 }
 
 /* Styles for trip details inside slideshow (Dashboard) */
 .trip-details-overlay {
     width: 100%;
     height: 100%;
-    padding: 20px 60px; /* IMPORTANT: Apply padding here to push content away from arrows */
+    padding: 30px 80px; /* Increased padding to give more space from edges */
     box-sizing: border-box;
-    /* --- IMPORTANT CHANGE: Solid background color instead of image --- */
-    background-color: var(--secondary-color); /* Or any other desired solid color */
+    background-color: rgba(0,0,0,0.2); /* Subtle transparent overlay for better text readability */
     color: white;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Keep text shadow for readability */
+    text-shadow: 1px 1px 5px rgba(0,0,0,0.9); /* Stronger text shadow for contrast */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: var(--border-radius-medium);
+    border-radius: var(--border-radius-large); /* Match slide radius */
     overflow: hidden;
 }
 
 .trip-details-overlay h4.trip-title {
-    font-size: 2em;
-    margin-bottom: 10px;
+    font-size: 2.5em; /* Larger title */
+    margin-bottom: 15px;
     font-weight: bold;
     color: white;
+    letter-spacing: -1px; /* Tighter for a modern look */
 }
 
 .trip-details-overlay p {
-    margin-bottom: 5px;
-    font-size: 1.1em;
+    margin-bottom: 8px;
+    font-size: 1.2em; /* Larger text */
+    opacity: 0.95; /* Slight transparency */
 }
 
 .trip-details-overlay p.trip-dates {
-    font-size: 1.2em;
-    font-weight: 500;
+    font-size: 1.3em;
+    font-weight: 600;
+    margin-bottom: 15px;
 }
 
 .trip-details-overlay p.trip-budget {
     font-weight: bold;
-    color: #ffd700; /* Gold color for budget */
+    color: #FFD700; /* Gold color for budget */
+    font-size: 1.4em; /* Very prominent budget */
 }
 
 /* No upcoming trips message for the dashboard */
 #noUpcomingTripsMessage {
     text-align: center;
-    padding: 40px 20px;
+    padding: 50px 30px; /* More padding */
     color: var(--text-color-light);
-    font-size: 1.2em;
-    background-color: #f0f0f0;
-    border-radius: var(--border-radius-medium);
-    margin-top: 20px;
+    font-size: 1.3em; /* Larger font */
+    background-color: #f8f8f8; /* Lighter background */
+    border-radius: var(--border-radius-large);
+    margin-top: 25px;
     box-shadow: var(--shadow-small);
 }
 
 #noUpcomingTripsMessage p {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 #noUpcomingTripsMessage i {
-    margin-right: 8px;
-    color: #999;
+    margin-right: 10px;
+    color: #bbb; /* Softer icon color */
+    font-size: 1.5em; /* Larger icon */
 }
 
 
@@ -1288,10 +1487,17 @@ main.dashboard-main-content {
 
     /* Adjust slideshow content padding for smaller screens */
     .trip-details-overlay {
-        padding: 20px 10px; /* Less padding for content on very small screens */
+        padding: 25px 30px; /* Less padding for content on very small screens */
+    }
+    .trip-details-overlay h4.trip-title {
+        font-size: 2em; /* Smaller title on mobile */
+    }
+    .trip-details-overlay p {
+        font-size: 1em; /* Smaller text on mobile */
     }
     .prev, .next {
-        padding: 10px; /* Smaller button padding */
+        padding: 15px; /* Smaller button padding */
+        font-size: 20px; /* Slightly smaller arrows */
     }
 }
 
