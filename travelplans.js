@@ -362,7 +362,8 @@ document.getElementById('travelPlanForm')?.addEventListener('submit', function (
 
     const planIdInput = document.getElementById('travelPlanId');
     const isEdit = planIdInput && planIdInput.value !== ''; // Check if planIdInput exists before accessing value
-    const id = isEdit ? parseInt(planIdInput.value) : Date.now();
+    // Using Date.now() for new IDs; ensure script.js's generateUniqueId doesn't clash if also used
+    const id = isEdit ? parseInt(planIdInput.value) : Date.now(); 
 
     // Get input values (add null checks for robustness)
     const planTitle = document.getElementById('planTitle')?.value || '';
