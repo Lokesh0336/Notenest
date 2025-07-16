@@ -24,12 +24,19 @@
 
     /* New/Modified variables for design */
     --card-gradient-start: #ffffff; /* Lighter start for professional look */
-    --card-gradient-end: #f0f4f8;   /* Subtle grey-blue end */
+    --card-gradient-end: #f0f4f8;    /* Subtle grey-blue end */
     --card-pattern-color-subtle: rgba(0, 0, 0, 0.02); /* Very subtle pattern */
     --icon-hover-bounce-y: -5px; /* How much icons move up/down */
     --icon-hover-scale: 1.1;
     --icon-hover-color: var(--accent-color);
     --airplane-hover-translate-x: 10px; /* How much the airplane moves back/forth */
+
+    /* New variables for slideshow colors */
+    --slideshow-bg-dark: rgba(0, 0, 0, 0.7);
+    --slideshow-text-light: #f8f8f8;
+    --slideshow-accent-light: #a8dadc;
+    --slideshow-nav-bg: rgba(0, 0, 0, 0.4);
+    --slideshow-nav-hover-bg: rgba(0, 0, 0, 0.7);
 }
 
 /* General Body and Font Styles */
@@ -1147,382 +1154,409 @@ main.dashboard-main-content {
     display: none;
 }
 
-/* --- Dashboard Upcoming Trips Slideshow (from script.js) --- */
-#upcoming-trips-section {
-    padding: 30px; /* More padding for the section */
-    background-color: var(--background-card);
-    border-radius: var(--border-radius-large);
-    box-shadow: var(--shadow-large); /* More prominent shadow */
-    border: 1px solid var(--border-color);
-    position: relative; /* For navigation buttons */
-    overflow: hidden;
-}
+/* --- Dashboard Slideshow Styling --- */
 
-#upcoming-trips-section h2 {
-    text-align: center;
-    margin-bottom: 30px; /* More space below heading */
-    color: var(--primary-color);
-    font-size: 1.8em; /* Larger heading */
-}
-
+/* Container for the whole slideshow */
 .slideshow-container {
-    max-width: 900px; /* Slightly wider slideshow */
+    max-width: 100%;
     position: relative;
     margin: auto;
-    border-radius: var(--border-radius-large); /* Rounded corners */
-    box-shadow: var(--shadow-medium); /* Nice shadow for the container */
-    overflow: hidden;
-    min-height: 300px; /* Ensure ample space */
+    border-radius: var(--border-radius-large);
+    box-shadow: var(--shadow-large); /* Prominent shadow for the entire slideshow */
+    overflow: hidden; /* Ensures rounded corners are respected */
+    background-color: var(--secondary-color); /* Fallback background */
+    perspective: 1000px; /* For subtle 3D effects on transitions */
 }
 
-#tripSlides {
-    width: 100%;
-    height: 100%;
-}
-
+/* Individual slides */
 .mySlides {
-    display: none; /* Controlled by JS, will be set to flex when active */
-    text-align: center;
-    min-height: 300px; /* Ensure a minimum height for slides */
-    display: flex; /* Use flexbox for content alignment */
-    align-items: center; /* Center vertically */
-    justify-content: center;
-    position: relative; /* For positioning numbertext */
-    color: white; /* Default text color for overlay */
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.8); /* Enhance text readability */
-    border-radius: var(--border-radius-large); /* Match container radius */
-    transition: background 0.5s ease-in-out; /* Smooth transition if backgrounds change */
-    /* Default slide background */
-    background: linear-gradient(135deg, #4CAF50, #8BC34A); /* Fresh Green Gradient */
+    display: none; /* Hidden by default */
+    height: 350px; /* Fixed height for consistent slide presentation */
     background-size: cover;
     background-position: center;
-}
-
-/* More Diverse Slide Background Designs */
-.mySlides.slide-1 {
-    /* Subtle diagonal stripes */
-    background: linear-gradient(135deg, #4CAF50, #8BC34A);
-    background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 10px, transparent 10px, transparent 20px);
-    background-size: 20px 20px;
-}
-
-.mySlides.slide-2 {
-    /* Geometric dots */
-    background: linear-gradient(135deg, #2196F3, #03A9F4);
-    background-image: radial-gradient(rgba(255,255,255,0.1) 2px, transparent 2px);
-    background-size: 25px 25px;
-}
-
-.mySlides.slide-3 {
-    /* Honeycomb pattern */
-    background: linear-gradient(135deg, #FFC107, #FFEB3B);
-    background-image:
-        url('data:image/svg+xml;charset=utf8,%3Csvg width="10" height="17.32" viewBox="0 0 10 17.32" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M5 0l5 8.66-5 8.66-5-8.66z" fill="rgba(255,255,255,0.08)"/%3E%3C/svg%3E'); /* Subtle white hexagons */
-    background-size: 10px 17.32px;
-}
-
-.mySlides.slide-4 {
-    /* Subtle diagonal weave */
-    background: linear-gradient(135deg, #9C27B0, #E040FB);
-    background-image:
-        linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(255,255,255,0.05) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(255,255,255,0.05) 75%);
-    background-size: 20px 20px;
-    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
-}
-
-.mySlides.slide-5 {
-    /* Wave pattern */
-    background: linear-gradient(135deg, #00BCD4, #4DD0E1); /* Cyan gradient */
-    background-image:
-        url('data:image/svg+xml;charset=utf8,%3Csvg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath fill="rgba(255,255,255,0.08)" d="M 0 50 C 25 25 75 25 100 50 L 100 100 L 0 100 Z"/%3E%3C/svg%3E');
-    background-size: 50px 50px;
-}
-
-.mySlides.slide-6 {
-    /* Concentric circles */
-    background: linear-gradient(135deg, #FF5722, #FFAB91); /* Orange gradient */
-    background-image:
-        radial-gradient(circle at center, rgba(255,255,255,0.1) 0, rgba(255,255,255,0.1) 5px, transparent 5px, transparent 100px);
-    background-size: 100px 100px;
-}
-
-
-/* Fade animation for slides */
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: .4}
-  to {opacity: 1}
-}
-
-/* Number text (1/3 etc) */
-.numbertext {
-  color: #f2f2f2;
-  font-size: 14px; /* Slightly larger */
-  padding: 10px 14px;
-  position: absolute;
-  top: 10px; /* Slightly offset */
-  left: 10px; /* Slightly offset */
-  background-color: rgba(0,0,0,0.4); /* Slightly darker */
-  border-bottom-right-radius: var(--border-radius-small);
-  z-index: 60;
-}
-
-/* Previous/Next buttons */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  top: 50%; /* Center vertically */
-  transform: translateY(-50%); /* Adjust for vertical centering */
-  width: auto;
-  padding: 20px; /* Larger hit area */
-  color: white;
-  font-weight: bold;
-  font-size: 22px; /* Larger arrows */
-  transition: 0.6s ease;
-  user-select: none;
-  background-color: rgba(0,0,0,0.6); /* Darker background */
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.prev {
-    left: 0;
-    border-radius: 0 var(--border-radius-medium) var(--border-radius-medium) 0; /* Match container radius */
-}
-
-.next {
-    right: 0;
-    border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium); /* Match container radius */
-}
-
-
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.9); /* Even darker on hover */
-}
-
-/* The dots/circles */
-#slideshow-dots {
-    padding: 15px; /* More padding */
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: var(--border-radius-large); /* Inherit from container */
+    overflow: hidden; /* Crucial for internal elements to respect border-radius */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    color: #fff; /* Default text color for slides */
     text-align: center;
-    background-color: var(--background-light); /* Background for dots section */
-    border-bottom-left-radius: var(--border-radius-large);
-    border-bottom-right-radius: var(--border-radius-large);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05); /* Subtle inner shadow */
+
+    /* Initial state for fade effect */
+    opacity: 0;
+    transform: scale(0.95);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out; /* Smooth transition */
 }
 
-.dot {
-  cursor: pointer;
-  height: 12px; /* Slightly smaller dots */
-  width: 12px;
-  margin: 0 5px; /* More space between dots */
-  background-color: #bbb;
-  border-radius: 50%;
-  display: inline-block;
-  transition: background-color 0.6s ease, transform 0.2s ease; /* Add transform transition */
+/* Active slide state */
+.mySlides.active {
+    display: flex;
+    opacity: 1;
+    transform: scale(1);
 }
 
-.active, .dot:hover {
-  background-color: var(--accent-color); /* Highlight with accent color */
-  transform: scale(1.2); /* Slightly grow on active/hover */
+/* Welcome Slide Specific Styles */
+.welcome-slide {
+    /* Background image set directly in JS for this specific slide */
+    background-color: #34495e; /* Fallback for image loading */
 }
 
-/* Styles for trip details inside slideshow (Dashboard) */
+.welcome-slide .welcome-details .trip-title {
+    font-size: 2.8em; /* Larger title for welcome */
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    margin-bottom: 15px;
+}
+.welcome-slide .welcome-details .trip-destination,
+.welcome-slide .welcome-details .trip-dates,
+.welcome-slide .welcome-details .trip-budget {
+    font-size: 1.3em;
+    color: var(--slideshow-text-light);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.5;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+}
+
+/* Text overlay for all slides */
 .trip-details-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
-    padding: 30px 80px; /* Increased padding to give more space from edges */
-    box-sizing: border-box;
-    background-color: rgba(0,0,0,0.2); /* Subtle transparent overlay for better text readability */
-    color: white;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.9); /* Stronger text shadow for contrast */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.8) 100%);
+    backdrop-filter: blur(2px);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 10px;
+    border-radius: var(--slideshow-border-radius);
     text-align: center;
-    border-radius: var(--border-radius-large); /* Match slide radius */
+    color: var(--slideshow-text-light);
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
     overflow: hidden;
 }
 
-.trip-details-overlay h4.trip-title {
-    font-size: 2.5em; /* Larger title */
-    margin-bottom: 15px;
+/* Number text (e.g., "1 / 3") */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 14px; /* <--- FIX: Increased font size here */
+    padding: 2px 5px;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background-color: rgba(0, 0, 0, 0.7);
+    border-radius: var(--border-radius-small);
+    z-index: 10;
+    font-weight: 500;
+}
+
+/* Trip Title (within actual trip slides) */
+.trip-details-overlay .trip-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 2px;
+    color: #ffffff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    word-break: break-word;
+}
+
+/* Trip Destination */
+.trip-details-overlay .trip-destination {
+    font-size: 1.0em;
+    font-weight: 500;
+    color: var(--slideshow-accent-light);
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+    letter-spacing: 0.2px;
+    line-height: 1.2;
+    word-break: break-word;
+}
+
+/* Group for dates and travelers */
+.trip-details-overlay .travel-info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-top: 6px;
+    margin-bottom: 8px;
+    padding-top: 4px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    width: 98%;
+    max-width: 280px;
+}
+
+.trip-details-overlay .trip-dates,
+.trip-details-overlay .trip-travelers {
+    font-size: 0.8em;
+    font-weight: 400;
+    color: var(--slideshow-text-light);
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+    line-height: 1.3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+}
+
+/* Budget Container for emphasis */
+.trip-details-overlay .trip-budget-container {
+    background-color: rgba(67, 170, 139, 0.9);
+    padding: 4px 10px;
+    border-radius: 18px;
+    margin-top: 8px;
+    margin-bottom: 10px;
+    display: inline-block;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.1s ease-in-out, background-color 0.1s ease;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.trip-details-overlay .trip-budget-container:hover {
+    transform: translateY(-1px) scale(1.01);
+    background-color: var(--success-color);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.6);
+}
+
+.trip-details-overlay .trip-budget {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.0em;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 0.3px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Trip Status */
+.trip-details-overlay .trip-status {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--slideshow-text-light);
+    margin-top: 5px;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+/* Specific status colors for the span inside status - consistent with general badges */
+.trip-details-overlay .trip-status .status-planning,
+.trip-details-overlay .trip-status .status-booked,
+.trip-details-overlay .trip-status .status-completed,
+.trip-details-overlay .trip-status .status-cancelled {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 0.65em;
     font-weight: bold;
     color: white;
-    letter-spacing: -1px; /* Tighter for a modern look */
+    text-transform: capitalize;
+    margin-left: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
-.trip-details-overlay p {
-    margin-bottom: 8px;
-    font-size: 1.2em; /* Larger text */
-    opacity: 0.95; /* Slight transparency */
-}
+.trip-details-overlay .trip-status .status-planning { background-color: #95a5a6; }
+.trip-details-overlay .trip-status .status-booked { background-color: var(--success-color); }
+.trip-details-overlay .trip-status .status-completed { background-color: #2ecc71; }
+.trip-details-overlay .trip-status .status-cancelled { background-color: var(--danger-color); }
 
-.trip-details-overlay p.trip-dates {
-    font-size: 1.3em;
-    font-weight: 600;
-    margin-bottom: 15px;
-}
 
-.trip-details-overlay p.trip-budget {
+/* Next & previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    color: white;
     font-weight: bold;
-    color: #FFD700; /* Gold color for budget */
-    font-size: 1.4em; /* Very prominent budget */
+    font-size: 1.2em;
+    transition: 0.1s ease;
+    border-radius: 50%;
+    user-select: none;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+    z-index: 10;
 }
 
-/* No upcoming trips message for the dashboard */
-#noUpcomingTripsMessage {
+/* Position the "prev button" to the left */
+.prev {
+    left: 3px;
+}
+
+/* Position the "next button" to the right */
+.next {
+    right: 3px;
+}
+
+/* On hover, add a darker background color and subtle scale */
+.prev:hover, .next:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    transform: translateY(-50%) scale(1.01);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+
+/* The dots/bullets/indicators */
+.dots-container {
     text-align: center;
-    padding: 50px 30px; /* More padding */
-    color: var(--text-color-light);
-    font-size: 1.3em; /* Larger font */
-    background-color: #f8f8f8; /* Lighter background */
-    border-radius: var(--border-radius-large);
-    margin-top: 25px;
-    box-shadow: var(--shadow-small);
+    padding: 3px;
+    position: absolute;
+    bottom: 3px;
+    width: 100%;
+    z-index: 10;
 }
 
-#noUpcomingTripsMessage p {
-    margin-bottom: 15px;
+.dot {
+    cursor: pointer;
+    height: 4px;
+    width: 4px;
+    margin: 0 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.1s ease, transform 0.05s ease;
 }
 
-#noUpcomingTripsMessage i {
-    margin-right: 10px;
-    color: #bbb; /* Softer icon color */
-    font-size: 1.5em; /* Larger icon */
+.dot.active,
+.dot:hover {
+    background-color: #ffffff;
+    transform: scale(1.05);
 }
 
 
-/* --- Responsive Design --- */
+/* Responsive layout */
 @media (max-width: 768px) {
-    header {
-        flex-direction: column;
-        gap: 10px;
-        padding: 15px;
+    .mySlides {
+        height: 180px;
     }
 
-    nav {
-        padding: 8px 0;
+    .trip-details-overlay {
+        padding: 8px;
     }
 
-    .navigation {
-        flex-direction: column;
-        gap: 8px;
+    .trip-details-overlay .trip-title {
+        font-size: 1.2em;
+        letter-spacing: 0.2px;
     }
 
-    .navigation li {
-        margin: 0;
+    .trip-details-overlay .trip-destination {
+        font-size: 0.9em;
+        margin-bottom: 4px;
     }
 
-    main {
-        padding: 15px;
-        margin: 15px auto;
+    .trip-details-overlay .travel-info-group {
+        margin-top: 4px;
+        margin-bottom: 6px;
+        gap: 2px;
+        padding-top: 3px;
     }
 
-    .form-section, .card-style, #upcoming-trips-section {
-        padding: 20px;
+    .trip-details-overlay .trip-dates,
+    .trip-details-overlay .trip-travelers {
+        font-size: 0.75em;
     }
 
-    .note-form-layout {
-        flex-direction: column;
-        gap: 20px;
+    .trip-details-overlay .trip-budget-container {
+        padding: 3px 8px;
+        margin-top: 5px;
+        margin-bottom: 7px;
     }
 
-    #cardViewContainer, #cardViewContainerNotes {
-        grid-template-columns: 1fr; /* Stack cards on small screens */
-        gap: 20px;
-    }
-
-    .travel-plan-card, .note-card {
-        margin: 0 auto; /* Center single column cards */
-        max-width: 400px; /* Limit width for very large screens in single column */
-    }
-
-    #travelTable th,
-    #travelTable td,
-    #notesTable th,
-    #notesTable td {
-        padding: 8px 10px;
+    .trip-details-overlay .trip-budget {
         font-size: 0.9em;
     }
 
-    .card-actions {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .card-actions button {
-        width: 100%;
-        justify-content: center;
-    }
-
-    #professionalReminderDisplay {
-        top: auto;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%); /* Center horizontally */
-        right: auto;
-        max-width: 90%;
-        width: 100%;
-        animation: none !important; /* Disable slide animation on small screens */
-        transition: opacity 0.3s ease; /* Use simple fade for small screens */
-        opacity: 1; /* Override initial opacity for responsive */
-    }
-
-    @keyframes fadeInOut { /* Re-define for smaller screens if needed or handle with JS */
-        0% { opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; }
-    }
-
-    /* Adjust slideshow content padding for smaller screens */
-    .trip-details-overlay {
-        padding: 25px 30px; /* Less padding for content on very small screens */
-    }
-    .trip-details-overlay h4.trip-title {
-        font-size: 2em; /* Smaller title on mobile */
-    }
-    .trip-details-overlay p {
-        font-size: 1em; /* Smaller text on mobile */
-    }
     .prev, .next {
-        padding: 15px; /* Smaller button padding */
-        font-size: 20px; /* Slightly smaller arrows */
+        font-size: 1.0em;
+        width: 20px;
+        height: 20px;
+    }
+
+    .numbertext {
+        font-size: 12px; /* <--- FIX: Increased font size here for tablets */
+        top: 6px;
+        left: 6px;
+    }
+
+    .dot {
+        height: 3px;
+        width: 3px;
+        margin: 0 1px;
     }
 }
 
 @media (max-width: 480px) {
-    header h1 {
-        font-size: 1.5em;
+    .mySlides {
+        height: 120px;
     }
 
-    .form-section h2, .display-section h2, #upcoming-trips-section h2 {
-        font-size: 1.5em;
+    .trip-details-overlay {
+        padding: 3px;
     }
 
-    .add-button {
-        width: 100%;
-        justify-content: center;
+    .trip-details-overlay .trip-title {
+        font-size: 1.0em;
+        margin-bottom: 1px;
+        letter-spacing: 0;
     }
 
-    .view-toggle-buttons {
-        flex-direction: column;
-        width: 100%;
-        gap: 10px;
+    .trip-details-overlay .trip-destination {
+        font-size: 0.7em;
+        margin-bottom: 2px;
     }
-    .view-toggle-buttons button {
-        margin-left: 0;
-        width: 100%;
-        justify-content: center;
+
+    .trip-details-overlay .travel-info-group {
+        margin-top: 2px;
+        margin-bottom: 4px;
+        gap: 0;
+        padding-top: 2px;
+    }
+
+    .trip-details-overlay .trip-dates,
+    .trip-details-overlay .trip-travelers {
+        font-size: 0.65em;
+    }
+
+    .trip-details-overlay .trip-budget-container {
+        padding: 2px 6px;
+        margin-top: 3px;
+        margin-bottom: 4px;
+    }
+
+    .trip-details-overlay .trip-budget {
+        font-size: 0.8em;
+    }
+
+    .prev, .next {
+        font-size: 0.8em;
+        width: 15px;
+        height: 15px;
+        left: 1px;
+        right: 1px;
+    }
+
+    .numbertext {
+        font-size: 11px; /* <--- FIX: Increased font size here for mobile */
+        padding: 1px 3px;
+        top: 3px;
+        left: 3px;
+    }
+
+    .dot {
+        height: 2px;
+        width: 2px;
+        margin: 0 1px;
     }
 }
