@@ -75,9 +75,63 @@
             90% { opacity: 1; }
             100% { opacity: 0; }
         }
+
+        /* Styles for Travelers section */
+        .traveler-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px; /* Space between traveler inputs */
+            width: 100%;
+        }
+
+        .traveler-input-group input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .add-traveler-btn, .remove-traveler-btn {
+            background-color: #28a745; /* Green for add */
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .remove-traveler-btn {
+            background-color: #dc3545; /* Red for remove */
+        }
+
+        .add-traveler-btn:hover {
+            background-color: #218838;
+        }
+
+        .remove-traveler-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+
+            document.getElementById('startDate').value = formattedDate;
+            document.getElementById('endDate').value = formattedDate;
+        });
+    </script>
     <header>
         <a href="index.html" class="logo-title">
             <img src="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" alt="NoteNest Logo" />
@@ -117,7 +171,8 @@
         <section class="form-card">
             <h2><i class="fas fa-plus-circle"></i> Add New Travel Plan</h2>
             <form id="travelPlanForm">
-                <input type="hidden" id="travelPlanId" value=""> <div class="form-group">
+                <input type="hidden" id="travelPlanId" value="">
+                <div class="form-group">
                     <label for="planTitle">Plan Title:</label>
                     <input type="text" id="planTitle" required placeholder="e.g., European Backpacking, Family Beach Trip" />
                 </div>
@@ -139,10 +194,10 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="destination">Destination (Country):</label>
-                    <select id="destination" required>
+                    <label for="destinationCountry">Destination (Country):</label>
+                    <select id="destinationCountry" required>
                         <option value="" disabled selected>-- Select a Country --</option>
-                        <option value="Other">Other (Not Listed)</option> <option value="India">India</option>
+                        <option value="India">India</option>
                         <option value="United States">United States</option>
                         <option value="Canada">Canada</option>
                         <option value="United Kingdom">United Kingdom</option>
@@ -182,7 +237,6 @@
                         <option value="Turkey">Turkey</option>
                         <option value="Israel">Israel</option>
                         <option value="Jordan">Jordan</option>
-                        <option value="Egypt">Egypt</option>
                         <option value="Colombia">Colombia</option>
                         <option value="Peru">Peru</option>
                         <option value="Chile">Chile</option>
@@ -199,255 +253,23 @@
                         <option value="Bhutan">Bhutan</option>
                         <option value="Maldives">Maldives</option>
                         <option value="Fiji">Fiji</option>
-                        </select>
+                        <option value="Other">Other (Not Listed)</option>
+                    </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="tripCity">City/State:</label>
-                    <input type="text" id="tripCity" list="cityOptions" required placeholder="Search for a city or state..." />
-                    <datalist id="cityOptions">
-                        <option value="Other">Other (Not Listed)</option> <option value="Hyderabad"></option>
-                        <option value="Mumbai, Maharashtra"></option>
-                        <option value="Delhi"></option>
-                        <option value="Bengaluru, Karnataka"></option>
-                        <option value="Chennai, Tamil Nadu"></option>
-                        <option value="Kolkata, West Bengal"></option>
-                        <option value="Pune, Maharashtra"></option>
-                        <option value="Ahmedabad, Gujarat"></option>
-                        <option value="Jaipur, Rajasthan"></option>
-                        <option value="Lucknow, Uttar Pradesh"></option>
-                        <option value="Chandigarh"></option>
-                        <option value="Goa"></option>
-                        <option value="Kochi, Kerala"></option>
-                        <option value="Srinagar, Jammu and Kashmir"></option>
-                        <option value="Udaipur, Rajasthan"></option>
-                        <option value="Varanasi, Uttar Pradesh"></option>
-                        <option value="Amritsar, Punjab"></option>
-                        <option value="Bhopal, Madhya Pradesh"></option>
-                        <option value="Indore, Madhya Pradesh"></option>
-                        <option value="Mysuru, Karnataka"></option>
-                        <option value="Shimla, Himachal Pradesh"></option>
-                        <option value="Darjeeling, West Bengal"></option>
-                        <option value="Agra, Uttar Pradesh"></option>
-                        <option value="Thiruvananthapuram, Kerala"></option>
-                        <option value="Bhubaneswar, Odisha"></option>
-                        <option value="Patna, Bihar"></option>
-                        <option value="Guwahati, Assam"></option>
-                        <option value="Ranchi, Jharkhand"></option>
-                        <option value="Dehradun, Uttarakhand"></option>
-                        <option value="Gangtok, Sikkim"></option>
-                        <option value="Shillong, Meghalaya"></option>
-                        <option value="Itanagar, Arunachal Pradesh"></option>
-                        <option value="Aizawl, Mizoram"></option>
-                        <option value="Kohima, Nagaland"></option>
-                        <option value="Imphal, Manipur"></option>
-                        <option value="Agartala, Tripura"></option>
-                        <option value="Panaji, Goa"></option>
-                        <option value="Port Blair, Andaman and Nicobar Islands"></option>
-                        <option value="Visakhapatnam, Andhra Pradesh"></option>
-                        <option value="Amaravati, Andhra Pradesh"></option>
-                        <option value="Raipur, Chhattisgarh"></option>
-                        <option value="Gandhinagar, Gujarat"></option>
-                        <option value="Puducherry"></option>
-                        <option value="Leh, Ladakh"></option>
-                        <option value="Jammu, Jammu and Kashmir"></option>
-                        <option value="Nagpur, Maharashtra"></option>
-                        <option value="Surat, Gujarat"></option>
-                        <option value="Kanpur, Uttar Pradesh"></option>
-                        <option value="Nashik, Maharashtra"></option>
-                        <option value="Coimbatore, Tamil Nadu"></option>
-                        <option value="Madurai, Tamil Nadu"></option>
-                        <option value="Kozhikode, Kerala"></option>
-                        <option value="Tiruchirappalli, Tamil Nadu"></option>
-                        <option value="Mangaluru, Karnataka"></option>
-                        <option value="Nellore, Andhra Pradesh"></option>
-                        <option value="Warangal, Telangana"></option>
-                        <option value="Vijayawada, Andhra Pradesh"></option>
-                        <option value="Jodhpur, Rajasthan"></option>
-                        <option value="Bikaner, Rajasthan"></option>
-                        <option value="Jaisalmer, Rajasthan"></option>
-                        <option value="Ajmer, Rajasthan"></option>
-                        <option value="Pushkar, Rajasthan"></option>
-                        <option value="Gwalior, Madhya Pradesh"></option>
-                        <option value="Jabalpur, Madhya Pradesh"></option>
-                        <option value="Ujjain, Madhya Pradesh"></option>
-                        <option value="Rishikesh, Uttarakhand"></option>
-                        <option value="Haridwar, Uttarakhand"></option>
-                        <option value="Nainital, Uttarakhand"></option>
-                        <option value="Mussoorie, Uttarakhand"></option>
-                        <option value="Manali, Himachal Pradesh"></option>
-                        <option value="Dharamshala, Himachal Pradesh"></option>
-                        <option value="Vellore, Tamil Nadu"></option>
-                        <option value="Salem, Tamil Nadu"></option>
-                        <option value="Alappuzha, Kerala"></option>
-                        <option value="Thrissur, Kerala"></option>
-                        <option value="Kollam, Kerala"></option>
-                        <option value="Alleppey, Kerala"></option>
-                        <option value="Hampi, Karnataka"></option>
-                        <option value="Puducherry"></option>
-                        <option value="Dispur, Assam"></option>
-                        <option value="Ranchi, Jharkhand"></option>
-                        <option value="Raipur, Chhattisgarh"></option>
-                        <option value="Bhubaneswar, Odisha"></option>
-                        <option value="Kavaratti, Lakshadweep"></option>
-                        <option value="Daman, Daman & Diu"></option>
-                        <option value="Silvassa, Dadra & Nagar Haveli"></option>
-                        <option value="Amravati, Maharashtra"></option>
-                        <option value="Aurangabad, Maharashtra"></option>
-                        <option value="Solapur, Maharashtra"></option>
-                        <option value="Kota, Rajasthan"></option>
-                        <option value="Rourkela, Odisha"></option>
-                        <option value="Cuttack, Odisha"></option>
-                        <option value="Tirupati, Andhra Pradesh"></option>
-                        <option value="Kurnool, Andhra Pradesh"></option>
-                        <option value="Guntur, Andhra Pradesh"></option>
-                        <option value="Kakinada, Andhra Pradesh"></option>
-                        <option value="Rajahmundry, Andhra Pradesh"></option>
-                        <option value="Karimnagar, Telangana"></option>
-                        <option value="Nizamabad, Telangana"></option>
-                        <option value="Khammam, Telangana"></option>
-                        <option value="Nalgonda, Telangana"></option>
-                        <option value="Ongole, Andhra Pradesh"></option>
-                        <option value="Palakkad, Kerala"></option>
-                        <option value="Kannur, Kerala"></option>
-                        <option value="Malappuram, Kerala"></option>
-                        <option value="Kottayam, Kerala"></option>
-                        <option value="Erode, Tamil Nadu"></option>
-                        <option value="Tiruppur, Tamil Nadu"></option>
-                        <option value="Thanjavur, Tamil Nadu"></option>
-                        <option value="Dindigul, Tamil Nadu"></option>
-                        <option value="Anantapur, Andhra Pradesh"></option>
-                        <option value="Kadapa, Andhra Pradesh"></option>
-                        <option value="Vizianagaram, Andhra Pradesh"></option>
-                        <option value="Srikakulam, Andhra Pradesh"></option>
-                        <option value="Eluru, Andhra Pradesh"></option>
-                        <option value="Machilipatnam, Andhra Pradesh"></option>
-                        <option value="Puri, Odisha"></option>
-                        <option value="Konark, Odisha"></option>
-                        <option value="Gaya, Bihar"></option>
-                        <option value="Darbhanga, Bihar"></option>
-                        <option value="Bhagalpur, Bihar"></option>
-                        <option value="Muzaffarpur, Bihar"></option>
-                        <option value="Jamshedpur, Jharkhand"></option>
-                        <option value="Dhanbad, Jharkhand"></option>
-                        <option value="Bokaro Steel City, Jharkhand"></option>
-                        <option value="Dibrugarh, Assam"></option>
-                        <option value="Silchar, Assam"></option>
-                        <option value="Sivakasi, Tamil Nadu"></option>
-                        <option value="Hosur, Tamil Nadu"></option>
-                        <option value="Pollachi, Tamil Nadu"></option>
-                        <option value="Tenkasi, Tamil Nadu"></option>
-                        <option value="Perambalur, Tamil Nadu"></option>
-                        <option value="Ariyalur, Tamil Nadu"></option>
-                        <option value="Dharmapuri, Tamil Nadu"></option>
-                        <option value="Krishnagiri, Tamil Nadu"></option>
-                        <option value="Nagapattinam, Tamil Nadu"></option>
-                        <option value="Tiruvarur, Tamil Nadu"></option>
-                        <option value="Karur, Tamil Nadu"></option>
-                        <option value="Namakkal, Tamil Nadu"></option>
-                        <option value="Ramanathapuram, Tamil Nadu"></option>
-                        <option value="Virudhunagar, Tamil Nadu"></option>
-                        <option value="Cuddalore, Tamil Nadu"></option>
-                        <option value="Villupuram, Tamil Nadu"></option>
-                        <option value="Pudukkottai, Tamil Nadu"></option>
-                        <option value="Sivaganga, Tamil Nadu"></option>
-                        <option value="Tuticorin, Tamil Nadu"></option>
-                        <option value="Tirunelveli, Tamil Nadu"></option>
-                        <option value="Kanyakumari, Tamil Nadu"></option>
-                        <option value="Nagercoil, Tamil Nadu"></option>
-                        <option value="Kodaikanal, Tamil Nadu"></option>
-                        <option value="Ooty, Tamil Nadu"></option>
-                        <option value="Kumbakonam, Tamil Nadu"></option>
-                        <option value="Mayiladuthurai, Tamil Nadu"></option>
-                        <option value="Neyveli, Tamil Nadu"></option>
-                        <option value="Tiruvannamalai, Tamil Nadu"></option>
-                        <option value="Chidambaram, Tamil Nadu"></option>
-                        <option value="Thanjavur, Tamil Nadu"></option>
-                        <option value="Trichy, Tamil Nadu"></option>
-                        <option value="Hubli, Karnataka"></option>
-                        <option value="Dharwad, Karnataka"></option>
-                        <option value="Belagavi, Karnataka"></option>
-                        <option value="Kalaburagi, Karnataka"></option>
-                        <option value="Davangere, Karnataka"></option>
-                        <option value="Ballari, Karnataka"></option>
-                        <option value="Vijayapura, Karnataka"></option>
-                        <option value="Shivamogga, Karnataka"></option>
-                        <option value="Tumakuru, Karnataka"></option>
-                        <option value="Raichur, Karnataka"></option>
-                        <option value="Bidar, Karnataka"></option>
-                        <option value="Hassan, Karnataka"></option>
-                        <option value="Chitradurga, Karnataka"></option>
-                        <option value="Udupi, Karnataka"></option>
-                        <option value="Kundapur, Karnataka"></option>
-                        <option value="Kolar, Karnataka"></option>
-                        <option value="Chikkamagaluru, Karnataka"></option>
-                        <option value="Madikeri, Karnataka"></option>
-                        <option value="Gokarna, Karnataka"></option>
-                        <option value="Karaikal, Puducherry"></option>
-                        <option value="Mahe, Puducherry"></option>
-                        <option value="Yanam, Puducherry"></option>
-                        <option value="Silvassa, Dadra and Nagar Haveli"></option>
-                        <option value="Daman, Daman and Diu"></option>
-                        <option value="Kavaratti, Lakshadweep"></option>
-                        <option value="New York"></option>
-                        <option value="London"></option>
-                        <option value="Paris"></option>
-                        <option value="Dubai"></option>
-                        <option value="Singapore"></option>
-                        <option value="Sydney"></option>
-                        <option value="Rome"></option>
-                        <option value="Tokyo"></option>
-                        <option value="San Francisco"></option>
-                        <option value="Rio de Janeiro"></option>
-                        <option value="Cairo"></option>
-                        <option value="Bangkok"></option>
-                        <option value="Berlin"></option>
-                        <option value="Barcelona"></option>
-                        <option value="Amsterdam"></option>
-                        <option value="Toronto"></option>
-                        <option value="Vancouver"></option>
-                        <option value="Mexico City"></option>
-                        <option value="Buenos Aires"></option>
-                        <option value="Cape Town"></option>
-                        <option value="Moscow"></option>
-                        <option value="Beijing"></option>
-                        <option value="Shanghai"></option>
-                        <option value="Seoul"></option>
-                        <option value="Istanbul"></option>
-                        <option value="Prague"></option>
-                        <option value="Vienna"></option>
-                        <option value="Lisbon"></option>
-                        <option value="Dublin"></option>
-                        <option value="Edinburgh"></option>
-                        <option value="Zurich"></option>
-                        <option value="Geneva"></option>
-                        <option value="Helsinki"></option>
-                        <option value="Oslo"></option>
-                        <option value="Stockholm"></option>
-                        <option value="Copenhagen"></option>
-                        <option value="Brussels"></option>
-                        <option value="Warsaw"></option>
-                        <option value="Budapest"></option>
-                        <option value="Athens"></option>
-                        <option value="Marrakech"></option>
-                        <option value="Nairobi"></option>
-                        <option value="Johannesburg"></option>
-                        <option value="Kyoto"></option>
-                        <option value="Osaka"></option>
-                        <option value="Hong Kong"></option>
-                        <option value="Kuala Lumpur"></option>
-                        <option value="Manila"></option>
-                        <option value="Jakarta"></option>
-                        <option value="Phuket"></option>
-                        <option value="Hanoi"></option>
-                        <option value="Ho Chi Minh City"></option>
-                        <option value="Santiago"></option>
-                        <option value="Lima"></option>
-                        <option value="Bogota"></option>
-                        <option value="Caracas"></option>
-                        <option value="Quito"></option>
-                        <option value="Reykjavik"></option>
-                        </datalist>
+                    <label for="destinationCity">Destination City/Region:</label>
+                    <input type="text" id="destinationCity" required placeholder="e.g., Paris, Goa" />
+                </div>
+
+                <div class="form-group">
+                    <label>Travelers Name:</label>
+                    <div id="travelersContainer">
+                        <div class="traveler-input-group">
+                            <input type="text" class="traveler-name" placeholder="Traveler Name 1" />
+                        </div>
+                    </div>
+                    <button type="button" id="addTravelerBtn" class="add-traveler-btn"><i class="fas fa-plus-circle"></i> Add Traveler</button>
                 </div>
                 <div class="form-group inline-group">
                     <div class="input-with-label">
@@ -500,7 +322,7 @@
             </div>
 
             <div id="cardViewContainer" class="card-grid-container">
-                </div>
+            </div>
 
             <div id="tableViewContainer" class="table-responsive hidden-view">
                 <table class="notes-table">
@@ -509,8 +331,8 @@
                             <th>S.No.</th>
                             <th>Title</th>
                             <th>Destination (Country)</th>
-                            <th>City/State</th>
-                            <th>Start Date</th>
+                            <th>Destination City/Region</th>
+                            <th>Travelers</th> <th>Start Date</th>
                             <th>End Date</th>
                             <th>Budget</th>
                             <th>Currency</th>
@@ -520,10 +342,10 @@
                         </tr>
                     </thead>
                     <tbody id="travelTableBody">
-                        </tbody>
+                    </tbody>
                     <tfoot>
                         <tr>
-                            <td colspan="6" class="table-total-label">Total Budgeted:</td>
+                            <td colspan="7" class="table-total-label">Total Budgeted:</td>
                             <td id="totalBudgetCell" class="table-total-amount">0.00</td>
                             <td colspan="4"></td>
                         </tr>
@@ -546,14 +368,109 @@
 
     <div id="professionalReminderDisplay" class="professional-reminder">
         <i class="fas fa-bell icon"></i>
-        <h3 id="reminderTitle">Travel Reminder!</h3>
+        <h3 id="reminderTitle"></h3>
         <p id="reminderMessage"></p>
-        <button class="close-btn" onclick="document.getElementById('professionalReminderDisplay').style.display = 'none';">Dismiss</button>
+        <button class="close-btn" onclick="document.getElementById('professionalReminderDisplay').style.display='none';">Dismiss</button>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
     <script src="travelplans.js"></script>
+    <script>
+        // Traveler Management
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set default dates (already existing)
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            const formattedDate = `${year}-${month}-${day}`;
+            document.getElementById('startDate').value = formattedDate;
+            document.getElementById('endDate').value = formattedDate;
 
+            // Add event listener for adding travelers
+            document.getElementById('addTravelerBtn').addEventListener('click', () => {
+                addTravelerInput();
+            });
+
+            // This ensures that if the page is loaded (e.g., during an edit),
+            // and there are existing traveler inputs, their remove buttons work.
+            // For the *first* default traveler input, we typically don't show a remove button
+            // unless there's more than one. The `addTravelerInput` function creates inputs
+            // with a remove button, so this part handles removal for any dynamically added ones.
+            document.getElementById('travelersContainer').addEventListener('click', (e) => {
+                if (e.target.closest('.remove-traveler-btn')) {
+                    e.target.closest('.traveler-input-group').remove();
+                    updateTravelerPlaceholders();
+                }
+            });
+        });
+
+        /**
+         * Adds a new traveler input field to the form.
+         * @param {string} travelerName - Optional: Pre-fill the input with a traveler name.
+         */
+        function addTravelerInput(travelerName = '') {
+            const travelersContainer = document.getElementById('travelersContainer');
+            const newTravelerIndex = travelersContainer.children.length + 1; // Get the current count for naming
+            const newTravelerInputGroup = document.createElement('div');
+            newTravelerInputGroup.classList.add('traveler-input-group');
+            newTravelerInputGroup.innerHTML = `
+                <input type="text" class="traveler-name" placeholder="Traveler Name ${newTravelerIndex}" value="${travelerName}">
+                <button type="button" class="remove-traveler-btn"><i class="fas fa-minus-circle"></i></button>
+            `;
+            travelersContainer.appendChild(newTravelerInputGroup);
+
+            updateTravelerPlaceholders(); // Ensure all placeholders are updated
+        }
+
+        /**
+         * Updates the placeholder text for all traveler input fields based on their index.
+         */
+        function updateTravelerPlaceholders() {
+            const travelerInputs = document.querySelectorAll('.traveler-name');
+            travelerInputs.forEach((input, index) => {
+                input.placeholder = `Traveler Name ${index + 1}`;
+                // Only show remove button if there's more than one traveler
+                const removeBtn = input.nextElementSibling; // Get the next sibling (the button)
+                if (removeBtn && removeBtn.classList.contains('remove-traveler-btn')) {
+                    if (travelerInputs.length > 1) {
+                        removeBtn.style.display = 'flex'; // Show if more than one
+                    } else {
+                        removeBtn.style.display = 'none'; // Hide if only one
+                    }
+                }
+            });
+        }
+
+        // Dummy slideshow functions (these are usually handled by travelplans.js or another dedicated script)
+        // Ensure these functions exist if they are called elsewhere (e.g., from index.html)
+        let slideIndex = 1;
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName("mySlides");
+            let dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            if (slides.length > 0) {
+                slides[slideIndex - 1].style.display = "block";
+                dots[slideIndex - 1].className += " active";
+            }
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+    </script>
 </body>
 </html>
