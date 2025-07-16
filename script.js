@@ -16,12 +16,14 @@
 /**
  * @typedef {Object} TravelPlan
  * @property {string} id - Unique ID for the travel plan.
+ * @property {string} planTitle - The title of the travel plan (e.g., "Hyderabad Trip").
  * @property {string} destinationCountry - The country or main region (e.g., "India", "United States").
  * @property {string} city - The specific city (e.g., "Hyderabad", "New York").
  * @property {string} startDate - Start date of the trip (YYYY-MM-DD).
  * @property {string} endDate - End date of the trip (YYYY-MM-DD).
  * @property {string} budgetCurrency - Currency for the budget (e.g., '₹', '$').
  * @property {number} budgetAmount - Total budget for the trip.
+ * @property {string[]} travelers - Array of traveler names.
  * @property {string} status - Current status ('Planning', 'Booked', 'Completed', 'Cancelled').
  * @property {string} [notes] - Optional notes for the travel plan.
  * @property {string} [reminderTime] - Optional time for a reminder.
@@ -90,15 +92,17 @@ function showSlides(n) {
 
     for (let i = 0; i < slides.length; i++) {
         slides[i].style.display = "none";
+        slides[i].classList.remove('active'); // Ensure 'active' class is removed
     }
     for (let i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
 
-    // Ensure the current slide is displayed as 'flex' for its internal content alignment
     if (slides[slideIndex - 1]) {
-        slides[slideIndex - 1].style.display = "flex"; // Changed to flex
+        slides[slideIndex - 1].style.display = "flex";
+        slides[slideIndex - 1].classList.add('active'); // Add 'active' class for CSS targeting
     }
+
     if (dots[slideIndex - 1]) {
         dots[slideIndex - 1].className += " active";
     }
@@ -108,10 +112,14 @@ function showSlides(n) {
 function startSlideshow() {
     clearInterval(slideshowInterval); // Clear any existing interval
     const slides = document.getElementsByClassName("mySlides");
+
     if (slides.length > 1) { // Only start if there's more than one slide
         slideshowInterval = setInterval(() => {
             plusSlides(1);
         }, AUTO_SLIDE_DELAY);
+    } else if (slides.length === 1) {
+        clearInterval(slideshowInterval); // Explicitly clear in case it was started prematurely
+        showSlides(1); // Ensure the single slide is shown
     }
 }
 
@@ -162,9 +170,9 @@ window.onload = function () {
     const noNotesMessage = document.getElementById('noNotesMessage');
 
     // Elements for upcoming trips slideshow
-    const upcomingTripsSection = document.getElementById('upcoming-trips-section');
-    const slideshowContainer = document.querySelector('.slideshow-container'); // Get the container
-    const tripSlidesContainer = document.getElementById('tripSlides');
+    const upcomingTripsSection = document.getElementById('upcoming-trips-section'); // Whole section
+    const slideshowContainer = document.querySelector('.slideshow-container'); // Get the container for the slides themselves
+    const tripSlidesContainer = document.getElementById('tripSlides'); // The wrapper for individual slides
     const slideshowDotsContainer = document.getElementById('slideshow-dots');
     const noUpcomingTripsMessage = document.getElementById('noUpcomingTripsMessage');
 
@@ -222,6 +230,13 @@ window.onload = function () {
         updateCategoryChart();
         updateTotals();
 
+        // After adding a note, switch to the "Notes" tab to show the new note
+        const notesTabButton = document.querySelector('.tab-button[data-tab="notes-section"]');
+        if (notesTabButton) {
+            notesTabButton.click(); // Simulate click to activate notes tab
+        }
+
+
         // Reset the form
         this.reset();
         document.getElementById("noteDate").value = new Date().toISOString().split('T')[0];
@@ -241,7 +256,7 @@ window.onload = function () {
 
         if (filtered.length === 0) {
             noNotesMessage.classList.remove('hidden');
-            cardViewContainerNotes.innerHTML = "";
+            cardViewContainerNotes.innerHTML = ""; // Ensure card view is empty
             notesTableBody.innerHTML = `<tr><td colspan="9" style="text-align: center; color: #777; padding: 20px;">No notes match your filter.</td></tr>`;
         } else {
             noNotesMessage.classList.add('hidden');
@@ -252,8 +267,8 @@ window.onload = function () {
             const div = document.createElement("div");
             div.className = `note-card ${note.category.toLowerCase().replace(/\s/g, '-')}`;
             const amountDisplay = (note.category === 'Casual Note' && (note.amount || 0) === 0)
-                                     ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
-                                     : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
+                                        ? `<span class="casual-description-display">Description: ${note.description || 'N/A'}</span>`
+                                        : `<span class="${note.category === 'Expenses' ? 'expense-amount' : 'income-amount'}">${note.currency}${(note.amount || 0).toFixed(2)}</span>`;
 
             div.innerHTML = `
                 <h4>${note.title}</h4>
@@ -274,8 +289,8 @@ window.onload = function () {
             row.className = `${note.category.toLowerCase().replace(/\s/g, '-')}-row`;
 
             const tableAmountDisplay = (note.category === 'Casual Note' && (note.amount || 0) === 0)
-                                            ? '-'
-                                            : `${note.currency}${(note.amount || 0).toFixed(2)}`;
+                                                ? '-'
+                                                : `${note.currency}${(note.amount || 0).toFixed(2)}`;
 
             const amountClass = note.category === 'Expenses' ? 'expense-amount-table' : (note.category === 'Income' ? 'income-amount-table' : '');
             const currencySymbol = note.currency || '-';
@@ -456,36 +471,59 @@ window.onload = function () {
             return (plan.status === 'Planning' || plan.status === 'Booked') && planStartDate >= today;
         }).sort((a, b) => new Date(a.startDate) - new Date(b.startDate)); // Sort by closest date first
 
-        // Debugging: Check how many upcoming trips are found
-        console.log("Found upcoming trips:", upcomingTrips.length, upcomingTrips);
-
 
         if (!slideshowContainer || !tripSlidesContainer || !slideshowDotsContainer || !noUpcomingTripsMessage || !prevButton || !nextButton) {
-            console.error("One or more dashboard upcoming trips elements not found. Skipping dashboard rendering.");
+            console.error("[ERROR] One or more dashboard upcoming trips elements not found. Skipping dashboard rendering.");
             return;
         }
 
         tripSlidesContainer.innerHTML = ''; // Clear previous slides
         slideshowDotsContainer.innerHTML = ''; // Clear previous dots
 
+        // Add the default welcome slide as the first slide
+        const welcomeSlideDiv = document.createElement('div');
+        welcomeSlideDiv.classList.add('mySlides', 'fade', 'dashboard-upcoming-trip-card', 'welcome-slide');
+        welcomeSlideDiv.style.backgroundImage = 'url("https://static.vecteezy.com/system/resources/previews/017/275/399/non_2x/india-city-skyline-with-color-buildings-blue-sky-and-reflections-vector.jpg")';
+        welcomeSlideDiv.innerHTML = `
+            <div class="numbertext">1 / ${upcomingTrips.length + 1}</div>
+            <div class="trip-details-overlay welcome-details">
+                <h4 class="trip-title">Welcome to Your Travel Plans!</h4>
+                <p class="trip-destination">Organize your next adventure here.</p>
+                <div class="travel-info-group">
+                    <p class="trip-dates">Plan, track, and enjoy your journeys.</p>
+                </div>
+                <div class="trip-budget-container">
+                    <p class="trip-budget">Start by adding a new travel plan!</p>
+                </div>
+            </div>
+        `;
+        tripSlidesContainer.appendChild(welcomeSlideDiv);
+
+        const welcomeDotSpan = document.createElement('span');
+        welcomeDotSpan.classList.add('dot');
+        welcomeDotSpan.onclick = () => currentSlide(1);
+        slideshowDotsContainer.appendChild(welcomeDotSpan);
+
+
+        // Check if there are any actual upcoming trips to display after the welcome slide
         if (upcomingTrips.length === 0) {
             noUpcomingTripsMessage.classList.remove('hidden');
-            // Hide navigation buttons and dots if no trips
+            // Hide navigation buttons and dots if only the welcome slide is present
             prevButton.style.display = 'none';
             nextButton.style.display = 'none';
-            clearInterval(slideshowInterval); // Stop auto-slide if no trips
-            slideshowContainer.style.display = 'none'; // Hide the entire slideshow container
-            return;
+            slideshowDotsContainer.style.display = 'none'; // Ensure dots are hidden
+            clearInterval(slideshowInterval); // Stop auto-slide if no actual trips
+            slideshowContainer.classList.remove('hidden'); // Ensure the container is visible for the welcome slide
         } else {
             noUpcomingTripsMessage.classList.add('hidden');
-            slideshowContainer.style.display = 'block'; // Show the entire slideshow container
+            slideshowContainer.classList.remove('hidden'); // Show the entire slideshow container
 
-            // Show navigation buttons only if there's more than one trip
-            if (upcomingTrips.length > 1) {
+            // Show navigation buttons and dots if there's more than just the welcome slide
+            if (upcomingTrips.length > 0) { // Since welcome slide is always there, this means at least one actual trip
                 prevButton.style.display = 'flex'; // Use flex to center arrow
                 nextButton.style.display = 'flex'; // Use flex to center arrow
                 slideshowDotsContainer.style.display = 'block'; // Show dots
-            } else { // Only one trip, hide arrows and dots
+            } else { // This case is technically handled by upcomingTrips.length === 0 above, but as a fallback
                 prevButton.style.display = 'none';
                 nextButton.style.display = 'none';
                 slideshowDotsContainer.style.display = 'none';
@@ -494,18 +532,17 @@ window.onload = function () {
 
         upcomingTrips.forEach((plan, index) => {
             const slideDiv = document.createElement('div');
-            slideDiv.classList.add('mySlides', 'fade', 'dashboard-upcoming-trip-card');
+            // Add a unique class for each slide to allow for different backgrounds in CSS
+            // e.g., slide-1, slide-2, slide-3...
+            const slideBgClass = `slide-${(index % 6) + 1}`; // Cycles through slide-1 to slide-6 backgrounds
+            slideDiv.classList.add('mySlides', 'fade', 'dashboard-upcoming-trip-card', slideBgClass);
+
 
             // --- Refined City/Country Display Logic ---
             let locationParts = [];
             // Ensure city and country are treated as valid strings, trimming whitespace
             const city = (plan.city && typeof plan.city === 'string') ? plan.city.trim() : '';
             const country = (plan.destinationCountry && typeof plan.destinationCountry === 'string') ? plan.destinationCountry.trim() : '';
-
-            // Debugging: Log the raw values and processed values
-            console.log(`Processing Plan ID: ${plan.id}`);
-            console.log(`  Raw City: '${plan.city}', Raw Country: '${plan.destinationCountry}'`);
-            console.log(`  Trimmed City: '${city}', Trimmed Country: '${country}'`);
 
             if (city !== '') {
                 locationParts.push(city);
@@ -514,37 +551,51 @@ window.onload = function () {
                 locationParts.push(country);
             }
             const locationDisplay = locationParts.length > 0 ? locationParts.join(', ') : 'N/A';
-            console.log(`  Final Location Display: '${locationDisplay}'`);
+
+            // Adjust index for display as we now have a welcome slide at index 0 (human readable 1)
+            const currentSlideNumber = index + 2; // +1 for 0-based to 1-based, and +1 for the welcome slide
+            const totalSlides = upcomingTrips.length + 1;
 
 
-            // The `trip-details-overlay` will now have a plain background color via CSS
             slideDiv.innerHTML = `
-                <div class="numbertext">${index + 1} / ${upcomingTrips.length}</div>
+                <div class="numbertext">${currentSlideNumber} / ${totalSlides}</div>
                 <div class="trip-details-overlay">
-                     <h4 class="trip-title">${plan.planTitle}</h4>
-                     <p class="trip-destination">${locationDisplay}</p>
-                     <p class="trip-dates">${new Date(plan.startDate).toLocaleDateString()} - ${new Date(plan.endDate).toLocaleDateString()}</p>
-                     <p class="trip-travelers">Travelers: ${(plan.travelers && plan.travelers.length > 0) ? plan.travelers.join(', ') : 'N/A'}</p>
-                     <p class="trip-budget">Budget: ${plan.budgetCurrency || '₹'} ${parseFloat(plan.budgetAmount || 0).toFixed(2)}</p>
-                     <p class="trip-status">Status: <span class="status-${(plan.status || 'Planning').toLowerCase().replace(/\s/g, '-')}">${plan.status || 'Planning'}</span></p>
+                    <h4 class="trip-title">${plan.planTitle || 'Untitled Trip'}</h4>
+                    <p class="trip-destination">${locationDisplay}</p>
+                    <div class="travel-info-group">
+                        <p class="trip-dates">Dates: ${new Date(plan.startDate).toLocaleDateString()} - ${new Date(plan.endDate).toLocaleDateString()}</p>
+                        <p class="trip-travelers">Travelers: ${(plan.travelers && plan.travelers.length > 0) ? plan.travelers.join(', ') : 'N/A'}</p>
+                    </div>
+                    <div class="trip-budget-container">
+                        <p class="trip-budget">Budget: ${plan.budgetCurrency || '₹'} ${parseFloat(plan.budgetAmount || 0).toFixed(2)}</p>
+                    </div>
+                    <p class="trip-status">Status: <span class="status-${(plan.status || 'Planning').toLowerCase().replace(/\s/g, '-')}">${plan.status || 'Planning'}</span></p>
                 </div>
             `;
             tripSlidesContainer.appendChild(slideDiv);
 
             const dotSpan = document.createElement('span');
             dotSpan.classList.add('dot');
-            dotSpan.onclick = () => currentSlide(index + 1);
+            dotSpan.onclick = () => currentSlide(currentSlideNumber); // Link dot to its correct slide number
             slideshowDotsContainer.appendChild(dotSpan);
         });
 
         // Initialize slideshow
-        slideIndex = 0; // Reset slide index before showing first slide (showSlides will increment it to 1)
-        showSlides(1); // Show the first slide (which is index 0 in array, but 1 for human count)
-        startSlideshow(); // Start auto-slide (will only run if >1 slide)
+        slideIndex = 1; // Always start with the first slide (human readable 1), which is now the welcome slide
+        showSlides(1); // Show the first slide (the welcome slide)
+        startSlideshow(); // Start auto-slide (will only run if >1 slide, i.e., if there are actual trips)
     }
 
     // Expose renderDashboardUpcomingTrips to the global scope if travelplans.js needs to call it
     window.renderDashboardUpcomingTrips = renderDashboardUpcomingTrips;
+    // Expose deleteNote to global scope so it can be called from onclick in HTML
+    window.deleteNote = deleteNote;
+    // Expose populateSubcategories to global scope for onchange attribute in HTML
+    window.populateSubcategories = populateSubcategories;
+    // Expose slideshow functions to global scope for navigation buttons
+    window.plusSlides = plusSlides;
+    window.currentSlide = currentSlide;
+
 
     // Initial renders and updates when the page loads
     document.getElementById("noteDate").value = new Date().toISOString().split('T')[0]; // Set default date for quick note
@@ -581,6 +632,12 @@ window.onload = function () {
                 // If the dashboard tab is clicked, re-render it
                 if (tabId === 'dashboard-section') {
                     renderDashboardUpcomingTrips(); // Refresh dashboard on tab switch
+                    updateCategoryChart(); // Also refresh chart
+                    updateTotals(); // And totals
+                }
+                // If the notes tab is clicked, re-render it
+                if (tabId === 'notes-section') {
+                    renderNotes(filterCategorySelect.value, currentViewNotes); // Refresh notes section
                 }
             });
         });
@@ -597,6 +654,9 @@ window.onload = function () {
             } else {
                 // If no tabs, just render the dashboard content if it's visible by default
                 renderDashboardUpcomingTrips();
+                updateCategoryChart();
+                updateTotals();
+                renderNotes(filterCategorySelect.value, currentViewNotes); // Also render notes if no tabs active
             }
         }
     });
