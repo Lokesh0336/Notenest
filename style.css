@@ -844,6 +844,7 @@ main.dashboard-main-content {
     padding: 12px 15px;
     border: 1px solid var(--border-color);
     text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
 }
 
 #travelTable th {
@@ -852,6 +853,9 @@ main.dashboard-main-content {
     font-weight: bold;
     text-transform: uppercase;
     font-size: 0.85em;
+    position: sticky; /* Keeps header visible on scroll */
+    top: 0;
+    z-index: 10;
 }
 
 #travelTable tbody tr:nth-child(even) {
@@ -1035,9 +1039,7 @@ main.dashboard-main-content {
     box-shadow: var(--shadow-small);
     overflow: hidden;
     min-height: 250px; /* Ensure space for content */
-    display: flex; /* To center content if no slides */
-    align-items: center;
-    justify-content: center;
+    /* No padding here, padding moved to .trip-details-overlay */
 }
 
 #tripSlides {
@@ -1046,7 +1048,7 @@ main.dashboard-main-content {
 }
 
 .mySlides {
-    display: none; /* Controlled by JS */
+    display: none; /* Controlled by JS, will be set to flex when active */
     text-align: center;
     min-height: 250px; /* Ensure a minimum height for slides */
     display: flex; /* Use flexbox for content alignment */
@@ -1055,7 +1057,6 @@ main.dashboard-main-content {
     position: relative; /* For positioning numbertext */
     color: white; /* Default text color for overlay */
     text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Enhance text readability */
-    background-color: var(--secondary-color); /* Fallback background if image fails */
 }
 
 /* Fade animation for slides */
@@ -1079,30 +1080,40 @@ main.dashboard-main-content {
   left: 0;
   background-color: rgba(0,0,0,0.3);
   border-bottom-right-radius: var(--border-radius-small);
+  z-index: 60; /* Ensure number text is above content but below arrows */
 }
 
 /* Previous/Next buttons */
 .prev, .next {
   cursor: pointer;
   position: absolute;
-  top: 50%;
+  top: 0; /* Align to top of slideshow-container */
+  bottom: 0; /* Align to bottom of slideshow-container */
   width: auto;
   padding: 16px;
-  margin-top: -22px;
+  /* margin-top: -22px; Removed as top/bottom 0 with auto margin will center */
   color: white;
   font-weight: bold;
   font-size: 18px;
   transition: 0.6s ease;
-  border-radius: 0 3px 3px 0;
   user-select: none;
   background-color: rgba(0,0,0,0.5); /* Semi-transparent background */
-  z-index: 50; /* Ensure buttons are above slides */
+  z-index: 100; /* Ensure buttons are on top of everything */
+  display: flex; /* Use flex to center the arrow vertically */
+  align-items: center; /* Center arrow vertically */
+  justify-content: center; /* Center arrow horizontally */
+}
+
+.prev {
+    left: 0; /* Fixed to the left edge of its relative parent (.slideshow-container) */
+    border-radius: 0 var(--border-radius-small) var(--border-radius-small) 0;
 }
 
 .next {
-  right: 0;
-  border-radius: 3px 0 0 3px;
+    right: 0; /* Fixed to the right edge of its relative parent (.slideshow-container) */
+    border-radius: var(--border-radius-small) 0 0 var(--border-radius-small);
 }
+
 
 .prev:hover, .next:hover {
   background-color: rgba(0,0,0,0.8);
@@ -1130,32 +1141,21 @@ main.dashboard-main-content {
 }
 
 /* Styles for trip details inside slideshow (Dashboard) */
-.mySlides .slide-content {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .trip-details-overlay {
     width: 100%;
     height: 100%;
-    padding: 20px;
+    padding: 20px 60px; /* IMPORTANT: Apply padding here to push content away from arrows */
     box-sizing: border-box;
-    background-size: cover;
-    background-position: center;
+    /* --- IMPORTANT CHANGE: Solid background color instead of image --- */
+    background-color: var(--secondary-color); /* Or any other desired solid color */
     color: white;
-    text-shadow: 1px 1px 5px rgba(0,0,0,0.8);
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.7); /* Keep text shadow for readability */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    border-radius: var(--border-radius-medium); /* Match slide container */
+    border-radius: var(--border-radius-medium);
     overflow: hidden;
 }
 
@@ -1163,7 +1163,7 @@ main.dashboard-main-content {
     font-size: 2em;
     margin-bottom: 10px;
     font-weight: bold;
-    color: white; /* Ensure title is white on image */
+    color: white;
 }
 
 .trip-details-overlay p {
@@ -1284,6 +1284,14 @@ main.dashboard-main-content {
         10% { opacity: 1; }
         90% { opacity: 1; }
         100% { opacity: 0; }
+    }
+
+    /* Adjust slideshow content padding for smaller screens */
+    .trip-details-overlay {
+        padding: 20px 10px; /* Less padding for content on very small screens */
+    }
+    .prev, .next {
+        padding: 10px; /* Smaller button padding */
     }
 }
 
