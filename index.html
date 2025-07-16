@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="style.css" />
     <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3242/3242257.png" type="image/png" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://unpkg.com/jspdf-autotable@3.8.2/dist/jspdf.autotable.min.js"></script>
 </head>
 <body>
 
@@ -20,18 +23,6 @@
                 <p class="subtitle">Your Smart Note Keeper</p>
             </div>
         </a>
-        <div class="header-icons" style="display: flex; align-items: center; gap: 10px;">
-            <span style="font-size: 0.95em; font-weight: 500; margin-right: 8px; color: #ffffff;">Follow us on:</span>
-            <a href="https://www.instagram.com/lokesh_ragutla96?igsh=ZHY2ZmcyZG1leGRh" target="_blank" title="Instagram" style="color: #C13584; font-size: 1.4em;">
-                <i class="fab fa-instagram"></i>
-            </a>
-            <a href="https://x.com/lokeshragutla2?t=zNATjgNQnXrpWt6T4ZcCxQ&s=09" target="_blank" title="Twitter" style="color: #1DA1F2; font-size: 1.4em;">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="https://www.threads.net/@lokesh_ragutla96" target="_blank" title="Threads" style="color: #ffffff; font-size: 1.4em;">
-                <i class="fas fa-at"></i>
-            </a>
-        </div>
     </header>
 
     <nav>
@@ -58,25 +49,39 @@
         </section>
 
         <section id="upcoming-trips-section" class="card-style">
-            <h3><i class="fas fa-plane-departure"></i> Upcoming Trips
+            <h3>
+                <i class="fas fa-plane-departure"></i>
+                <i class="fas fa-bus"></i>
+                <i class="fas fa-train"></i>
+                <i class="fas fa-car-side"></i>
+                Upcoming Trips
                 <a href="travelplans.html" class="add-trip-link" title="Go to Travel Plans"><i class="fas fa-plus-circle"></i> Add New Trip</a>
             </h3>
             <div class="slideshow-container">
-                <div id="tripSlides" class="trip-slides">
+                <p id="noUpcomingTripsMessage" class="no-data-message hidden">
+                    No upcoming travel plans yet. Add one in the 'Travel Plans' section!
+                </p>
+                <div id="tripSlides">
                     </div>
 
                 <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                 <a class="next" onclick="plusSlides(1)">&#10095;</a>
-
-                <div id="slideshow-dots" class="slideshow-dots">
-                </div>
             </div>
-            <div id="noUpcomingTripsMessage" class="info-message hidden">
-                <p>No upcoming travel plans. Start planning your next adventure!</p>
-                <p><a href="travelplans.html">Go to Travel Plans page to add.</a></p>
+
+            <br>
+
+            <div style="text-align:center;">
+                <div id="slideshow-dots" class="slideshow-dots-container">
+                    </div>
             </div>
         </section>
 
+        <div id="professionalReminderDisplay" class="reminder-popup">
+            <h3 id="reminderTitle"></h3>
+            <p id="reminderMessage"></p>
+            <audio id="alarmSound" src="path/to/your/alarm_sound.mp3" preload="auto"></audio>
+            <button onclick="document.getElementById('professionalReminderDisplay').style.display='none'; document.getElementById('alarmSound').pause();">Dismiss</button>
+        </div>
 
         <section class="create-note-section card-style">
             <h3><i class="fas fa-feather-alt"></i> Quick Create Note</h3>
@@ -185,8 +190,8 @@
                 </div>
 
                 <div class="view-toggle-buttons">
-                    <button class="view-toggle-button active-view" id="cardViewBtn" data-view="card"><i class="fas fa-th-large"></i> Card View</button>
-                    <button class="view-toggle-button" id="tableViewBtn" data-view="table"><i class="fas fa-table"></i> Table View</button>
+                    <button class="view-toggle-button active-view" id="cardViewBtnNotes" data-view="card"><i class="fas fa-th-large"></i> Card View</button>
+                    <button class="view-toggle-button" id="tableViewBtnNotes" data-view="table"><i class="fas fa-table"></i> Table View</button>
                 </div>
             </div>
 
@@ -194,10 +199,10 @@
                 <p>No notes recorded yet. Add your first note using the "Quick Create Note" form!</p>
             </div>
 
-            <div id="cardViewContainer" class="note-card-grid-container">
+            <div id="cardViewContainerNotes" class="note-card-grid-container">
             </div>
 
-            <div id="tableViewContainer" class="notes-table-container hidden-view">
+            <div id="tableViewContainerNotes" class="notes-table-container hidden-view">
                 <table class="notes-table">
                     <thead>
                         <tr>
@@ -224,6 +229,7 @@
     </footer>
 
     <script src="script.js"></script>
+    <script src="travelplans.js"></script>
 
 </body>
 </html>
