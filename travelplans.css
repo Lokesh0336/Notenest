@@ -302,7 +302,7 @@ form textarea {
     overflow: hidden;
     position: relative;
     color: #fff; /* Text color for content over image */
-    min-height: 280px; /* Ensure sufficient height for the image */
+    min-height: 180px; /* **Adjusted: Reduced height to make the image smaller** */
     background-size: cover; /* THIS IS THE FIX: Scales image to cover the container */
     background-position: center; /* THIS IS THE FIX: Centers the image */
     background-repeat: no-repeat;
@@ -322,7 +322,7 @@ form textarea {
 }
 
 /* Original .travel-card from your provided CSS. If you're not using it anymore, you can remove it.
-   If you have other cards without background images, keep it. */
+    If you have other cards without background images, keep it. */
 .travel-card {
     background-color: #fff;
     border: 1px solid #eee;
@@ -594,7 +594,7 @@ footer {
     }
     /* Adjusted .travel-plan-card for smaller screens if needed, but 'cover' usually handles well */
     .travel-plan-card {
-        min-height: 250px; /* Slightly reduce height on smaller screens */
+        min-height: 150px; /* **Adjusted: Further reduced height for smaller screens** */
     }
     .travel-card { /* If you're still using this class */
         padding: 15px;
