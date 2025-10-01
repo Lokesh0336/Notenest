@@ -234,7 +234,7 @@ main.dashboard-main-content {
 
 /* ===== CARD DESIGN ===== */
 .dashboard-card {
-    background: #fff;
+    background: #fdfcf7;
     border-radius: 16px;
     padding: 20px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
