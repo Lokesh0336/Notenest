@@ -82,7 +82,7 @@ a:hover {
 /* Header Styles */
 header {
     background-color: var(--primary-color);
-    color: #ffffff;
+    color:  #fdfcf7;
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
@@ -133,7 +133,7 @@ header .logo-title .subtitle {
 }
 /* Ensure the anchor itself changes color, but icon moves */
 .header-icons a {
-    color: #ffffff; /* Default color */
+    color:  #fdfcf7; /* Default color */
     font-size: 1.5em;
     margin-left: 15px;
     /* No direct transform on anchor to allow child icon to move independently */
