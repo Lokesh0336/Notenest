@@ -196,6 +196,7 @@ main {
 }
 
 /* Dashboard Specific Layout (assuming grid areas are defined in HTML/JS for dashboard) */
+/* Base Dashboard Layout */
 main.dashboard-main-content {
     display: grid;
     gap: 25px;
@@ -205,8 +206,11 @@ main.dashboard-main-content {
         "trips"
         "create-note"
         "overview";
+    padding: 20px;
+    background-color: #f9f9f9; /* light background */
 }
 
+/* Tablet Layout */
 @media (min-width: 768px) {
     main.dashboard-main-content {
         grid-template-columns: 2fr 1fr;
@@ -217,6 +221,7 @@ main.dashboard-main-content {
     }
 }
 
+/* Desktop Layout */
 @media (min-width: 1024px) {
     main.dashboard-main-content {
         grid-template-columns: 3fr 2fr;
@@ -227,38 +232,88 @@ main.dashboard-main-content {
     }
 }
 
-.welcome-note { grid-area: welcome; }
-.create-note-section { grid-area: create-note; }
-.dashboard-overview-section { grid-area: overview; }
-#upcoming-trips-section { grid-area: trips; } /* This is the slideshow area */
-
-
-/* Card Style for Sections */
-.card-style {
-    background-color: var(--background-card);
-    padding: 25px;
-    border-radius: var(--border-radius-large);
-    box-shadow: var(--shadow-medium);
-    border: 1px solid var(--border-color);
+/* ===== CARD DESIGN ===== */
+.dashboard-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.card-style h2, .card-style h3 {
-    color: var(--secondary-color);
-    margin-top: 0;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.6em;
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
 }
 
-.card-style h3 {
-    font-size: 1.3em;
-    border-bottom: 1px solid #eee;
-    padding-bottom: 10px;
-    justify-content: space-between;
+/* Welcome Section */
+.welcome-note {
+    grid-area: welcome;
+    text-align: center;
+    background: linear-gradient(135deg, #4a90e2, #357ABD);
+    color: #fff;
+    padding: 40px 20px;
+    border-radius: 20px;
 }
 
+.welcome-note h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+.welcome-note p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Slideshow Section */
+#upcoming-trips-section {
+    grid-area: trips;
+}
+
+#upcoming-trips-section .dashboard-card {
+    background: #fff url('https://www.transparenttextures.com/patterns/white-wall.png');
+    background-size: cover;
+}
+
+/* Create Note Section */
+.create-note-section {
+    grid-area: create-note;
+}
+
+.create-note-section .dashboard-card h2 {
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    color: #333;
+}
+
+/* Overview Section */
+.dashboard-overview-section {
+    grid-area: overview;
+}
+
+.dashboard-overview-section .dashboard-card h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #333;
+}
+
+/* Buttons inside sections */
+.dashboard-card button {
+    background: #4a90e2;
+    color: #fff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background 0.2s;
+}
+
+.dashboard-card button:hover {
+    background: #357ABD;
+}
 
 /* Welcome Note Specific Styles */
 .welcome-note {
