@@ -273,7 +273,7 @@ main.dashboard-main-content {
 }
 
 #upcoming-trips-section .dashboard-card {
-    background: #fff url('https://www.transparenttextures.com/patterns/white-wall.png');
+    background: #F3E5F5 url('https://www.transparenttextures.com/patterns/white-wall.png');
     background-size: cover;
 }
 
@@ -312,7 +312,7 @@ main.dashboard-main-content {
 }
 
 .dashboard-card button:hover {
-    background: #05BFDB;
+    background: #B39DDB;
 }
 
 /* Welcome Note Specific Styles */
