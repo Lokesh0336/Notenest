@@ -250,7 +250,7 @@ main.dashboard-main-content {
 .welcome-note {
     grid-area: welcome;
     text-align: center;
-    background: linear-gradient(135deg, #4a90e2, #357ABD);
+    background: linear-gradient(135deg, #4a90e2, #F8F9FA);
     color: #fff;
     padding: 40px 20px;
     border-radius: 20px;
