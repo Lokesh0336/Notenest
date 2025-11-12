@@ -1254,7 +1254,7 @@ main.dashboard-main-content {
 /* Welcome Slide Specific Styles */
 .welcome-slide {
     /* Background image set directly in JS for this specific slide */
-    background-color: #34495e; /* Fallback for image loading */
+    background-color: #C8E6C9; /* Fallback for image loading */
 }
 
 .welcome-slide .welcome-details .trip-title {
@@ -1416,9 +1416,9 @@ main.dashboard-main-content {
     box-shadow: 0 1px 1px rgba(0,0,0,0.1);
 }
 
-.trip-details-overlay .trip-status .status-planning { background-color: #95a5a6; }
+.trip-details-overlay .trip-status .status-planning { background-color: #E3F2FD; }
 .trip-details-overlay .trip-status .status-booked { background-color: var(--success-color); }
-.trip-details-overlay .trip-status .status-completed { background-color: #2ecc71; }
+.trip-details-overlay .trip-status .status-completed { background-color: 81D4FA; }
 .trip-details-overlay .trip-status .status-cancelled { background-color: var(--danger-color); }
 
 
